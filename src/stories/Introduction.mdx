@@ -1,0 +1,75 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Introduction" />
+
+# Dhaakon UI
+
+The design system and React component library for the **dhaakon-network** —
+the console, the dashboard, and the apps teams generate.
+
+Its visual language is lifted from **dhaakon.com**:
+
+- **Warm paper ground** (`#f0eee8`), near-black **ink** (`#101010`).
+- **Sharp corners.** The only curve in the system is a full circle (status
+  dots, avatars).
+- **Hairline rules** instead of shadows and fills. Structure is drawn, not
+  shaded.
+- **IBM Plex** throughout — Sans for UI, Serif for editorial, Mono for data and
+  identifiers, Condensed for the dense uppercase labels.
+- **One decisive accent** — orange (`#ff5a1f`) — used sparingly. Blue
+  (`#2d62ff`) is reserved for focus rings and informational state.
+- **Light body weight** (300), semibold (600) only for labels and emphasis.
+
+## Install
+
+```sh
+npm install @dhaakon/ui   # from the network Verdaccio at :21760
+```
+
+## Use
+
+```tsx
+// once, at your app entry
+import '@dhaakon/ui/styles.css';
+
+import { DhaakonProvider, Button, Card, CardBody, useToast } from '@dhaakon/ui';
+
+function App() {
+  return (
+    <DhaakonProvider>
+      <Card>
+        <CardBody>
+          <Button variant="accent">Engage</Button>
+        </CardBody>
+      </Card>
+    </DhaakonProvider>
+  );
+}
+```
+
+`DhaakonProvider` establishes the `.dhk-root` baseline (Plex, paper ground,
+`box-sizing`) and mounts the toast host. Pass `theme="dark"` to force a theme;
+omit it to follow `data-theme` on `<html>` or the OS setting.
+
+### Tailwind (optional)
+
+Apps already on Tailwind v4 can pull the tokens in as utilities:
+
+```css
+@import 'tailwindcss';
+@import '@dhaakon/ui/theme.css';   /* bg-paper, text-ink, font-mono, … */
+```
+
+### Tokens as data
+
+```ts
+import { tokens } from '@dhaakon/ui';
+tokens.color.accent;      // '#ff5a1f'
+tokens.motion.ease;       // 'cubic-bezier(0.16, 1, 0.3, 1)'
+```
+
+## Versioning
+
+`@dhaakon/ui` is versioned in Gitea (`dhaakon-ubuntu/dhaakon-ui`) and published
+to the network Verdaccio. It tracks dhaakon.com and the apps as they evolve —
+open a PR when the language shifts.

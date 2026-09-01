@@ -1,0 +1,41 @@
+/*
+ * Optional Tailwind v4 theme.  For apps that use Tailwind and want the
+ * dhaakon tokens as utilities (`bg-paper`, `text-ink`, `font-mono`, …):
+ *
+ *   @import 'tailwindcss';
+ *   @import '@dhaakon/ui/theme.css';
+ *
+ * The values mirror src/styles/dhaakon-ui.css — keep them in sync.
+ */
+
+@theme {
+  --color-paper: #f0eee8;
+  --color-paper-bright: #faf9f5;
+  --color-ink: #101010;
+  --color-ink-soft: #1b1b1b;
+  --color-accent: #ff5a1f;
+  --color-accent-deep: #e6480f;
+  --color-blue: #2d62ff;
+  --color-blue-deep: #1843cf;
+  --color-violet: #8a5cff;
+  --color-acid: #d9ff43;
+
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'IBM Plex Serif', ui-serif, Georgia, serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-condensed: 'IBM Plex Sans Condensed', 'IBM Plex Sans', sans-serif;
+
+  --text-display: clamp(4rem, 9vw, 10rem);
+  --text-title: clamp(1.2rem, 2vw, 1.8rem);
+
+  --tracking-display: -0.055em;
+  --tracking-label: 0.06em;
+  --tracking-label-wide: 0.12em;
+
+  --ease-dhk: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --radius-none: 0px;
+
+  --spacing-gutter: clamp(1.25rem, 3vw, 3.75rem);
+  --spacing-header: 5rem;
+}

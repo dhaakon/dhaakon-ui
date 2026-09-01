@@ -1,0 +1,75 @@
+{
+  "name": "@dhaakon/ui",
+  "version": "0.1.0",
+  "description": "Dhaakon UI — the design system and React component library for the dhaakon-network. Built from dhaakon.com and IBM Plex.",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./dist/dhaakon-ui.css",
+    "./theme.css": "./dist/theme.css",
+    "./tokens": {
+      "types": "./dist/tokens.d.ts",
+      "import": "./dist/tokens.js"
+    },
+    "./fonts/*": "./dist/fonts/*"
+  },
+  "publishConfig": {
+    "registry": "http://localhost:21760/"
+  },
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build -o storybook-static",
+    "build": "tsc -p tsconfig.build.json && vite build -c vite.lib.config.ts && node scripts/build-css.mjs",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
+  },
+  "peerDependenciesMeta": {
+    "lucide-react": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.4.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^9.1.20",
+    "@storybook/addon-docs": "^9.1.20",
+    "@storybook/react-vite": "^9.1.20",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.2.13",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.2.0",
+    "eslint": "^9.39.1",
+    "lucide-react": "^0.563.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "storybook": "^9.1.20",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.2": true
+  }
+}

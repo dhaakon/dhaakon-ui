@@ -1,0 +1,818 @@
+/*
+ * Dhaakon UI — design tokens + component styles.
+ * One import: `import '@dhaakon/ui/styles.css'`.
+ *
+ * Visual language is taken from dhaakon.com:
+ *   warm paper ground, near-black ink, hairline rules, SHARP corners
+ *   (the only curve in the system is a full circle), IBM Plex throughout,
+ *   uppercase letter-spaced labels, light body weight, one decisive accent.
+ */
+
+@import './fonts.css';
+
+:root {
+  /* ---- palette (raw) ------------------------------------------------ */
+  --dhk-paper: #f0eee8;
+  --dhk-paper-bright: #faf9f5;
+  --dhk-ink: #101010;
+  --dhk-ink-soft: #1b1b1b;
+  --dhk-white: #ffffff;
+
+  --dhk-orange: #ff5a1f;
+  --dhk-orange-deep: #e6480f;
+  --dhk-blue: #2d62ff;
+  --dhk-blue-deep: #1843cf;
+  --dhk-violet: #8a5cff;
+  --dhk-acid: #d9ff43;
+
+  --dhk-line-on-light: rgba(16, 16, 16, 0.2);
+  --dhk-line-on-light-strong: rgba(16, 16, 16, 0.55);
+  --dhk-line-on-dark: rgba(240, 238, 232, 0.22);
+
+  /* ---- semantic (light) ------------------------------------------- */
+  --dhk-bg: var(--dhk-paper);
+  --dhk-surface: var(--dhk-paper);
+  --dhk-surface-raised: var(--dhk-paper-bright);
+  --dhk-surface-inset: rgba(16, 16, 16, 0.03);
+  --dhk-text: var(--dhk-ink);
+  --dhk-text-muted: rgba(16, 16, 16, 0.66);
+  --dhk-text-subtle: rgba(16, 16, 16, 0.44);
+  --dhk-text-on-accent: var(--dhk-paper);
+  --dhk-border: var(--dhk-line-on-light);
+  --dhk-border-strong: var(--dhk-line-on-light-strong);
+  --dhk-accent: var(--dhk-orange);
+  --dhk-accent-hover: var(--dhk-orange-deep);
+  --dhk-focus: var(--dhk-blue);
+
+  --dhk-info: var(--dhk-blue);
+  --dhk-success: #1f7a4d;
+  --dhk-warning: #a5620a;
+  --dhk-danger: #c22b1c;
+
+  /* ---- type ------------------------------------------------------- */
+  --dhk-font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --dhk-font-serif: 'IBM Plex Serif', ui-serif, Georgia, 'Times New Roman', serif;
+  --dhk-font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --dhk-font-condensed: 'IBM Plex Sans Condensed', 'IBM Plex Sans', sans-serif;
+
+  --dhk-weight-light: 300;
+  --dhk-weight-regular: 400;
+  --dhk-weight-semibold: 600;
+
+  --dhk-text-2xs: 0.625rem;
+  --dhk-text-xs: 0.75rem;
+  --dhk-text-sm: 0.875rem;
+  --dhk-text-base: 1rem;
+  --dhk-text-lg: 1.15rem;
+  --dhk-text-xl: 1.5rem;
+  --dhk-text-2xl: 2rem;
+  --dhk-text-3xl: 2.4rem;
+  --dhk-text-title: clamp(1.2rem, 2vw, 1.8rem);
+  --dhk-text-display: clamp(4rem, 9vw, 10rem);
+
+  --dhk-leading-tight: 1.05;
+  --dhk-leading-snug: 1.3;
+  --dhk-leading-normal: 1.5;
+
+  --dhk-tracking-display: -0.055em;
+  --dhk-tracking-tight: -0.02em;
+  --dhk-tracking-normal: 0;
+  --dhk-tracking-label: 0.06em;
+  --dhk-tracking-label-wide: 0.12em;
+
+  /* ---- space ---------------------------------------------------- */
+  --dhk-space-1: 0.25rem;
+  --dhk-space-2: 0.5rem;
+  --dhk-space-3: 0.75rem;
+  --dhk-space-4: 1rem;
+  --dhk-space-5: 1.5rem;
+  --dhk-space-6: 2rem;
+  --dhk-space-8: 3rem;
+  --dhk-space-10: 4rem;
+  --dhk-space-12: 6rem;
+
+  /* ---- form -------------------------------------------------- */
+  --dhk-radius: 0px;
+  --dhk-radius-full: 999px;
+  --dhk-control-height-sm: 1.75rem;
+  --dhk-control-height-md: 2.25rem;
+  --dhk-control-height-lg: 2.75rem;
+  --dhk-focus-ring: 0 0 0 2px var(--dhk-bg), 0 0 0 4px var(--dhk-focus);
+
+  /* ---- motion --------------------------------------------- */
+  --dhk-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dhk-duration-fast: 120ms;
+  --dhk-duration: 200ms;
+  --dhk-duration-slow: 360ms;
+
+  /* ---- layout / elevation ------------------------------- */
+  --dhk-header-height: 5rem;
+  --dhk-gutter: clamp(1.25rem, 3vw, 3.75rem);
+  --dhk-shadow-raised: 0 1px 0 var(--dhk-line-on-light), 0 12px 32px -20px rgba(16, 16, 16, 0.35);
+  --dhk-shadow-overlay: 0 24px 60px -24px rgba(16, 16, 16, 0.45);
+  --dhk-z-dropdown: 1000;
+  --dhk-z-overlay: 1100;
+  --dhk-z-toast: 1200;
+}
+
+:root[data-theme='dark'],
+.dhk-dark {
+  --dhk-bg: #0d0d0c;
+  --dhk-surface: #141412;
+  --dhk-surface-raised: #1b1b18;
+  --dhk-surface-inset: rgba(240, 238, 232, 0.05);
+  --dhk-text: #f0eee8;
+  --dhk-text-muted: rgba(240, 238, 232, 0.66);
+  --dhk-text-subtle: rgba(240, 238, 232, 0.42);
+  --dhk-text-on-accent: #0d0d0c;
+  --dhk-border: var(--dhk-line-on-dark);
+  --dhk-border-strong: rgba(240, 238, 232, 0.5);
+  --dhk-accent: var(--dhk-orange);
+  --dhk-accent-hover: #ff7a48;
+  --dhk-focus: #6f93ff;
+  --dhk-success: #4fd18b;
+  --dhk-warning: #e0a75c;
+  --dhk-danger: #f2705f;
+  --dhk-shadow-raised: 0 1px 0 var(--dhk-line-on-dark), 0 12px 32px -18px rgba(0, 0, 0, 0.8);
+  --dhk-shadow-overlay: 0 24px 60px -20px rgba(0, 0, 0, 0.85);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not(.dhk-light) {
+    --dhk-bg: #0d0d0c;
+    --dhk-surface: #141412;
+    --dhk-surface-raised: #1b1b18;
+    --dhk-surface-inset: rgba(240, 238, 232, 0.05);
+    --dhk-text: #f0eee8;
+    --dhk-text-muted: rgba(240, 238, 232, 0.66);
+    --dhk-text-subtle: rgba(240, 238, 232, 0.42);
+    --dhk-text-on-accent: #0d0d0c;
+    --dhk-border: var(--dhk-line-on-dark);
+    --dhk-border-strong: rgba(240, 238, 232, 0.5);
+    --dhk-accent-hover: #ff7a48;
+    --dhk-focus: #6f93ff;
+    --dhk-success: #4fd18b;
+    --dhk-warning: #e0a75c;
+    --dhk-danger: #f2705f;
+    --dhk-shadow-raised: 0 1px 0 var(--dhk-line-on-dark), 0 12px 32px -18px rgba(0, 0, 0, 0.8);
+    --dhk-shadow-overlay: 0 24px 60px -20px rgba(0, 0, 0, 0.85);
+  }
+}
+
+/* ================================================================
+ * Base — applied wherever `.dhk-root` (or the <DhaakonProvider>) wraps.
+ * Scoped rather than global so it never fights a host app's reset.
+ * ============================================================== */
+
+.dhk-root {
+  font-family: var(--dhk-font-sans);
+  font-weight: var(--dhk-weight-light);
+  font-size: var(--dhk-text-base);
+  line-height: var(--dhk-leading-normal);
+  color: var(--dhk-text);
+  background-color: var(--dhk-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'kern' 1;
+  text-rendering: optimizeLegibility;
+}
+
+.dhk-root *,
+.dhk-root *::before,
+.dhk-root *::after {
+  box-sizing: border-box;
+}
+
+/* ---- primitive typography helpers -------------------------------- */
+.dhk-eyebrow {
+  font-family: var(--dhk-font-condensed);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: var(--dhk-text-2xs);
+  letter-spacing: var(--dhk-tracking-label-wide);
+  text-transform: uppercase;
+  color: var(--dhk-text-muted);
+}
+.dhk-display {
+  font-weight: var(--dhk-weight-light);
+  font-size: var(--dhk-text-display);
+  line-height: var(--dhk-leading-tight);
+  letter-spacing: var(--dhk-tracking-display);
+}
+.dhk-title {
+  font-weight: var(--dhk-weight-light);
+  font-size: var(--dhk-text-title);
+  line-height: var(--dhk-leading-snug);
+  letter-spacing: var(--dhk-tracking-tight);
+}
+.dhk-prose-serif {
+  font-family: var(--dhk-font-serif);
+  font-weight: var(--dhk-weight-regular);
+  line-height: 1.6;
+}
+.dhk-mono {
+  font-family: var(--dhk-font-mono);
+  font-size: 0.92em;
+}
+
+/* shared focus treatment */
+.dhk-focusable:focus-visible,
+.dhk-root :focus-visible {
+  outline: 2px solid var(--dhk-focus);
+  outline-offset: 2px;
+}
+
+/* ================================================================
+ * Button
+ * ============================================================== */
+
+.dhk-btn {
+  --_h: var(--dhk-control-height-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dhk-space-2);
+  height: var(--_h);
+  padding-inline: var(--dhk-space-4);
+  border: 1px solid transparent;
+  border-radius: var(--dhk-radius);
+  font-family: var(--dhk-font-sans);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: var(--dhk-text-xs);
+  letter-spacing: var(--dhk-tracking-label);
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  transition:
+    background-color var(--dhk-duration) var(--dhk-ease),
+    color var(--dhk-duration) var(--dhk-ease),
+    border-color var(--dhk-duration) var(--dhk-ease),
+    transform var(--dhk-duration-fast) var(--dhk-ease);
+}
+.dhk-btn:active {
+  transform: translateY(1px);
+}
+.dhk-btn:disabled,
+.dhk-btn[aria-disabled='true'] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+.dhk-btn--sm {
+  --_h: var(--dhk-control-height-sm);
+  padding-inline: var(--dhk-space-3);
+  font-size: var(--dhk-text-2xs);
+}
+.dhk-btn--lg {
+  --_h: var(--dhk-control-height-lg);
+  padding-inline: var(--dhk-space-5);
+  font-size: var(--dhk-text-xs);
+}
+.dhk-btn--block {
+  width: 100%;
+}
+.dhk-btn__icon {
+  display: inline-flex;
+  width: 1em;
+  height: 1em;
+  font-size: 1.05em;
+}
+
+.dhk-btn--primary {
+  background: var(--dhk-ink);
+  color: var(--dhk-paper);
+  border-color: var(--dhk-ink);
+}
+.dhk-btn--primary:hover {
+  background: var(--dhk-accent);
+  border-color: var(--dhk-accent);
+  color: var(--dhk-text-on-accent);
+}
+:root[data-theme='dark'] .dhk-btn--primary,
+.dhk-dark .dhk-btn--primary {
+  background: var(--dhk-paper);
+  color: var(--dhk-ink);
+  border-color: var(--dhk-paper);
+}
+
+.dhk-btn--accent {
+  background: var(--dhk-accent);
+  color: var(--dhk-text-on-accent);
+  border-color: var(--dhk-accent);
+}
+.dhk-btn--accent:hover {
+  background: var(--dhk-accent-hover);
+  border-color: var(--dhk-accent-hover);
+}
+
+.dhk-btn--outline {
+  background: transparent;
+  color: var(--dhk-text);
+  border-color: var(--dhk-border-strong);
+}
+.dhk-btn--outline:hover {
+  background: var(--dhk-ink);
+  color: var(--dhk-paper);
+  border-color: var(--dhk-ink);
+}
+
+.dhk-btn--ghost {
+  background: transparent;
+  color: var(--dhk-text);
+}
+.dhk-btn--ghost:hover {
+  background: var(--dhk-surface-inset);
+}
+
+.dhk-btn--link {
+  height: auto;
+  padding: 0;
+  background: transparent;
+  color: var(--dhk-text);
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: var(--dhk-weight-regular);
+  font-size: inherit;
+  text-underline-offset: 0.2em;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+.dhk-btn--link:hover {
+  color: var(--dhk-accent);
+}
+
+/* ================================================================
+ * Field / Label / Input / Textarea
+ * ============================================================== */
+
+.dhk-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dhk-space-2);
+}
+.dhk-label {
+  font-family: var(--dhk-font-condensed);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: var(--dhk-text-2xs);
+  letter-spacing: var(--dhk-tracking-label);
+  text-transform: uppercase;
+  color: var(--dhk-text-muted);
+}
+.dhk-label__req {
+  color: var(--dhk-accent);
+  margin-inline-start: 0.25em;
+}
+.dhk-field__hint {
+  font-size: var(--dhk-text-xs);
+  color: var(--dhk-text-subtle);
+}
+.dhk-field__error {
+  font-size: var(--dhk-text-xs);
+  color: var(--dhk-danger);
+}
+
+.dhk-input,
+.dhk-textarea {
+  width: 100%;
+  min-height: var(--dhk-control-height-md);
+  padding: var(--dhk-space-2) var(--dhk-space-3);
+  background: var(--dhk-surface-raised);
+  color: var(--dhk-text);
+  border: 1px solid var(--dhk-border-strong);
+  border-radius: var(--dhk-radius);
+  font-family: var(--dhk-font-sans);
+  font-weight: var(--dhk-weight-regular);
+  font-size: var(--dhk-text-sm);
+  line-height: 1.4;
+  transition:
+    border-color var(--dhk-duration) var(--dhk-ease),
+    background-color var(--dhk-duration) var(--dhk-ease);
+}
+.dhk-textarea {
+  min-height: calc(var(--dhk-control-height-md) * 2.4);
+  resize: vertical;
+}
+.dhk-input::placeholder,
+.dhk-textarea::placeholder {
+  color: var(--dhk-text-subtle);
+}
+.dhk-input:hover,
+.dhk-textarea:hover {
+  border-color: var(--dhk-ink);
+}
+.dhk-input:focus,
+.dhk-textarea:focus {
+  outline: none;
+  border-color: var(--dhk-ink);
+  box-shadow: inset 0 -2px 0 var(--dhk-focus);
+}
+.dhk-input:disabled,
+.dhk-textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.dhk-input[aria-invalid='true'],
+.dhk-textarea[aria-invalid='true'] {
+  border-color: var(--dhk-danger);
+}
+.dhk-input[aria-invalid='true']:focus,
+.dhk-textarea[aria-invalid='true']:focus {
+  box-shadow: inset 0 -2px 0 var(--dhk-danger);
+}
+.dhk-input--mono {
+  font-family: var(--dhk-font-mono);
+  font-size: var(--dhk-text-xs);
+}
+.dhk-input--sm {
+  min-height: var(--dhk-control-height-sm);
+  font-size: var(--dhk-text-xs);
+}
+.dhk-input--lg {
+  min-height: var(--dhk-control-height-lg);
+}
+
+/* ================================================================
+ * Card
+ * ============================================================== */
+
+.dhk-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--dhk-surface);
+  border: 1px solid var(--dhk-border);
+  border-radius: var(--dhk-radius);
+  color: var(--dhk-text);
+}
+.dhk-card--raised {
+  background: var(--dhk-surface-raised);
+  box-shadow: var(--dhk-shadow-raised);
+}
+.dhk-card--interactive {
+  transition:
+    border-color var(--dhk-duration) var(--dhk-ease),
+    transform var(--dhk-duration) var(--dhk-ease);
+}
+.dhk-card--interactive:hover {
+  border-color: var(--dhk-ink);
+}
+.dhk-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dhk-space-1);
+  padding: var(--dhk-space-4) var(--dhk-space-5);
+  border-bottom: 1px solid var(--dhk-border);
+}
+.dhk-card__title {
+  font-size: var(--dhk-text-lg);
+  font-weight: var(--dhk-weight-light);
+  letter-spacing: var(--dhk-tracking-tight);
+}
+.dhk-card__subtitle {
+  font-size: var(--dhk-text-xs);
+  color: var(--dhk-text-muted);
+}
+.dhk-card__body {
+  padding: var(--dhk-space-5);
+  flex: 1;
+}
+.dhk-card__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--dhk-space-3);
+  padding: var(--dhk-space-4) var(--dhk-space-5);
+  border-top: 1px solid var(--dhk-border);
+}
+.dhk-card--flush .dhk-card__body {
+  padding: 0;
+}
+
+/* ================================================================
+ * Badge
+ * ============================================================== */
+
+.dhk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.15em 0.6em;
+  border: 1px solid var(--dhk-border-strong);
+  border-radius: var(--dhk-radius);
+  background: transparent;
+  color: var(--dhk-text);
+  font-family: var(--dhk-font-condensed);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: var(--dhk-text-2xs);
+  letter-spacing: var(--dhk-tracking-label);
+  text-transform: uppercase;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.dhk-badge__dot {
+  width: 0.4em;
+  height: 0.4em;
+  border-radius: var(--dhk-radius-full);
+  background: currentColor;
+}
+.dhk-badge--solid {
+  border-color: transparent;
+  background: var(--dhk-ink);
+  color: var(--dhk-paper);
+}
+.dhk-badge--accent {
+  border-color: var(--dhk-accent);
+  color: var(--dhk-accent);
+}
+.dhk-badge--accent.dhk-badge--solid {
+  background: var(--dhk-accent);
+  color: var(--dhk-text-on-accent);
+}
+.dhk-badge--info {
+  border-color: var(--dhk-info);
+  color: var(--dhk-info);
+}
+.dhk-badge--success {
+  border-color: var(--dhk-success);
+  color: var(--dhk-success);
+}
+.dhk-badge--warning {
+  border-color: var(--dhk-warning);
+  color: var(--dhk-warning);
+}
+.dhk-badge--danger {
+  border-color: var(--dhk-danger);
+  color: var(--dhk-danger);
+}
+
+/* ================================================================
+ * Tabs
+ * ============================================================== */
+
+.dhk-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dhk-space-5);
+}
+.dhk-tabs__list {
+  display: flex;
+  gap: var(--dhk-space-5);
+  border-bottom: 1px solid var(--dhk-border);
+}
+.dhk-tabs__tab {
+  appearance: none;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: 0 0 var(--dhk-space-3);
+  cursor: pointer;
+  color: var(--dhk-text-muted);
+  font-family: var(--dhk-font-condensed);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: var(--dhk-text-xs);
+  letter-spacing: var(--dhk-tracking-label);
+  text-transform: uppercase;
+  transition:
+    color var(--dhk-duration) var(--dhk-ease),
+    border-color var(--dhk-duration) var(--dhk-ease);
+}
+.dhk-tabs__tab:hover {
+  color: var(--dhk-text);
+}
+.dhk-tabs__tab[aria-selected='true'] {
+  color: var(--dhk-text);
+  border-bottom-color: var(--dhk-ink);
+}
+.dhk-tabs__tab:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.dhk-tabs__panel:focus-visible {
+  outline: 2px solid var(--dhk-focus);
+  outline-offset: 4px;
+}
+
+/* ================================================================
+ * Table
+ * ============================================================== */
+
+.dhk-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--dhk-border);
+}
+.dhk-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--dhk-text-sm);
+  color: var(--dhk-text);
+}
+.dhk-table caption {
+  padding: var(--dhk-space-3) var(--dhk-space-4);
+  text-align: left;
+  color: var(--dhk-text-muted);
+  font-size: var(--dhk-text-xs);
+  border-bottom: 1px solid var(--dhk-border);
+}
+.dhk-table th {
+  text-align: left;
+  font-family: var(--dhk-font-condensed);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: var(--dhk-text-2xs);
+  letter-spacing: var(--dhk-tracking-label);
+  text-transform: uppercase;
+  color: var(--dhk-text-muted);
+  background: var(--dhk-surface-inset);
+}
+.dhk-table th,
+.dhk-table td {
+  padding: var(--dhk-space-3) var(--dhk-space-4);
+  border-bottom: 1px solid var(--dhk-border);
+}
+.dhk-table tbody tr:last-child td,
+.dhk-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.dhk-table tbody tr {
+  transition: background-color var(--dhk-duration-fast) var(--dhk-ease);
+}
+.dhk-table--hoverable tbody tr:hover {
+  background: var(--dhk-surface-inset);
+}
+.dhk-table--dense th,
+.dhk-table--dense td {
+  padding: var(--dhk-space-2) var(--dhk-space-3);
+}
+.dhk-table__num {
+  text-align: right;
+  font-family: var(--dhk-font-mono);
+  font-size: var(--dhk-text-xs);
+}
+
+/* ================================================================
+ * Dialog  (native <dialog>)
+ * ============================================================== */
+
+.dhk-dialog {
+  width: min(32rem, calc(100vw - 2 * var(--dhk-space-5)));
+  max-height: calc(100dvh - 2 * var(--dhk-space-8));
+  padding: 0;
+  border: 1px solid var(--dhk-border-strong);
+  border-radius: var(--dhk-radius);
+  background: var(--dhk-surface-raised);
+  color: var(--dhk-text);
+  box-shadow: var(--dhk-shadow-overlay);
+}
+.dhk-dialog::backdrop {
+  background: rgba(16, 16, 16, 0.4);
+  backdrop-filter: blur(2px);
+}
+.dhk-dialog[open] {
+  animation: dhk-dialog-in var(--dhk-duration) var(--dhk-ease);
+}
+@keyframes dhk-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+.dhk-dialog__inner {
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
+}
+.dhk-dialog__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--dhk-space-4);
+  padding: var(--dhk-space-5) var(--dhk-space-5) var(--dhk-space-4);
+  border-bottom: 1px solid var(--dhk-border);
+}
+.dhk-dialog__title {
+  font-size: var(--dhk-text-lg);
+  font-weight: var(--dhk-weight-light);
+  letter-spacing: var(--dhk-tracking-tight);
+}
+.dhk-dialog__desc {
+  margin-top: var(--dhk-space-1);
+  font-size: var(--dhk-text-sm);
+  color: var(--dhk-text-muted);
+}
+.dhk-dialog__close {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin: -0.25rem -0.25rem 0 0;
+  border: none;
+  background: none;
+  color: var(--dhk-text-muted);
+  cursor: pointer;
+  transition: color var(--dhk-duration) var(--dhk-ease);
+}
+.dhk-dialog__close:hover {
+  color: var(--dhk-text);
+}
+.dhk-dialog__body {
+  padding: var(--dhk-space-5);
+  overflow-y: auto;
+}
+.dhk-dialog__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--dhk-space-3);
+  padding: var(--dhk-space-4) var(--dhk-space-5);
+  border-top: 1px solid var(--dhk-border);
+}
+
+/* ================================================================
+ * Toast
+ * ============================================================== */
+
+.dhk-toaster {
+  position: fixed;
+  z-index: var(--dhk-z-toast);
+  bottom: var(--dhk-space-5);
+  right: var(--dhk-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--dhk-space-3);
+  width: min(22rem, calc(100vw - 2 * var(--dhk-space-5)));
+  pointer-events: none;
+}
+.dhk-toast {
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--dhk-space-1) var(--dhk-space-3);
+  padding: var(--dhk-space-3) var(--dhk-space-4);
+  background: var(--dhk-surface-raised);
+  color: var(--dhk-text);
+  border: 1px solid var(--dhk-border-strong);
+  border-left-width: 3px;
+  border-left-color: var(--dhk-ink);
+  border-radius: var(--dhk-radius);
+  box-shadow: var(--dhk-shadow-overlay);
+  animation: dhk-toast-in var(--dhk-duration-slow) var(--dhk-ease);
+}
+@keyframes dhk-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+}
+.dhk-toast[data-tone='accent'] {
+  border-left-color: var(--dhk-accent);
+}
+.dhk-toast[data-tone='info'] {
+  border-left-color: var(--dhk-info);
+}
+.dhk-toast[data-tone='success'] {
+  border-left-color: var(--dhk-success);
+}
+.dhk-toast[data-tone='warning'] {
+  border-left-color: var(--dhk-warning);
+}
+.dhk-toast[data-tone='danger'] {
+  border-left-color: var(--dhk-danger);
+}
+.dhk-toast__title {
+  font-family: var(--dhk-font-condensed);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: var(--dhk-text-xs);
+  letter-spacing: var(--dhk-tracking-label);
+  text-transform: uppercase;
+}
+.dhk-toast__desc {
+  grid-column: 1 / -1;
+  font-size: var(--dhk-text-sm);
+  color: var(--dhk-text-muted);
+}
+.dhk-toast__close {
+  grid-row: 1;
+  grid-column: 2;
+  align-self: start;
+  border: none;
+  background: none;
+  color: var(--dhk-text-subtle);
+  cursor: pointer;
+  line-height: 1;
+  font-size: var(--dhk-text-sm);
+  transition: color var(--dhk-duration) var(--dhk-ease);
+}
+.dhk-toast__close:hover {
+  color: var(--dhk-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dhk-root *,
+  .dhk-dialog[open],
+  .dhk-toast {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,101 @@
+/*
+ * IBM Plex — the dhaakon type family.
+ * Sans (UI + body), Serif (editorial), Mono (data + code), Sans Condensed (dense labels).
+ * Weights: 300 Light, 400 Regular, 600 SemiBold — matching dhaakon.com.
+ * IBM Plex is licensed under the SIL Open Font License 1.1.
+ */
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./fonts/IBMPlexSans-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/IBMPlexSans-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./fonts/IBMPlexSans-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Serif';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./fonts/IBMPlexSerif-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Serif';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./fonts/IBMPlexSerif-LightItalic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/IBMPlexSerif-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Serif';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./fonts/IBMPlexSerif-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./fonts/IBMPlexMono-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/IBMPlexMono-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./fonts/IBMPlexMono-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Condensed';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./fonts/IBMPlexSansCondensed-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Sans Condensed';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/IBMPlexSansCondensed-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Sans Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./fonts/IBMPlexSansCondensed-SemiBold.woff2') format('woff2');
+}
