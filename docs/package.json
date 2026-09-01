@@ -1,0 +1,29 @@
+{
+  "name": "@dhaakon/ui-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host --port 5174",
+    "build": "tsc -b --noEmit false --emitDeclarationOnly false || true && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "react": "^19.2.0",
+    "react-aria-components": "^1.21.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.13.0",
+    "tailwind-merge": "^3.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.13",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.2.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  }
+}

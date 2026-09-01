@@ -10,7 +10,7 @@ const dist = join(root, 'dist');
 
 await mkdir(join(dist, 'fonts'), { recursive: true });
 
-for (const file of ['dhaakon-ui.css', 'fonts.css', 'site.css', 'theme.css']) {
+for (const file of ['dhaakon-ui.css', 'fonts.css', 'controls.css', 'site.css', 'theme.css']) {
   await cp(join(src, file), join(dist, file));
 }
 

@@ -1,0 +1,314 @@
+/* Docs chrome. The component styles all come from @dhaakon/ui itself. */
+
+body {
+  margin: 0;
+  background: var(--dhk-bg);
+}
+
+.doc-shell {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  min-height: 100vh;
+}
+@media (max-width: 900px) {
+  .doc-shell {
+    grid-template-columns: 1fr;
+  }
+  .doc-side {
+    position: static !important;
+    height: auto !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--dhk-border);
+  }
+}
+
+/* ---- top bar ---------------------------------------------------- */
+.doc-top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--dhk-space-5);
+  height: 3.25rem;
+  padding-inline: var(--dhk-space-5);
+  background: var(--dhk-bg);
+  border-bottom: 1px solid var(--dhk-border);
+}
+.doc-top__brand {
+  display: flex;
+  align-items: baseline;
+  gap: var(--dhk-space-2);
+  font-family: var(--dhk-font-condensed);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: var(--dhk-text-sm);
+  letter-spacing: var(--dhk-tracking-label);
+  text-transform: uppercase;
+  color: var(--dhk-text);
+  text-decoration: none;
+}
+.doc-top__brand span {
+  color: var(--dhk-accent);
+}
+.doc-top__ver {
+  font-family: var(--dhk-font-mono);
+  font-size: var(--dhk-text-2xs);
+  color: var(--dhk-text-subtle);
+  border: 1px solid var(--dhk-border);
+  padding: 0.1rem 0.4rem;
+}
+.doc-top__links {
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--dhk-space-5);
+}
+.doc-top__links a,
+.doc-top__theme {
+  font-family: var(--dhk-font-condensed);
+  font-size: var(--dhk-text-2xs);
+  letter-spacing: var(--dhk-tracking-label);
+  text-transform: uppercase;
+  color: var(--dhk-text-muted);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.doc-top__links a:hover,
+.doc-top__theme:hover {
+  color: var(--dhk-accent);
+}
+
+/* ---- sidebar ---------------------------------------------------- */
+.doc-side {
+  position: sticky;
+  top: 3.25rem;
+  height: calc(100vh - 3.25rem);
+  overflow-y: auto;
+  border-right: 1px solid var(--dhk-border);
+  padding: var(--dhk-space-5) 0 var(--dhk-space-10);
+}
+.doc-side__group {
+  padding: var(--dhk-space-4) var(--dhk-space-5) var(--dhk-space-2);
+  font-family: var(--dhk-font-condensed);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: var(--dhk-text-2xs);
+  letter-spacing: var(--dhk-tracking-label-wide);
+  text-transform: uppercase;
+  color: var(--dhk-text-subtle);
+}
+.doc-side a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dhk-space-2);
+  padding: 0.35rem var(--dhk-space-5);
+  font-size: var(--dhk-text-sm);
+  color: var(--dhk-text-muted);
+  text-decoration: none;
+  border-inline-start: 2px solid transparent;
+}
+.doc-side a:hover {
+  color: var(--dhk-text);
+  background: var(--dhk-surface-inset);
+}
+.doc-side a.is-active {
+  color: var(--dhk-text);
+  border-inline-start-color: var(--dhk-accent);
+  font-weight: var(--dhk-weight-semibold);
+}
+.doc-side__aria {
+  font-family: var(--dhk-font-mono);
+  font-size: 0.6rem;
+  color: var(--dhk-text-subtle);
+  letter-spacing: 0.04em;
+}
+
+/* ---- main ------------------------------------------------------- */
+.doc-main {
+  padding: var(--dhk-space-8) var(--dhk-gutter) var(--dhk-space-12);
+  max-width: 62rem;
+}
+.doc-lede {
+  max-width: 44rem;
+  font-size: var(--dhk-text-lg);
+  line-height: 1.6;
+  color: var(--dhk-text-muted);
+}
+.doc-h1 {
+  font-size: var(--dhk-text-3xl);
+  font-weight: var(--dhk-weight-light);
+  letter-spacing: var(--dhk-tracking-display);
+  margin: 0 0 var(--dhk-space-3);
+}
+.doc-h2 {
+  font-size: var(--dhk-text-xl);
+  font-weight: var(--dhk-weight-light);
+  letter-spacing: var(--dhk-tracking-tight);
+  margin: var(--dhk-space-10) 0 var(--dhk-space-4);
+  padding-bottom: var(--dhk-space-2);
+  border-bottom: 1px solid var(--dhk-border);
+}
+.doc-p {
+  max-width: 44rem;
+  line-height: 1.7;
+  color: var(--dhk-text-muted);
+}
+.doc-note {
+  max-width: 44rem;
+  border-inline-start: 2px solid var(--dhk-accent);
+  padding: var(--dhk-space-1) 0 var(--dhk-space-1) var(--dhk-space-4);
+  font-family: var(--dhk-font-serif);
+  line-height: 1.65;
+  color: var(--dhk-text-muted);
+}
+
+/* ---- demo frame -------------------------------------------------- */
+.doc-demo {
+  border: 1px solid var(--dhk-border);
+  margin: var(--dhk-space-5) 0;
+}
+.doc-demo__stage {
+  padding: var(--dhk-space-8);
+  background: var(--dhk-surface);
+  overflow-x: auto;
+}
+.doc-demo__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--dhk-space-3);
+  padding: var(--dhk-space-2) var(--dhk-space-3);
+  border-top: 1px solid var(--dhk-border);
+  background: var(--dhk-surface-inset);
+}
+.doc-demo__btn {
+  font-family: var(--dhk-font-condensed);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: var(--dhk-text-2xs);
+  letter-spacing: var(--dhk-tracking-label);
+  text-transform: uppercase;
+  color: var(--dhk-text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem 0;
+}
+.doc-demo__btn:hover {
+  color: var(--dhk-accent);
+}
+.doc-demo__spacer {
+  margin-inline-start: auto;
+}
+
+/* ---- code -------------------------------------------------------- */
+.doc-code {
+  margin: 0;
+  padding: var(--dhk-space-4);
+  background: #0d0d0c;
+  color: #e8e6e0;
+  font-family: var(--dhk-font-mono);
+  font-size: var(--dhk-text-xs);
+  line-height: 1.65;
+  overflow-x: auto;
+  border-top: 1px solid var(--dhk-border);
+}
+.doc-code--standalone {
+  border: 1px solid var(--dhk-border);
+  margin: var(--dhk-space-4) 0;
+}
+.doc-code .t-str { color: #d9ff43; }
+.doc-code .t-com { color: #6f736a; font-style: italic; }
+.doc-code .t-kw  { color: #ff8a5c; }
+.doc-code .t-tag { color: #7fd4ee; }
+
+.doc-inline {
+  font-family: var(--dhk-font-mono);
+  font-size: 0.88em;
+  background: var(--dhk-surface-inset);
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--dhk-border);
+}
+
+/* ---- gallery ----------------------------------------------------- */
+.doc-grid {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  background: var(--dhk-border);
+  border: 1px solid var(--dhk-border);
+  margin-bottom: var(--dhk-space-8);
+}
+.doc-grid a {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dhk-space-2);
+  padding: var(--dhk-space-5);
+  background: var(--dhk-surface);
+  text-decoration: none;
+  color: var(--dhk-text);
+  transition: background-color var(--dhk-duration) var(--dhk-ease);
+}
+.doc-grid a:hover {
+  background: var(--dhk-surface-raised);
+}
+.doc-grid__name {
+  font-size: var(--dhk-text-lg);
+  font-weight: var(--dhk-weight-light);
+  letter-spacing: var(--dhk-tracking-tight);
+}
+.doc-grid__sum {
+  font-size: var(--dhk-text-xs);
+  color: var(--dhk-text-muted);
+  line-height: 1.5;
+}
+
+/* ---- misc -------------------------------------------------------- */
+.doc-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--dhk-space-2);
+  margin-bottom: var(--dhk-space-5);
+}
+.doc-swatches {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  background: var(--dhk-border);
+  border: 1px solid var(--dhk-border);
+  margin-bottom: var(--dhk-space-8);
+}
+.doc-swatch {
+  background: var(--dhk-surface);
+}
+.doc-swatch__chip {
+  height: 4rem;
+}
+.doc-swatch__meta {
+  padding: var(--dhk-space-3);
+  border-top: 1px solid var(--dhk-border);
+}
+.doc-swatch__meta b {
+  display: block;
+  font-weight: var(--dhk-weight-regular);
+  font-size: var(--dhk-text-sm);
+}
+.doc-swatch__meta code {
+  font-family: var(--dhk-font-mono);
+  font-size: var(--dhk-text-2xs);
+  color: var(--dhk-text-subtle);
+}
+.doc-typerow {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: var(--dhk-space-4);
+  align-items: baseline;
+  padding: var(--dhk-space-3) 0;
+  border-bottom: 1px solid var(--dhk-border);
+}
+.doc-typerow code {
+  font-family: var(--dhk-font-mono);
+  font-size: var(--dhk-text-2xs);
+  color: var(--dhk-text-subtle);
+}

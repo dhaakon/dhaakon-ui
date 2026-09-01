@@ -1,16 +1,15 @@
+/*
+ * The decorator wrapper only supplies the paper ground and breathing room.
+ * Alignment is left to Storybook's own `layout` parameter — centring here as
+ * well collapses any story that sizes itself with a max-width.
+ */
 .sb-frame {
   min-height: 100vh;
   padding: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 1rem;
 }
 
 /* Docs pages render inside Storybook's own chrome — let them breathe. */
 .sbdocs .sb-frame {
   min-height: 0;
   padding: 0;
-  display: block;
 }

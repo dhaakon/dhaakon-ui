@@ -1,0 +1,24 @@
+# Docs site. Context is the repo root: the site imports the kit from ../src,
+# so it always documents the working tree rather than a published tarball.
+FROM node:24-alpine AS build
+WORKDIR /repo
+
+# Kit deps first — the docs build resolves @dhaakon/ui through a source alias.
+COPY package.json package-lock.json ./
+RUN npm ci --ignore-scripts
+
+COPY docs/package.json docs/package-lock.json docs/.npmrc ./docs/
+RUN cd docs && npm ci --ignore-scripts
+
+COPY src ./src
+COPY docs ./docs
+ARG VITE_STORYBOOK_URL
+ENV VITE_STORYBOOK_URL=$VITE_STORYBOOK_URL
+RUN cd docs && npx vite build
+
+FROM nginx:1.27-alpine AS serve
+COPY docs/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /repo/docs/dist /usr/share/nginx/html
+EXPOSE 8080
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s \
+  CMD curl -fsS http://localhost:8080/ -o /dev/null || exit 1

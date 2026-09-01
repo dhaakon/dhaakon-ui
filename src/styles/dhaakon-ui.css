@@ -9,6 +9,7 @@
  */
 
 @import './fonts.css';
+@import './controls.css';
 @import './site.css';
 
 :root {
