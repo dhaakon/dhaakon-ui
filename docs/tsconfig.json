@@ -16,6 +16,7 @@
     "paths": {
       "@dhaakon/ui": ["../src/index.ts"],
       "@dhaakon/ui/site": ["../src/site/index.ts"],
+      "@dhaakon/ui/app": ["../src/app/index.ts"],
       "@dhaakon/ui/tokens": ["../src/tokens.ts"],
 
       // The kit source lives outside this project, so without these it would

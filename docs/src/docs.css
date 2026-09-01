@@ -90,6 +90,17 @@ body {
   border-right: 1px solid var(--dhk-border);
   padding: var(--dhk-space-5) 0 var(--dhk-space-10);
 }
+.doc-side__layer {
+  margin-top: var(--dhk-space-5);
+  padding: var(--dhk-space-3) var(--dhk-space-5) var(--dhk-space-1);
+  border-top: 1px solid var(--dhk-border);
+  font-family: var(--dhk-font-condensed);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: var(--dhk-text-xs);
+  letter-spacing: var(--dhk-tracking-label);
+  text-transform: uppercase;
+  color: var(--dhk-accent);
+}
 .doc-side__group {
   padding: var(--dhk-space-4) var(--dhk-space-5) var(--dhk-space-2);
   font-family: var(--dhk-font-condensed);

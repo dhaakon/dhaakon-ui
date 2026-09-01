@@ -87,7 +87,8 @@ omit it to follow `data-theme` on `<html>` or the OS setting.
 
 | Import | Contents |
 |---|---|
-| `@dhaakon/ui` | app components + `cn` + `tokens` |
+| `@dhaakon/ui` | the 39 primitives + `cn` + `tokens` |
+| `@dhaakon/ui/app` | 25 application composites — shells, headers, metric bands, feeds, whole pages |
 | `@dhaakon/ui/site` | the editorial page patterns from dhaakon.com (see below) |
 | `@dhaakon/ui/styles.css` | tokens, `@font-face` (IBM Plex), all component CSS — **required**, one import |
 | `@dhaakon/ui/theme.css` | optional Tailwind v4 `@theme` (`bg-paper`, `text-ink`, `font-mono`, …) |
@@ -216,6 +217,36 @@ cd docs && npm install && npm run dev    # :5174
 Pages: overview, install guide, foundations (live token tables), component
 gallery, and a page per component with guidance, a live demo, the import line
 and a link through to its Storybook prop table.
+
+## Composites — `@dhaakon/ui/app`
+
+Assemblies rather than primitives: the pieces application screens are actually
+made of. Everything here is built from `@dhaakon/ui`, so it inherits the same
+tokens and the same React Aria behaviour.
+
+| Composite | What it assembles |
+|---|---|
+| `AppShell` | sticky header + optional sidebar + scrolling main |
+| `HeaderNav` | brand, primary links, account slot |
+| `SidebarNav` | grouped nav with counts; links when `href`, buttons otherwise |
+| `PageHeader` / `SectionHeader` | breadcrumbs, title, description, actions, tab strip |
+| `MetricTile` / `MetricRow` / `Sparkline` | a number with change and trend; `invertDelta` when rising is bad |
+| `StatList` | key/value detail as a real `<dl>` |
+| `ActivityFeed` | timeline with a rail that stops at the last marker |
+| `DataGrid` | `FilterBar` + `DataTable` + `PaginationBar` as one block |
+| `FilterBar` | search, filter controls, chips for what is applied |
+| `PaginationBar` | page size + range + navigation; resets to page 1 on resize |
+| `FileList` | selected files with progress, size and errors |
+| `TreeView` | the WAI-ARIA tree pattern: one tab stop, ↑↓→← to move |
+| `CommandMenu` | ⌘K palette, filtered with React Aria's locale-aware `useFilter` |
+| `FormSection` / `SettingRow` | titled field blocks; label + description + one control |
+| `VerificationCodeInput` | one box per character; pasting anywhere fills the rest |
+| `ProgressSteps` | where you are in a flow; `aria-current="step"` |
+| `ConfirmDialog` | confirmation, optionally gated on typing an exact phrase |
+| `NotificationList` | read/unread, carried by weight and hidden text as well as a dot |
+| `InlineCTA` | promotes the next step — not an `Alert` |
+| `LoginPanel` | a real `<form>`, so Enter and password managers work |
+| `ErrorPage` | full-page failure with a way out and a copyable request id |
 
 ## Site patterns — `@dhaakon/ui/site`
 

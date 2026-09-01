@@ -49,13 +49,22 @@ export function Home() {
         lead="Sharp corners everywhere — the only curve in the system is a full circle. IBM Plex Sans for UI, Serif for editorial, Mono for identifiers, Condensed for the uppercase labels. One decisive accent."
       />
 
-      <h2 className="doc-h2">Two layers</h2>
-      <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(18rem, 1fr))' }}>
+      <h2 className="doc-h2">Three layers</h2>
+      <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(16rem, 1fr))' }}>
         <Card>
           <CardBody>
             <div className="dhk-eyebrow" style={{ marginBottom: '0.5rem' }}>@dhaakon/ui</div>
             <p className="doc-grid__sum">
-              Application components — buttons, forms, tables, overlays. What you build screens from.
+              Primitives — buttons, forms, tables, overlays. What screens are built from.
+            </p>
+          </CardBody>
+        </Card>
+        <Card>
+          <CardBody>
+            <div className="dhk-eyebrow" style={{ marginBottom: '0.5rem' }}>@dhaakon/ui/app</div>
+            <p className="doc-grid__sum">
+              Composites — shells, page headers, metric bands, data grids, command menus,
+              whole login and error pages. Assembled from the primitives.
             </p>
           </CardBody>
         </Card>

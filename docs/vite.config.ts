@@ -18,6 +18,7 @@ export default defineConfig({
     alias: [
       { find: /^@dhaakon\/ui\/styles\.css$/, replacement: resolve(kit, 'styles/dhaakon-ui.css') },
       { find: /^@dhaakon\/ui\/site$/, replacement: resolve(kit, 'site/index.ts') },
+      { find: /^@dhaakon\/ui\/app$/, replacement: resolve(kit, 'app/index.ts') },
       { find: /^@dhaakon\/ui\/tokens$/, replacement: resolve(kit, 'tokens.ts') },
       { find: /^@dhaakon\/ui$/, replacement: resolve(kit, 'index.ts') },
     ],

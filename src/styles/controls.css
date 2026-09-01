@@ -11,6 +11,39 @@
  */
 
 /* ================================================================
+ * Overlay baseline
+ *
+ * React Aria portals overlays to document.body, which puts them outside
+ * .dhk-root — so they inherit neither its typography nor its box-sizing
+ * reset. Without this, popover and modal text falls back to the browser's
+ * serif default. Re-establish the baseline on every overlay root.
+ * ============================================================== */
+
+.dhk-popover,
+.dhk-modal-overlay,
+.dhk-tooltip {
+  font-family: var(--dhk-font-sans);
+  font-weight: var(--dhk-weight-light);
+  font-size: var(--dhk-text-base);
+  line-height: var(--dhk-leading-normal);
+  color: var(--dhk-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.dhk-popover,
+.dhk-popover *,
+.dhk-popover *::before,
+.dhk-popover *::after,
+.dhk-modal-overlay,
+.dhk-modal-overlay *,
+.dhk-modal-overlay *::before,
+.dhk-modal-overlay *::after,
+.dhk-tooltip,
+.dhk-tooltip * {
+  box-sizing: border-box;
+}
+
+/* ================================================================
  * Shared field furniture
  * ============================================================== */
 

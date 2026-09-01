@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { Badge, Button, EmptyState } from '@dhaakon/ui';
 import { CtaLink } from '@dhaakon/ui/site';
-import { COMPONENTS, STORYBOOK_URL, findComponent, getDemo, getDemoSource } from '../lib/registry';
+import { COMPONENTS, STORYBOOK_URL, entryFor, findComponent, getDemo, getDemoSource } from '../lib/registry';
 import { Demo } from '../parts/Demo';
 import { CodeBlock } from '../parts/CodeBlock';
 import { Prose } from '../parts/Prose';
@@ -31,6 +31,7 @@ export function ComponentPage() {
       <p className="doc-lede">{doc.summary}</p>
 
       <div className="doc-chips" style={{ marginTop: '1.5rem' }}>
+        {doc.layer === 'app' && <Badge solid>composite</Badge>}
         {doc.aria && <Badge tone="accent" solid>React Aria</Badge>}
         {doc.exports.map((e) => <Badge key={e}>{e}</Badge>)}
       </div>
@@ -41,7 +42,7 @@ export function ComponentPage() {
       <Demo component={getDemo(doc)} source={getDemoSource(doc)} />
 
       <h2 className="doc-h2">Import</h2>
-      <CodeBlock standalone code={`import { ${doc.exports.join(', ')} } from '@dhaakon/ui';`} />
+      <CodeBlock standalone code={`import { ${doc.exports.join(', ')} } from '${entryFor(doc)}';`} />
 
       <h2 className="doc-h2">Props &amp; controls</h2>
       <p className="doc-p">

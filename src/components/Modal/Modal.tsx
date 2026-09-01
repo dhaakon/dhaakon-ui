@@ -39,10 +39,18 @@ export function Modal({
   footer,
   hideClose,
   className,
+  isOpen,
+  defaultOpen,
+  onOpenChange,
   ...rest
 }: ModalProps) {
+  // With a trigger, DialogTrigger owns the open state — React Aria warns if
+  // the overlay is also handed it. Without one, the overlay is the owner.
+  const stateOnTrigger = trigger != null;
+  const state = { isOpen, defaultOpen, onOpenChange };
+
   const body = (
-    <ModalOverlay {...rest} className="dhk-modal-overlay">
+    <ModalOverlay {...rest} {...(stateOnTrigger ? {} : state)} className="dhk-modal-overlay">
       <AriaModal className={cn('dhk-modal', className)}>
         <AriaDialog className="dhk-dialog__inner" style={{ outline: 'none' }}>
           {({ close }) => (
@@ -73,8 +81,8 @@ export function Modal({
     </ModalOverlay>
   );
 
-  return trigger != null ? (
-    <DialogTrigger>
+  return stateOnTrigger ? (
+    <DialogTrigger {...state}>
       {trigger}
       {body}
     </DialogTrigger>

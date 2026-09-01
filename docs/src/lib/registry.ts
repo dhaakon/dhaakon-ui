@@ -15,11 +15,24 @@ export interface ComponentDoc {
   storybook?: string;
   /** Built on React Aria rather than hand-rolled. */
   aria?: boolean;
+  /**
+   * Which entry point it ships from. `core` is `@dhaakon/ui` (primitives);
+   * `app` is `@dhaakon/ui/app` (composites assembled from them).
+   */
+  layer?: 'core' | 'app';
   /** File in ../demos, without extension. Defaults to `name`. */
   demo?: string;
 }
 
-export type Category = 'Actions' | 'Forms' | 'Containment' | 'Feedback' | 'Navigation' | 'Data';
+export type Category =
+  | 'Actions'
+  | 'Forms'
+  | 'Containment'
+  | 'Feedback'
+  | 'Navigation'
+  | 'Data'
+  | 'Shell'
+  | 'Pages';
 
 export const CATEGORIES: Category[] = [
   'Actions',
@@ -28,7 +41,24 @@ export const CATEGORIES: Category[] = [
   'Data',
   'Feedback',
   'Navigation',
+  'Shell',
+  'Pages',
 ];
+
+export const LAYERS = [
+  { id: 'core', label: 'Components', entry: '@dhaakon/ui', blurb: 'Primitives — the pieces screens are built from.' },
+  { id: 'app', label: 'Composites', entry: '@dhaakon/ui/app', blurb: 'Assemblies — shells, headers, metric bands, feeds, whole pages.' },
+] as const;
+
+export type Layer = (typeof LAYERS)[number]['id'];
+
+export function entryFor(doc: ComponentDoc): string {
+  return doc.layer === 'app' ? '@dhaakon/ui/app' : '@dhaakon/ui';
+}
+
+export function byLayer(layer: Layer): ComponentDoc[] {
+  return COMPONENTS.filter((c) => (c.layer ?? 'core') === layer);
+}
 
 export const COMPONENTS: ComponentDoc[] = [
   {
@@ -445,6 +475,139 @@ export const COMPONENTS: ComponentDoc[] = [
       'Renders first, last and a window around the current page rather than every number. `compact` gives prev/next only, for cursor-based sources.',
     exports: ['Pagination'],
     storybook: 'components-pagination--elided',
+  },
+  /* ---- composites: @dhaakon/ui/app ------------------------------- */
+  {
+    name: 'AppShell', slug: 'app-shell', category: 'Shell', layer: 'app',
+    summary: 'Sticky header, optional sidebar, scrolling main column.',
+    guidance: 'The frame every application screen sits in. The sidebar stacks above the main column under 860px rather than becoming a drawer — a drawer needs a trigger and a focus trap, which belong to the app, not the shell.',
+    exports: ['AppShell'], storybook: 'composites-shell--full',
+  },
+  {
+    name: 'HeaderNav', slug: 'header-nav', category: 'Shell', layer: 'app',
+    summary: 'Top bar: brand, primary links, account slot.',
+    guidance: 'The active link carries `aria-current="page"`, so it is announced as the current location rather than only looking different.',
+    exports: ['HeaderNav'], storybook: 'composites-shell--full',
+  },
+  {
+    name: 'SidebarNav', slug: 'sidebar-nav', category: 'Shell', layer: 'app',
+    summary: 'Grouped sidebar navigation with counts and active state.',
+    guidance: 'Items render as links when given an `href` and buttons otherwise. A nav item that only runs JavaScript is not a link, and pretending it is breaks middle-click and open-in-new-tab.',
+    exports: ['SidebarNav'], storybook: 'composites-shell--sidebar-only',
+  },
+  {
+    name: 'PageHeader', slug: 'page-header', category: 'Shell', layer: 'app',
+    summary: 'Breadcrumbs, title, description, actions and the page tab strip.',
+    guidance: 'Keep `actions` to one primary and one or two secondary. A header with five buttons is a menu wearing a disguise.',
+    exports: ['PageHeader', 'SectionHeader'], storybook: 'composites-headers--page',
+  },
+  {
+    name: 'TreeView', slug: 'tree-view', category: 'Navigation', layer: 'app',
+    summary: 'A nested, expandable tree.',
+    guidance: 'Implements the WAI-ARIA tree pattern directly: one tab stop for the whole tree, then ↑↓ between visible rows, → to open or descend, ← to close or go to the parent.',
+    exports: ['TreeView'], storybook: 'composites-navigation--tree',
+  },
+  {
+    name: 'CommandMenu', slug: 'command-menu', category: 'Navigation', layer: 'app',
+    summary: 'A ⌘K palette — type to filter, Enter to run.',
+    guidance: 'Filtering uses React Aria\'s locale-aware `useFilter`, not `String.includes`, so accents and case fold the way the reader\'s language expects. Shortcuts shown are labels; binding them is yours.',
+    exports: ['CommandMenu'], storybook: 'composites-navigation--command-open', aria: true,
+  },
+  {
+    name: 'MetricTile', slug: 'metric-tile', category: 'Data', layer: 'app',
+    summary: 'One number, with change and trend.',
+    guidance: '`invertDelta` matters more than it looks: a rise is not automatically good, and colouring a climbing error rate green is worse than not colouring it at all.',
+    exports: ['MetricTile', 'MetricRow', 'Sparkline'], storybook: 'composites-metrics--row',
+  },
+  {
+    name: 'StatList', slug: 'stat-list', category: 'Data', layer: 'app',
+    summary: 'Key/value detail as a real definition list.',
+    guidance: 'Renders `<dl>`/`<dt>`/`<dd>`, so the pairing survives being read out of order by a screen reader. Collapses to stacked pairs under 560px.',
+    exports: ['StatList'], storybook: 'composites-metrics--stats',
+  },
+  {
+    name: 'ActivityFeed', slug: 'activity-feed', category: 'Data', layer: 'app',
+    summary: 'A vertical timeline of events.',
+    guidance: 'The connecting rail is drawn per item rather than down the whole list, so it stops at the last marker instead of trailing into whitespace.',
+    exports: ['ActivityFeed'], storybook: 'composites-feed-steps--activity',
+  },
+  {
+    name: 'DataGrid', slug: 'data-grid', category: 'Data', layer: 'app',
+    summary: 'Filter bar, table and pagination as one block.',
+    guidance: 'When empty it keeps the toolbar on screen and swaps only the table. Hiding the filters along with the rows leaves no way to undo the filter that emptied it — the most common way a list appears broken.',
+    exports: ['DataGrid'], storybook: 'composites-datagrid--assembled',
+  },
+  {
+    name: 'FilterBar', slug: 'filter-bar', category: 'Data', layer: 'app',
+    summary: 'Search, filter controls, and chips for what is applied.',
+    guidance: 'Always show the applied filters. A table silently filtered to nothing reads as a bug.',
+    exports: ['FilterBar'], storybook: 'composites-datagrid--assembled',
+  },
+  {
+    name: 'PaginationBar', slug: 'pagination-bar', category: 'Data', layer: 'app',
+    summary: 'Page size, result range and page navigation on one row.',
+    guidance: 'Changing the page size resets to page 1 — staying on page 9 after quadrupling rows per page lands the reader somewhere they did not ask to be.',
+    exports: ['PaginationBar'], storybook: 'composites-datagrid--assembled',
+  },
+  {
+    name: 'FileList', slug: 'file-list', category: 'Data', layer: 'app',
+    summary: 'Selected files with progress and a remove control.',
+    guidance: 'The companion to `DropZone`: the zone accepts files, this reports what happened to them. Failures stay in the list with their reason rather than vanishing.',
+    exports: ['FileList'], storybook: 'composites-pages--files',
+  },
+  {
+    name: 'FormSection', slug: 'form-section', category: 'Forms', layer: 'app',
+    summary: 'A titled block of fields, heading beside the inputs.',
+    guidance: 'The two-column split collapses under 760px — an 18rem description column beside a 12rem input is worse than either alone.',
+    exports: ['FormSection', 'SettingRow'], storybook: 'composites-forms--sections',
+  },
+  {
+    name: 'SettingRow', slug: 'setting-row', category: 'Forms', layer: 'app',
+    summary: 'Label, explanation and one control on a ruled row.',
+    guidance: 'The control carries its own accessible name — the title here is layout. Give the control an `aria-label` when it has no visible label of its own.',
+    exports: ['SettingRow'], storybook: 'composites-forms--settings',
+  },
+  {
+    name: 'VerificationCodeInput', slug: 'verification-code', category: 'Forms', layer: 'app',
+    summary: 'One box per character of a one-time code.',
+    guidance: 'Pasting the whole code into any box fills the rest. People paste these far more often than they type them, and a split input that rejects a paste is the classic way this control is done badly.',
+    exports: ['VerificationCodeInput'], storybook: 'composites-forms--verification',
+  },
+  {
+    name: 'ProgressSteps', slug: 'progress-steps', category: 'Feedback', layer: 'app',
+    summary: 'Where you are in a multi-step flow.',
+    guidance: 'Display only — it reports progress, it does not navigate. The current step carries `aria-current="step"` so it is announced, not merely highlighted.',
+    exports: ['ProgressSteps'], storybook: 'composites-feed-steps--steps',
+  },
+  {
+    name: 'ConfirmDialog', slug: 'confirm-dialog', category: 'Feedback', layer: 'app',
+    summary: 'A confirmation modal, optionally gated on typing a phrase.',
+    guidance: '`confirmText` is the difference between "are you sure?" — which people click through without reading — and an action they must demonstrate intent for. Reserve it for what cannot be undone.',
+    exports: ['ConfirmDialog'], storybook: 'composites-forms--confirm', aria: true,
+  },
+  {
+    name: 'NotificationList', slug: 'notification-list', category: 'Feedback', layer: 'app',
+    summary: 'A read/unread list for a notifications panel.',
+    guidance: 'Unread is carried by weight and background as well as the accent dot, and by visually hidden text — a dot alone is invisible to a screen reader and to anyone who cannot pick it out.',
+    exports: ['NotificationList'], storybook: 'composites-feed-steps--notifications',
+  },
+  {
+    name: 'InlineCTA', slug: 'inline-cta', category: 'Feedback', layer: 'app',
+    summary: 'A banner promoting the next step.',
+    guidance: 'Not an `Alert`: an alert reports the state of what is on screen, this asks for something unrelated to it. At most one per page, or they stop being read.',
+    exports: ['InlineCTA'], storybook: 'composites-pages--ctas',
+  },
+  {
+    name: 'LoginPanel', slug: 'login-panel', category: 'Pages', layer: 'app',
+    summary: 'A sign-in panel: brand, heading, fields, submit.',
+    guidance: 'A real `<form>` with a real submit button, so Enter works and password managers recognise it — the two things a div-and-onClick version breaks.',
+    exports: ['LoginPanel'], storybook: 'composites-pages--login',
+  },
+  {
+    name: 'ErrorPage', slug: 'error-page', category: 'Pages', layer: 'app',
+    summary: 'A full-page failure state.',
+    guidance: 'Say what happened in words, not just a number, and give at least one way out. `detail` carries the request id worth pasting into an issue.',
+    exports: ['ErrorPage'], storybook: 'composites-pages--server-error',
   },
 ];
 

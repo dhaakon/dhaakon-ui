@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { CATEGORIES, COMPONENTS, STORYBOOK_URL } from '../lib/registry';
+import { CATEGORIES, COMPONENTS, LAYERS, STORYBOOK_URL, byLayer } from '../lib/registry';
 
 const THEME_KEY = 'dhaakon-ui-docs-theme';
 
@@ -52,22 +52,31 @@ export function Layout() {
           <NavLink to="/foundations" className={({ isActive }) => (isActive ? 'is-active' : '')}>Foundations</NavLink>
           <NavLink to="/components" end className={({ isActive }) => (isActive ? 'is-active' : '')}>All components</NavLink>
 
-          {CATEGORIES.map((cat) => {
-            const items = COMPONENTS.filter((c) => c.category === cat);
-            if (!items.length) return null;
+          {LAYERS.map((layer) => {
+            const inLayer = byLayer(layer.id);
+            if (!inLayer.length) return null;
             return (
-              <div key={cat}>
-                <div className="doc-side__group">{cat}</div>
-                {items.map((c) => (
-                  <NavLink
-                    key={c.slug}
-                    to={`/components/${c.slug}`}
-                    className={({ isActive }) => (isActive ? 'is-active' : '')}
-                  >
-                    {c.name}
-                    {c.aria && <span className="doc-side__aria" title="Built on React Aria">aria</span>}
-                  </NavLink>
-                ))}
+              <div key={layer.id}>
+                <div className="doc-side__layer">{layer.label}</div>
+                {CATEGORIES.map((cat) => {
+                  const items = inLayer.filter((c) => c.category === cat);
+                  if (!items.length) return null;
+                  return (
+                    <div key={cat}>
+                      <div className="doc-side__group">{cat}</div>
+                      {items.map((c) => (
+                        <NavLink
+                          key={c.slug}
+                          to={`/components/${c.slug}`}
+                          className={({ isActive }) => (isActive ? 'is-active' : '')}
+                        >
+                          {c.name}
+                          {c.aria && <span className="doc-side__aria" title="Built on React Aria">aria</span>}
+                        </NavLink>
+                      ))}
+                    </div>
+                  );
+                })}
               </div>
             );
           })}
