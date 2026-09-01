@@ -194,8 +194,8 @@
   font-size: var(--dhk-text-sm);
 }
 .dhk-numitem__signal {
-  display: inline-block;
-  margin-bottom: var(--dhk-space-3);
+  display: block;
+  margin-bottom: var(--dhk-space-2);
   font-family: var(--dhk-font-condensed);
   font-size: var(--dhk-text-2xs);
   letter-spacing: var(--dhk-tracking-label-wide);
