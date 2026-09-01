@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+import { LogoMark } from '@dhaakon/ui';
 import { CATEGORIES, COMPONENTS, LAYERS, STORYBOOK_URL, byLayer } from '../lib/registry';
 
 const THEME_KEY = 'dhaakon-ui-docs-theme';
@@ -26,7 +27,7 @@ export function Layout() {
     <>
       <header className="doc-top">
         <NavLink to="/" className="doc-top__brand">
-          <span>◆</span> Dhaakon UI
+          <LogoMark size={20} /> Dhaakon UI
         </NavLink>
         <span className="doc-top__ver">v{__KIT_VERSION__}</span>
         <nav className="doc-top__links">

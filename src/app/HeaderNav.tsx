@@ -1,5 +1,6 @@
 import { type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '../lib/cn';
+import { LogoMark } from '../components/Logo/Logo';
 
 export interface HeaderNavLink {
   label: ReactNode;
@@ -9,7 +10,10 @@ export interface HeaderNavLink {
 
 export interface HeaderNavProps extends HTMLAttributes<HTMLElement> {
   brand: ReactNode;
-  /** Small mark before the brand — a glyph or logo. */
+  /**
+   * Mark before the brand. Defaults to the dhaakon monogram; pass `null` to
+   * drop it, or your own element to replace it.
+   */
   mark?: ReactNode;
   links?: HeaderNavLink[];
   /** Right-hand slot: search, notifications, an avatar menu. */
@@ -22,7 +26,14 @@ export interface HeaderNavProps extends HTMLAttributes<HTMLElement> {
  * `aria-current="page"` marks the active link, so it is announced as the
  * current location rather than merely looking different.
  */
-export function HeaderNav({ brand, mark, links = [], end, className, ...rest }: HeaderNavProps) {
+export function HeaderNav({
+  brand,
+  mark = <LogoMark size={20} />,
+  links = [],
+  end,
+  className,
+  ...rest
+}: HeaderNavProps) {
   return (
     <header className={cn('dhk-headernav', className)} {...rest}>
       <span className="dhk-headernav__brand">

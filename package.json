@@ -1,6 +1,6 @@
 {
   "name": "@dhaakon/ui",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Dhaakon UI — the design system and React component library for the dhaakon-network. Built from dhaakon.com and IBM Plex.",
   "type": "module",
   "license": "MIT",

@@ -21,7 +21,7 @@ export const Login: Story = {
   render: () => (
     <LoginPanel
       brand="Dhaakon"
-      mark="◆"
+     
       title="Sign in"
       description="Use your dhaakon-network account."
       submit={<Button type="submit" block>Sign in</Button>}
@@ -43,7 +43,7 @@ export const LoginWithError: Story = {
   render: () => (
     <LoginPanel
       brand="Dhaakon"
-      mark="◆"
+     
       error={<Alert tone="danger" title="Sign-in failed">That email and password do not match.</Alert>}
       submit={<Button type="submit" block>Sign in</Button>}
     >

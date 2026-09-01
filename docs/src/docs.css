@@ -47,8 +47,8 @@ body {
   color: var(--dhk-text);
   text-decoration: none;
 }
-.doc-top__brand span {
-  color: var(--dhk-accent);
+.doc-top__brand {
+  gap: var(--dhk-space-2);
 }
 .doc-top__ver {
   font-family: var(--dhk-font-mono);

@@ -5,7 +5,7 @@ export default function Demo() {
   return (
     <div style={{ border: '1px solid var(--dhk-border)', height: 420, overflow: 'auto' }}>
       <AppShell
-        header={<HeaderNav brand="Dhaakon" mark="◆" links={[{ label: 'Console', href: '#', current: true }, { label: 'Teams', href: '#' }]} />}
+        header={<HeaderNav brand="Dhaakon" links={[{ label: 'Console', href: '#', current: true }, { label: 'Teams', href: '#' }]} />}
         sidebar={
           <SidebarNav
             groups={[

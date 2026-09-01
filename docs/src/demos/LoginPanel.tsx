@@ -6,7 +6,7 @@ export default function Demo() {
     <div style={{ border: '1px solid var(--dhk-border)' }}>
       <LoginPanel
         brand="Dhaakon"
-        mark="◆"
+       
         title="Sign in"
         description="Use your dhaakon-network account."
         submit={<Button type="submit" block>Sign in</Button>}

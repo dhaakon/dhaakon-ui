@@ -12,6 +12,7 @@
  */
 
 export { DhaakonProvider, type DhaakonProviderProps } from './components/Provider/DhaakonProvider';
+export { Logo, LogoMark, type LogoProps, type LogoMarkProps, type LogoVariant } from './components/Logo/Logo';
 
 /* ---- actions ---------------------------------------------------- */
 export { Button, type ButtonProps, type ButtonVariant, type ButtonSize } from './components/Button/Button';

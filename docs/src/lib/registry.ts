@@ -72,6 +72,16 @@ export const COMPONENTS: ComponentDoc[] = [
     storybook: 'components-button--variants',
   },
   {
+    name: 'Logo',
+    slug: 'logo',
+    category: 'Shell',
+    summary: 'The dhaakon monogram, as a mark or a full lockup.',
+    guidance:
+      "Colours come from tokens rather than the source SVG's literals, so the square inverts in dark mode instead of vanishing into the ground; the dot stays accent in both. `variant=\"outline\"` drops the square and inherits `currentColor` for coloured or inverted chrome. `HeaderNav` and `LoginPanel` already use it — you only need this directly for footers, splash screens and print.",
+    exports: ['Logo', 'LogoMark'],
+    storybook: 'components-logo--lockup',
+  },
+  {
     name: 'Menu',
     slug: 'menu',
     category: 'Actions',

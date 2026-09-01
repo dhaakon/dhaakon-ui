@@ -36,7 +36,7 @@ const GROUPS = [
 const header = (
   <HeaderNav
     brand="Dhaakon"
-    mark="◆"
+   
     links={[
       { label: 'Console', href: '#', current: true },
       { label: 'Teams', href: '#' },

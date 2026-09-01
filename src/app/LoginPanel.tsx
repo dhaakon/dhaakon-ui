@@ -1,5 +1,6 @@
 import { type FormEvent, type ReactNode } from 'react';
 import { cn } from '../lib/cn';
+import { LogoMark } from '../components/Logo/Logo';
 
 export interface LoginPanelProps {
   brand?: ReactNode;
@@ -30,7 +31,7 @@ export interface LoginPanelProps {
  */
 export function LoginPanel({
   brand,
-  mark,
+  mark = <LogoMark size={20} />,
   title = 'Sign in',
   description,
   children,
@@ -46,7 +47,7 @@ export function LoginPanel({
     <div className={cn('dhk-authpanel', className)}>
       {brand != null && (
         <div className="dhk-authpanel__brand">
-          {mark != null && <span style={{ color: 'var(--dhk-accent)' }} aria-hidden>{mark}</span>}
+          {mark}
           {brand}
         </div>
       )}

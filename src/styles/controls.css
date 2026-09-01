@@ -44,6 +44,34 @@
 }
 
 /* ================================================================
+ * Logo
+ * ============================================================== */
+
+.dhk-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  color: var(--dhk-text);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.dhk-logo__word {
+  font-family: var(--dhk-font-condensed);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: 0.82em;
+  letter-spacing: var(--dhk-tracking-label);
+  text-transform: uppercase;
+  line-height: 1;
+}
+.dhk-logomark {
+  flex-shrink: 0;
+  display: block;
+}
+a.dhk-logo:hover .dhk-logo__word {
+  color: var(--dhk-accent);
+}
+
+/* ================================================================
  * Shared field furniture
  * ============================================================== */
 

@@ -111,8 +111,13 @@ tokens.motion.ease;    // 'cubic-bezier(0.16, 1, 0.3, 1)'
 
 ## Components
 
-39 components. Those marked **aria** are built on React Aria; the rest are
+40 components. Those marked **aria** are built on React Aria; the rest are
 plain React where no interaction pattern needed rescuing.
+
+### Brand
+| Component | Notes |
+|---|---|
+| `Logo` / `LogoMark` | the dhaakon.com monogram; token-coloured so the square inverts in dark, `outline` variant inherits `currentColor`. `HeaderNav` and `LoginPanel` use it by default |
 
 ### Actions
 | Component | Notes |
