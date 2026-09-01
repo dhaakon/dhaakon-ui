@@ -5,6 +5,7 @@
  */
 
 export const color = {
+  // raw palette
   paper: '#f0eee8',
   paperBright: '#faf9f5',
   ink: '#101010',
@@ -18,6 +19,14 @@ export const color = {
   acid: '#d9ff43',
   lineOnLight: 'rgba(16, 16, 16, 0.2)',
   lineOnDark: 'rgba(240, 238, 232, 0.22)',
+  // semantic aliases (light theme; the CSS custom properties swap for dark)
+  accent: '#ff5a1f',
+  accentHover: '#e6480f',
+  focus: '#2d62ff',
+  info: '#2d62ff',
+  success: '#1f7a4d',
+  warning: '#a5620a',
+  danger: '#c22b1c',
 } as const;
 
 export const font = {
