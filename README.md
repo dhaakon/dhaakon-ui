@@ -36,6 +36,7 @@ npm run storybook     # http://localhost:6006
 | `npm run build-storybook` | static Storybook → `storybook-static/` |
 | `npm run typecheck` | `tsc --noEmit` |
 | `cd docs && npm run dev` | docs site dev server (:5174) — reads the kit from `../src`, so it always shows the working tree |
+| `cd docs && npm run check:routes` | render **every** docs route in headless Chrome and fail on any demo that throws |
 
 Both are served in the network stack (`dhaakon-ui` and `dhaakon-ui-docs` in
 `dhaakon-network/docker-compose.yml`). Rebuild after a change:
@@ -52,6 +53,19 @@ docker compose -f $COMPOSE up -d dhaakon-ui
 docker build -f Dockerfile.docs -t dhaakon/dhaakon-ui-docs:latest \
   --build-arg VITE_STORYBOOK_URL=http://dhaakon-ubuntu:21762 .
 docker compose -f $COMPOSE up -d dhaakon-ui-docs
+```
+
+### Before publishing the docs
+
+`check:routes` walks all ~79 routes and fails if a demo throws or a page comes
+up empty. The gallery renders a live example per page, so a broken one only
+surfaces when that page is opened — screenshotting a handful proves nothing.
+Each demo is also wrapped in an error boundary, so a failure degrades to a
+visible message on that card instead of blanking the site.
+
+```sh
+cd docs && npm run build && npx http-server dist -p 6098 -s &
+npm run check:routes
 ```
 
 ## Consume

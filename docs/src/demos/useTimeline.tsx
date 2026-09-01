@@ -14,11 +14,16 @@ export default function Demo() {
 
   // Built once, cancelled on unmount — the bookkeeping that otherwise leaks
   // running tweens on every rerender.
+  //
+  // Positions are absolute ms, a label, `label+=N`, `<` (previous start) or
+  // `>` (previous end). `<` and `>` stand alone: there is no `<+=N`, so a
+  // cascade is expressed off a label.
   const timeline = useTimeline(
     () => new Timeline({ autoplay: false })
-      .add(grow(bars[0], 82))
-      .add(grow(bars[1], 54), '<+=120')
-      .add(grow(bars[2], 31), '<+=120'),
+      .label('start')
+      .add(grow(bars[0], 82), 'start')
+      .add(grow(bars[1], 54), 'start+=120')
+      .add(grow(bars[2], 31), 'start+=240'),
     [],
   );
 

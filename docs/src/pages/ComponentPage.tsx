@@ -41,7 +41,7 @@ export function ComponentPage() {
       {doc.guidance && <Prose className="doc-note">{doc.guidance}</Prose>}
 
       <h2 className="doc-h2">Example</h2>
-      <Demo component={getDemo(doc)} source={getDemoSource(doc)} />
+      <Demo component={getDemo(doc)} source={getDemoSource(doc)} name={doc.name} />
 
       <h2 className="doc-h2">Import</h2>
       <CodeBlock standalone code={`import { ${doc.exports.join(', ')} } from '${entryFor(doc)}';`} />
