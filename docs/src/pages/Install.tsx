@@ -14,18 +14,22 @@ export function Install() {
       <h2 className="doc-h2">1 · Point the scope at the registry</h2>
       <p className="doc-p">
         Add an <code className="doc-inline">.npmrc</code> beside your{' '}
-        <code className="doc-inline">package.json</code>. Use the docker0 gateway address rather than{' '}
-        <code className="doc-inline">localhost</code> if the project is built inside a container —
-        <code className="doc-inline">localhost</code> there is the container, not the host.
+        <code className="doc-inline">package.json</code>. Which host to use depends on where{' '}
+        <code className="doc-inline">npm install</code> actually runs.
       </p>
       <CodeBlock
         standalone
-        code={`# .npmrc — on the host
-@dhaakon:registry=http://localhost:21760/
+        code={`# On dhaakon-ubuntu, or from any machine on the tailnet
+@dhaakon:registry=http://dhaakon-ubuntu:21760/
 
-# .npmrc — building inside Docker
+# Building inside a container — Docker's DNS does not know the host's
+# name, so address it by the docker0 gateway instead
 @dhaakon:registry=http://172.17.0.1:21760/`}
       />
+      <Alert tone="warning" title="Not localhost">
+        Inside a container <code className="doc-inline">localhost</code> is the container itself, and
+        from another machine it is that machine — neither reaches the registry.
+      </Alert>
       <Alert tone="info" title="Reading is anonymous">
         The <code className="doc-inline">@dhaakon/*</code> scope is readable without a token.
         Publishing needs a registry login.
@@ -108,7 +112,7 @@ import                         '@dhaakon/ui/theme.css';`}
         standalone
         code={`npm version patch --no-git-tag-version
 npm run build
-npm publish            # → http://localhost:21760/`}
+npm publish            # → http://dhaakon-ubuntu:21760/`}
       />
       <p className="doc-p">
         Storybook is the workshop for building components; it lives at{' '}

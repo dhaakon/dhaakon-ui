@@ -16,8 +16,8 @@ Two places to look:
 
 | | |
 |---|---|
-| **Docs site** — guide, foundations, component gallery with live previews | http://localhost:21763 |
-| **Storybook** — the workshop: controls, generated prop tables, a11y checks | http://localhost:21762 |
+| **Docs site** — guide, foundations, component gallery with live previews | http://dhaakon-ubuntu:21763 |
+| **Storybook** — the workshop: controls, generated prop tables, a11y checks | http://dhaakon-ubuntu:21762 |
 
 ---
 
@@ -49,7 +49,7 @@ docker compose -f $COMPOSE up -d dhaakon-ui
 
 # Docs site → :21763
 docker build -f Dockerfile.docs -t dhaakon/dhaakon-ui-docs:latest \
-  --build-arg VITE_STORYBOOK_URL=http://localhost:21762 .
+  --build-arg VITE_STORYBOOK_URL=http://dhaakon-ubuntu:21762 .
 docker compose -f $COMPOSE up -d dhaakon-ui-docs
 ```
 
@@ -246,7 +246,7 @@ Dark theme: set `data-theme="dark"` on `<html>` or add `.dhk-dark` to a subtree
 
 ```sh
 npm run build
-npm publish            # → http://localhost:21760/ (Verdaccio)
+npm publish            # → http://dhaakon-ubuntu:21760/ (Verdaccio)
 ```
 
 Bump the version, tag, and push. Consumers pick it up on their next `npm install`.

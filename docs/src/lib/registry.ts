@@ -333,4 +333,4 @@ export function findComponent(slug: string): ComponentDoc | undefined {
 }
 
 export const STORYBOOK_URL =
-  (import.meta.env.VITE_STORYBOOK_URL as string | undefined) ?? 'http://localhost:21762';
+  (import.meta.env.VITE_STORYBOOK_URL as string | undefined) ?? 'http://dhaakon-ubuntu:21762';

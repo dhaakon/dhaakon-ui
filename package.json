@@ -31,7 +31,7 @@
     "./fonts/*": "./dist/fonts/*"
   },
   "publishConfig": {
-    "registry": "http://localhost:21760/"
+    "registry": "http://dhaakon-ubuntu:21760/"
   },
   "scripts": {
     "dev": "storybook dev -p 6006",
