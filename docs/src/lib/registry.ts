@@ -17,9 +17,12 @@ export interface ComponentDoc {
   aria?: boolean;
   /**
    * Which entry point it ships from. `core` is `@dhaakon/ui` (primitives);
-   * `app` is `@dhaakon/ui/app` (composites assembled from them).
+   * `app` is `@dhaakon/ui/app` (composites assembled from them); `motion` is
+   * the companion `@dhaakon/motion` package.
    */
-  layer?: 'core' | 'app';
+  layer?: 'core' | 'app' | 'motion';
+  /** Overrides the layer's default entry — e.g. `@dhaakon/motion/react`. */
+  entry?: string;
   /** File in ../demos, without extension. Defaults to `name`. */
   demo?: string;
 }
@@ -32,7 +35,9 @@ export type Category =
   | 'Navigation'
   | 'Data'
   | 'Shell'
-  | 'Pages';
+  | 'Pages'
+  | 'Animation'
+  | 'Hooks';
 
 export const CATEGORIES: Category[] = [
   'Actions',
@@ -43,18 +48,28 @@ export const CATEGORIES: Category[] = [
   'Navigation',
   'Shell',
   'Pages',
+  'Animation',
+  'Hooks',
 ];
 
 export const LAYERS = [
   { id: 'core', label: 'Components', entry: '@dhaakon/ui', blurb: 'Primitives — the pieces screens are built from.' },
   { id: 'app', label: 'Composites', entry: '@dhaakon/ui/app', blurb: 'Assemblies — shells, headers, metric bands, feeds, whole pages.' },
+  { id: 'motion', label: 'Motion', entry: '@dhaakon/motion', blurb: 'The companion animation package: tweens, timelines and React bindings.' },
 ] as const;
 
 export type Layer = (typeof LAYERS)[number]['id'];
 
 export function entryFor(doc: ComponentDoc): string {
-  return doc.layer === 'app' ? '@dhaakon/ui/app' : '@dhaakon/ui';
+  if (doc.entry) return doc.entry;
+  if (doc.layer === 'app') return '@dhaakon/ui/app';
+  if (doc.layer === 'motion') return '@dhaakon/motion';
+  return '@dhaakon/ui';
 }
+
+/** Where a layer's own documentation lives, when it has a site of its own. */
+export const MOTION_DOCS_URL =
+  (import.meta.env.VITE_MOTION_DOCS_URL as string | undefined) ?? 'http://dhaakon-ubuntu:21764';
 
 export function byLayer(layer: Layer): ComponentDoc[] {
   return COMPONENTS.filter((c) => (c.layer ?? 'core') === layer);
@@ -618,6 +633,101 @@ export const COMPONENTS: ComponentDoc[] = [
     summary: 'A full-page failure state.',
     guidance: 'Say what happened in words, not just a number, and give at least one way out. `detail` carries the request id worth pasting into an issue.',
     exports: ['ErrorPage'], storybook: 'composites-pages--server-error',
+  },
+  /* ---- motion: @dhaakon/motion ------------------------------------ */
+  {
+    name: 'Tween', slug: 'tween', category: 'Animation', layer: 'motion',
+    summary: 'Interpolate any shape over time, with full transport control.',
+    guidance:
+      'Handles numbers, CSS unit strings, colours, arrays and nested objects. Every active tween shares one `FrameScheduler`, so a composition of twenty elements requests one animation frame, not twenty. Supports delay, repeat, yoyo, `seek()`, `reverse()` and an awaitable `finished`.',
+    exports: ['Tween', 'animate'],
+  },
+  {
+    name: 'Timeline', slug: 'timeline', category: 'Animation', layer: 'motion',
+    summary: 'Sequence and overlap tweens against one clock.',
+    guidance:
+      'Positions can be absolute milliseconds, a label, a relative offset like `entrance+=80`, `<` to align with the previous start, or `>` to follow the previous end. Sampling children from the timeline\'s own clock is what makes pause, seek and reverse deterministic across overlaps.',
+    exports: ['Timeline'],
+  },
+  {
+    name: 'Easing', slug: 'easing', category: 'Animation', layer: 'motion',
+    summary: 'The curve library, plus `cubicBezier` and `spring`.',
+    guidance:
+      '`Easing.dhaakon` is the system curve — the same `cubic-bezier(0.16, 1, 0.3, 1)` that `--dhk-ease` carries in the UI kit, so JS-driven motion and CSS transitions agree. `spring({ stiffness, damping, mass })` returns a sampled curve, not a physics loop, so it still has a fixed duration.',
+    exports: ['Easing', 'cubicBezier', 'spring'],
+  },
+  {
+    name: 'stagger', slug: 'stagger', category: 'Animation', layer: 'motion',
+    summary: 'Per-index delays for a group entering together.',
+    guidance:
+      'Returns an index→delay function. Keep the interval short — 40–80ms reads as one gesture, while 200ms reads as a queue and makes a list feel slow to arrive.',
+    exports: ['stagger'],
+  },
+  {
+    name: 'MotionValue', slug: 'motion-value', category: 'Animation', layer: 'motion',
+    summary: 'An observable value that drives animation without React state.',
+    guidance:
+      'Subscribe to it and write to the DOM directly. This is how `motion.*` animates at 60fps without rerendering the tree every frame.',
+    exports: ['MotionValue'],
+  },
+  {
+    name: 'motion', slug: 'motion-components', category: 'Hooks', layer: 'motion',
+    entry: '@dhaakon/motion/react',
+    // `motion` and `Motion` differ only in case; on a case-insensitive
+    // filesystem they would be the same demo file.
+    demo: 'MotionElements',
+    summary: 'Animated DOM elements — `motion.div`, `motion.section`, any tag.',
+    guidance:
+      'Animates the element directly rather than rerendering React each frame. `initial` / `animate` for mount transitions, `whileInView` + `viewport` for scroll entrances.',
+    exports: ['motion', 'createMotionComponent'],
+  },
+  {
+    name: 'Reveal', slug: 'reveal', category: 'Hooks', layer: 'motion',
+    entry: '@dhaakon/motion/react',
+    summary: 'Animate an element when it crosses the viewport.',
+    guidance:
+      'Observers disconnect after the first entrance unless `once={false}`, and resolve immediately when the reader has asked for reduced motion — so content is never trapped behind an animation that will not run.',
+    exports: ['Reveal'],
+  },
+  {
+    name: 'useInView', slug: 'use-in-view', category: 'Hooks', layer: 'motion',
+    entry: '@dhaakon/motion/react',
+    summary: 'IntersectionObserver state for custom reveals.',
+    guidance:
+      'The escape hatch under `Reveal`: use it when the entrance drives something other than a style — a counter, a chart, a lazy fetch.',
+    exports: ['useInView'],
+  },
+  {
+    name: 'useTween', slug: 'use-tween', category: 'Hooks', layer: 'motion',
+    entry: '@dhaakon/motion/react',
+    summary: 'Animated state plus transport controls.',
+    guidance:
+      'Unlike `motion.*` this does rerender per frame, so reach for it when the value feeds React — a formatted number, a chart series — rather than a style.',
+    exports: ['useTween', 'useMotionValue', 'useMotionValueState'],
+  },
+  {
+    name: 'Motion', slug: 'motion-render-prop', category: 'Hooks', layer: 'motion',
+    entry: '@dhaakon/motion/react',
+    summary: 'Render-prop animation for SVG, canvas and component props.',
+    guidance:
+      'For anything that is not a DOM style — an SVG `d` attribute, a canvas draw call, a prop on someone else\'s component.',
+    exports: ['Motion'],
+  },
+  {
+    name: 'MotionConfig', slug: 'motion-config', category: 'Hooks', layer: 'motion',
+    entry: '@dhaakon/motion/react',
+    summary: 'Shared transitions and the reduced-motion policy.',
+    guidance:
+      'Set the house transition once at the root. `reducedMotion="user"` (the default) honours the OS setting; `"always"` is useful for testing that a composition still reads with motion off.',
+    exports: ['MotionConfig', 'useReducedMotion'],
+  },
+  {
+    name: 'useTimeline', slug: 'use-timeline', category: 'Hooks', layer: 'motion',
+    entry: '@dhaakon/motion/react',
+    summary: 'Lifecycle-safe timeline composition in React.',
+    guidance:
+      'Builds the timeline once per dependency change and cancels it on unmount — the bookkeeping that otherwise leaks running tweens on every rerender.',
+    exports: ['useTimeline'],
   },
 ];
 

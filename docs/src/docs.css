@@ -101,6 +101,22 @@ body {
   text-transform: uppercase;
   color: var(--dhk-accent);
 }
+.doc-side__layer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.doc-side__out {
+  font-family: var(--dhk-font-mono);
+  font-size: 0.6rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--dhk-text-subtle);
+  text-decoration: none;
+}
+.doc-side__out:hover {
+  color: var(--dhk-accent);
+}
 .doc-side__group {
   padding: var(--dhk-space-4) var(--dhk-space-5) var(--dhk-space-2);
   font-family: var(--dhk-font-condensed);

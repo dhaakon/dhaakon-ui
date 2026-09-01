@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { LogoMark } from '@dhaakon/ui';
-import { CATEGORIES, COMPONENTS, LAYERS, STORYBOOK_URL, byLayer } from '../lib/registry';
+import { CATEGORIES, COMPONENTS, LAYERS, MOTION_DOCS_URL, STORYBOOK_URL, byLayer } from '../lib/registry';
 
 const THEME_KEY = 'dhaakon-ui-docs-theme';
 
@@ -34,6 +34,7 @@ export function Layout() {
           <NavLink to="/install">Install</NavLink>
           <NavLink to="/foundations">Foundations</NavLink>
           <NavLink to="/components">Components</NavLink>
+          <NavLink to="/showcase">Motion</NavLink>
           <a href={STORYBOOK_URL} target="_blank" rel="noreferrer">Storybook ↗</a>
           <button
             type="button"
@@ -52,13 +53,21 @@ export function Layout() {
           <NavLink to="/install" className={({ isActive }) => (isActive ? 'is-active' : '')}>Install</NavLink>
           <NavLink to="/foundations" className={({ isActive }) => (isActive ? 'is-active' : '')}>Foundations</NavLink>
           <NavLink to="/components" end className={({ isActive }) => (isActive ? 'is-active' : '')}>All components</NavLink>
+          <NavLink to="/showcase" className={({ isActive }) => (isActive ? 'is-active' : '')}>Compositions in motion</NavLink>
 
           {LAYERS.map((layer) => {
             const inLayer = byLayer(layer.id);
             if (!inLayer.length) return null;
             return (
               <div key={layer.id}>
-                <div className="doc-side__layer">{layer.label}</div>
+                <div className="doc-side__layer">
+                  {layer.label}
+                  {layer.id === 'motion' && (
+                    <a href={MOTION_DOCS_URL} target="_blank" rel="noreferrer" className="doc-side__out">
+                      docs ↗
+                    </a>
+                  )}
+                </div>
                 {CATEGORIES.map((cat) => {
                   const items = inLayer.filter((c) => c.category === cat);
                   if (!items.length) return null;

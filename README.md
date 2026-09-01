@@ -18,6 +18,7 @@ Two places to look:
 |---|---|
 | **Docs site** — guide, foundations, component gallery with live previews | http://dhaakon-ubuntu:21763 |
 | **Storybook** — the workshop: controls, generated prop tables, a11y checks | http://dhaakon-ubuntu:21762 |
+| **@dhaakon/motion** — the companion animation package, documented in the gallery | http://dhaakon-ubuntu:21764 |
 
 ---
 
@@ -252,6 +253,28 @@ tokens and the same React Aria behaviour.
 | `InlineCTA` | promotes the next step — not an `Alert` |
 | `LoginPanel` | a real `<form>`, so Enter and password managers work |
 | `ErrorPage` | full-page failure with a way out and a copyable request id |
+
+## Motion — `@dhaakon/motion`
+
+A separate package, not a dependency of this one: the kit's own transitions are
+plain CSS. It is documented alongside the components in the docs gallery
+(**Motion** in the sidebar) because the two are used together, and because
+`Easing.dhaakon` is the same `cubic-bezier(0.16, 1, 0.3, 1)` that `--dhk-ease`
+carries here — JS-driven motion and CSS transitions agree by construction.
+
+`Compositions in motion` in the docs assembles the composites into one animated
+screen, using each technique where it fits:
+
+| Technique | For |
+|---|---|
+| `motion.*` | entrances — writes to the DOM without rerendering React |
+| `useTween` | values that *are* content, like a counting metric |
+| `stagger` | a group arriving as one gesture (40–80ms reads best) |
+| `Reveal` | anything below the fold |
+| `MotionConfig` | one house transition, and the reduced-motion policy |
+
+Everything resolves immediately under `prefers-reduced-motion`, so content is
+never trapped behind an animation that will not run.
 
 ## Site patterns — `@dhaakon/ui/site`
 

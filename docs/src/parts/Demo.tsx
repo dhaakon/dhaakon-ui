@@ -1,4 +1,5 @@
 import { useState, type ComponentType } from 'react';
+import { Reveal } from '@dhaakon/motion/react';
 import { CodeBlock, CopyButton } from './CodeBlock';
 
 export function Demo({ component: C, source }: { component: ComponentType | null; source: string | null }) {
@@ -7,9 +8,11 @@ export function Demo({ component: C, source }: { component: ComponentType | null
 
   return (
     <div className="doc-demo">
-      <div className="doc-demo__stage">
+      {/* Reveal resolves immediately under reduced motion, so the demo is
+          never trapped behind an animation that will not run. */}
+      <Reveal className="doc-demo__stage" amount={0.15} margin="0px 0px -6% 0px">
         <C />
-      </div>
+      </Reveal>
       {source && (
         <>
           <div className="doc-demo__bar">

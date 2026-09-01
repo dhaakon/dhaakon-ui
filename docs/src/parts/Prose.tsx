@@ -4,7 +4,16 @@ import { type ReactNode } from 'react';
  * Renders `backtick` spans in registry copy as inline code. The guidance
  * strings are authored as plain text, so nothing else is interpreted.
  */
-export function Prose({ children, className }: { children: string; className?: string }) {
+export function Prose({
+  children,
+  className,
+  as: Tag = 'p',
+}: {
+  children: string;
+  className?: string;
+  /** `<p>` by default; use `span` inside a link or another paragraph. */
+  as?: 'p' | 'span';
+}) {
   const out: ReactNode[] = [];
   const parts = children.split(/`([^`]+)`/g);
 
@@ -20,5 +29,5 @@ export function Prose({ children, className }: { children: string; className?: s
     );
   });
 
-  return <p className={className}>{out}</p>;
+  return <Tag className={className}>{out}</Tag>;
 }

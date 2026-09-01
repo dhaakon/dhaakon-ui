@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Badge } from '@dhaakon/ui';
 import { CATEGORIES, COMPONENTS, LAYERS, byLayer } from '../lib/registry';
+import { Prose } from '../parts/Prose';
 
 export function ComponentIndex() {
   return (
@@ -31,7 +32,7 @@ export function ComponentIndex() {
                     {items.map((c) => (
                       <Link key={c.slug} to={`/components/${c.slug}`}>
                         <span className="doc-grid__name">{c.name}</span>
-                        <span className="doc-grid__sum">{c.summary}</span>
+                        <Prose as="span" className="doc-grid__sum">{c.summary}</Prose>
                         <span style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginTop: 'auto' }}>
                           {c.aria && <Badge tone="accent">aria</Badge>}
                           <Badge>{c.exports.length} export{c.exports.length > 1 ? 's' : ''}</Badge>
