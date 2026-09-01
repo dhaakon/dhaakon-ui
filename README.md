@@ -70,8 +70,9 @@ omit it to follow `data-theme` on `<html>` or the OS setting.
 
 | Import | Contents |
 |---|---|
-| `@dhaakon/ui` | React components + `cn` + `tokens` |
-| `@dhaakon/ui/styles.css` | tokens, `@font-face` (IBM Plex), component CSS — **required** |
+| `@dhaakon/ui` | app components + `cn` + `tokens` |
+| `@dhaakon/ui/site` | the editorial page patterns from dhaakon.com (see below) |
+| `@dhaakon/ui/styles.css` | tokens, `@font-face` (IBM Plex), all component CSS — **required**, one import |
 | `@dhaakon/ui/theme.css` | optional Tailwind v4 `@theme` (`bg-paper`, `text-ink`, `font-mono`, …) |
 | `@dhaakon/ui/tokens` | tokens as data, no React |
 
@@ -107,6 +108,28 @@ Foundations — colour, typography, spacing, motion — plus:
 
 Every component ships a story with an autodocs page and an a11y check
 (`@storybook/addon-a11y`).
+
+## Site patterns — `@dhaakon/ui/site`
+
+The recurring editorial blocks from **dhaakon.com**, rebuilt as components.
+`Site/Landing Page` in Storybook recomposes the whole homepage from them.
+
+| Component | dhaakon.com pattern |
+|---|---|
+| `StatusBar` | `Listening · Brooklyn, NY · Remote / N. America` top strip |
+| `Marker` | the glyph vocabulary — `↗ ↘ ↔ ◎ + − ↳ ≠` |
+| `SectionMarker` / `SectionIntro` | `[ 01 ] The approach ↘` → statement → serif subtitle → lead |
+| `DisplayHeading` | oversized Plex line with scattered, staggered mono annotations |
+| `NumberedList` / `NumberedItem` | the collapsible `01 … Adoption ≠ impact −` failure-signal list |
+| `LogoMarquee` | the infinite client wall (pauses on hover) |
+| `ProgramCard` | `02 / 04 · 8–16 weeks` header, `↳` points, "You get" payoff |
+| `OfferCard` | `[ 01 ] Diagnostic & Keynote`, `+` list, CTA |
+| `ProcessStep` | `01 Listen … Output — workflow map` transfer sequence |
+| `Segmented` | numbered pill switcher + `01 / 03` counter |
+| `CapabilityIndex` | `08 capabilities` numbered grid |
+| `FieldNote` | `[Field note 02.1]` serif margin aside |
+| `CtaLink` | underlined uppercase "Let's engage and discuss details ↗" |
+| `SiteFooter` | email + nav + copyright |
 
 ## Design tokens
 

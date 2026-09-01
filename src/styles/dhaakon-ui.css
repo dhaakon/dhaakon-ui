@@ -9,6 +9,7 @@
  */
 
 @import './fonts.css';
+@import './site.css';
 
 :root {
   /* ---- palette (raw) ------------------------------------------------ */

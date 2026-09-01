@@ -20,6 +20,10 @@
     },
     "./styles.css": "./dist/dhaakon-ui.css",
     "./theme.css": "./dist/theme.css",
+    "./site": {
+      "types": "./dist/site.d.ts",
+      "import": "./dist/site.js"
+    },
     "./tokens": {
       "types": "./dist/tokens.d.ts",
       "import": "./dist/tokens.js"

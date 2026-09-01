@@ -17,6 +17,7 @@ export default defineConfig({
       entry: {
         index: resolve(__dirname, 'src/index.ts'),
         tokens: resolve(__dirname, 'src/tokens.ts'),
+        site: resolve(__dirname, 'src/site/index.ts'),
       },
       formats: ['es'],
     },
