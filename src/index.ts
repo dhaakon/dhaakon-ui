@@ -21,10 +21,13 @@ export {
   MenuItem,
   MenuGroup,
   MenuSeparator,
+  SubMenu,
   type MenuProps,
   type MenuItemProps,
   type MenuGroupProps,
+  type SubMenuProps,
 } from './components/Menu/Menu';
+export { Toolbar, ToolbarSeparator, type ToolbarProps } from './components/Toolbar/Toolbar';
 
 /* ---- forms ------------------------------------------------------ */
 export { Field, useField, type FieldProps } from './components/Field/Field';
@@ -36,6 +39,41 @@ export { Switch, type SwitchProps } from './components/Switch/Switch';
 export { Select, SelectItem, type SelectProps, type SelectItemProps } from './components/Select/Select';
 export { ComboBox, type ComboBoxProps } from './components/ComboBox/ComboBox';
 export { Slider, type SliderProps } from './components/Slider/Slider';
+export { NumberField, type NumberFieldProps } from './components/NumberField/NumberField';
+export { SearchField, type SearchFieldProps } from './components/SearchField/SearchField';
+export {
+  DateField,
+  TimeField,
+  Segments,
+  type DateFieldProps,
+  type TimeFieldProps,
+} from './components/DateField/DateField';
+export {
+  Calendar,
+  RangeCalendar,
+  type CalendarProps,
+  type RangeCalendarProps,
+} from './components/Calendar/Calendar';
+export {
+  DatePicker,
+  DateRangePicker,
+  type DatePickerProps,
+  type DateRangePickerProps,
+} from './components/DatePicker/DatePicker';
+export {
+  ColorPicker,
+  ColorField,
+  ColorSwatch,
+  type ColorPickerProps,
+  type ColorFieldProps,
+  type ColorSwatchProps,
+} from './components/ColorPicker/ColorPicker';
+export {
+  FileTrigger,
+  DropZone,
+  type FileTriggerProps,
+  type DropZoneProps,
+} from './components/FileInput/FileInput';
 
 /* ---- containment ------------------------------------------------ */
 export {
@@ -57,7 +95,29 @@ export {
 } from './components/Tabs/Tabs';
 export { Accordion, AccordionItem, type AccordionProps, type AccordionItemProps } from './components/Accordion/Accordion';
 export { Table, type TableProps, type Column } from './components/Table/Table';
+export {
+  DataTable,
+  DataTableHeader,
+  DataTableBody,
+  DataColumn,
+  DataRow,
+  DataCell,
+  SelectionColumn,
+  type DataTableProps,
+  type ColumnProps,
+  type RowProps,
+  type CellProps,
+} from './components/DataTable/DataTable';
+export {
+  GridList,
+  GridListItem,
+  GridListAction,
+  type GridListProps,
+  type GridListItemProps,
+} from './components/GridList/GridList';
 export { Dialog, type DialogProps } from './components/Dialog/Dialog';
+export { Modal, type ModalProps } from './components/Modal/Modal';
+export { Popover, type PopoverProps } from './components/Popover/Popover';
 
 /* ---- status & feedback ------------------------------------------ */
 export { Badge, type BadgeProps, type BadgeTone } from './components/Badge/Badge';
@@ -71,6 +131,7 @@ export {
   type ProgressTone,
 } from './components/Progress/Progress';
 export { Spinner, Skeleton, type SpinnerProps, type SkeletonProps } from './components/Spinner/Spinner';
+export { Meter, type MeterProps } from './components/Meter/Meter';
 export { EmptyState, type EmptyStateProps } from './components/EmptyState/EmptyState';
 export {
   ToastProvider,

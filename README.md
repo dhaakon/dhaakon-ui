@@ -110,7 +110,7 @@ tokens.motion.ease;    // 'cubic-bezier(0.16, 1, 0.3, 1)'
 
 ## Components
 
-26 components. Those marked **aria** are built on React Aria; the rest are
+39 components. Those marked **aria** are built on React Aria; the rest are
 plain React where no interaction pattern needed rescuing.
 
 ### Actions
@@ -118,7 +118,8 @@ plain React where no interaction pattern needed rescuing.
 |---|---|
 | `Button` | `primary` (ink → accent on hover) · `accent` · `outline` · `ghost` · `link`; `sm`/`md`/`lg`; icon slots |
 | `ButtonGroup` | joins buttons into one unit, collapsing the shared hairline |
-| `Menu` **aria** | `Menu` / `MenuItem` / `MenuGroup` / `MenuSeparator`; typeahead, arrow keys, focus restoration |
+| `Menu` **aria** | `Menu` / `MenuItem` / `MenuGroup` / `MenuSeparator` / `SubMenu`; typeahead, arrow keys, nested submenus |
+| `Toolbar` **aria** | a row of controls that is one tab stop; arrow keys move within it |
 
 ### Forms
 | Component | Notes |
@@ -130,6 +131,13 @@ plain React where no interaction pattern needed rescuing.
 | `Select` + `SelectItem` **aria** | popover listbox, typeahead, collision-aware placement |
 | `ComboBox` **aria** | filter-as-you-type; `allowsCustomValue`, `searchIcon`, empty state |
 | `Slider` **aria** | one thumb or two; `formatOptions` for percent/currency |
+| `NumberField` **aria** | steppers, clamping, locale-aware parsing and `Intl.NumberFormat` output |
+| `SearchField` **aria** | clear button, Escape-to-clear, correct search semantics |
+| `DateField` + `TimeField` **aria** | segmented entry; locale-ordered parts, arrow keys per segment |
+| `Calendar` + `RangeCalendar` **aria** | month grid; `isDateUnavailable` for per-day exclusions |
+| `DatePicker` + `DateRangePicker` **aria** | segmented input plus calendar popover — type it or pick it |
+| `ColorPicker` (+ `ColorField`, `ColorSwatch`) **aria** | saturation area, hue and alpha sliders, hex field |
+| `FileTrigger` + `DropZone` **aria** | real button driving the file dialog; keyboard-reachable drop target |
 
 ### Containment
 | Component | Notes |
@@ -138,11 +146,15 @@ plain React where no interaction pattern needed rescuing.
 | `Tabs` (`TabList` / `Tab` / `TabPanel`) | roving tabindex, arrow-key nav, controlled or uncontrolled |
 | `Accordion` + `AccordionItem` **aria** | single or `allowsMultipleExpanded`; real heading levels |
 | `Dialog` | native `<dialog>` — real focus trap, `Esc`, inert background |
+| `Modal` **aria** | trigger-driven overlay with entry/exit animation |
+| `Popover` **aria** | non-modal anchored panel; collision-aware placement |
 
 ### Data
 | Component | Notes |
 |---|---|
 | `Table` | `columns` + `data`, `numeric` columns, `dense`, `hoverable`, `empty` slot |
+| `DataTable` **aria** | sortable columns, selectable rows, cell-level keyboard navigation |
+| `GridList` **aria** | selectable list whose rows carry their own controls |
 | `Badge` | read-only status; `neutral`/`accent`/`info`/`success`/`warning`/`danger`, `solid`, `dot` |
 | `Tag` + `TagGroup` + `TagList` **aria** | selectable and removable chips; Backspace to remove |
 | `Avatar` + `AvatarGroup` | image with initials fallback, status dot, `+N` overflow |
@@ -154,6 +166,7 @@ plain React where no interaction pattern needed rescuing.
 | `Toast` (`ToastProvider` + `useToast`) | queued, tone-coded, auto-dismiss |
 | `Progress` + `ProgressRing` **aria** | determinate or indeterminate; ring for dashboard tiles |
 | `Spinner` + `Skeleton` | skeletons are `aria-hidden`; put `aria-busy` on the region |
+| `Meter` **aria** | a static measurement, not a task advancing — screen readers say so |
 | `EmptyState` | icon, copy and the way out |
 | `Tooltip` **aria** | warmup delay, touch suppression, `aria-describedby` |
 | `FeaturedIcon` | icon in a bordered frame; tones, `solid`, `circle` |
@@ -185,7 +198,9 @@ attributes, so appearance stays here:
 ```
 
 `react-aria-components` is a dependency and stays external in the build, so an
-app already using it shares one copy.
+app already using it shares one copy. Date components additionally use
+`@internationalized/date` for their value types — a `CalendarDate` is not a
+`Date`, precisely because a calendar date has no timezone.
 
 ## Docs site — `docs/`
 

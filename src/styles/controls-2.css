@@ -1,0 +1,677 @@
+/*
+ * Controls, part two — dates, numeric and search fields, colour, files,
+ * collections and overlays.
+ *
+ * Same contract as controls.css: React Aria owns behaviour and exposes state
+ * as `data-*` attributes; every rule here is appearance only.
+ */
+
+/* ================================================================
+ * Segmented date & time input
+ * ============================================================== */
+
+.dhk-dateinput {
+  display: flex;
+  align-items: center;
+  gap: 0.05em;
+  flex: 1;
+  padding: var(--dhk-space-2) var(--dhk-space-3);
+  min-height: var(--dhk-control-height-md);
+  font-family: var(--dhk-font-mono);
+  font-size: var(--dhk-text-sm);
+  white-space: nowrap;
+}
+.dhk-datefield {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dhk-space-2);
+}
+.dhk-datefield__box {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--dhk-border-strong);
+  border-radius: var(--dhk-radius);
+  background: var(--dhk-surface-raised);
+  transition: border-color var(--dhk-duration) var(--dhk-ease);
+}
+.dhk-datefield__box[data-hovered],
+.dhk-datefield__box[data-focus-within] {
+  border-color: var(--dhk-ink);
+}
+.dhk-datefield__box[data-focus-within] {
+  box-shadow: inset 0 -2px 0 var(--dhk-focus);
+}
+.dhk-datefield__box[data-invalid] {
+  border-color: var(--dhk-danger);
+}
+.dhk-datefield__box[data-disabled] {
+  opacity: 0.5;
+}
+
+.dhk-datesegment {
+  padding: 0 0.1em;
+  border-radius: var(--dhk-radius);
+  color: var(--dhk-text);
+  outline: none;
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+  caret-color: transparent;
+}
+.dhk-datesegment[data-type='literal'] {
+  padding: 0;
+  color: var(--dhk-text-subtle);
+}
+.dhk-datesegment[data-placeholder] {
+  color: var(--dhk-text-subtle);
+}
+.dhk-datesegment[data-focused] {
+  background: var(--dhk-ink);
+  color: var(--dhk-paper);
+}
+.dhk-datesegment[data-invalid] {
+  color: var(--dhk-danger);
+}
+
+/* trailing button shared by DatePicker / DateRangePicker / ColorPicker */
+.dhk-field-trigger {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  align-self: stretch;
+  border: none;
+  border-inline-start: 1px solid var(--dhk-border);
+  background: none;
+  color: var(--dhk-text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  outline: none;
+  transition: background-color var(--dhk-duration) var(--dhk-ease);
+}
+.dhk-field-trigger[data-hovered] {
+  background: var(--dhk-surface-inset);
+  color: var(--dhk-text);
+}
+.dhk-field-trigger[data-focus-visible] {
+  outline: 2px solid var(--dhk-focus);
+  outline-offset: -2px;
+}
+
+.dhk-daterange__sep {
+  padding: 0 0.35em;
+  color: var(--dhk-text-subtle);
+  font-family: var(--dhk-font-mono);
+  font-size: var(--dhk-text-sm);
+}
+
+/* ================================================================
+ * Calendar
+ * ============================================================== */
+
+.dhk-calendar {
+  padding: var(--dhk-space-4);
+  width: fit-content;
+}
+.dhk-calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dhk-space-3);
+  margin-bottom: var(--dhk-space-4);
+}
+.dhk-calendar__heading {
+  font-family: var(--dhk-font-condensed);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: var(--dhk-text-xs);
+  letter-spacing: var(--dhk-tracking-label);
+  text-transform: uppercase;
+  color: var(--dhk-text);
+  margin: 0;
+}
+.dhk-calendar__nav {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid var(--dhk-border);
+  border-radius: var(--dhk-radius);
+  background: none;
+  color: var(--dhk-text-muted);
+  cursor: pointer;
+  outline: none;
+  transition:
+    background-color var(--dhk-duration) var(--dhk-ease),
+    color var(--dhk-duration) var(--dhk-ease);
+}
+.dhk-calendar__nav[data-hovered] {
+  background: var(--dhk-ink);
+  border-color: var(--dhk-ink);
+  color: var(--dhk-paper);
+}
+.dhk-calendar__nav[data-focus-visible] {
+  outline: 2px solid var(--dhk-focus);
+  outline-offset: 2px;
+}
+.dhk-calendar__nav[data-disabled] {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.dhk-calendar__grid {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.dhk-calendar__weekday {
+  padding-bottom: var(--dhk-space-2);
+  font-family: var(--dhk-font-condensed);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: var(--dhk-text-2xs);
+  letter-spacing: var(--dhk-tracking-label);
+  text-transform: uppercase;
+  color: var(--dhk-text-subtle);
+}
+.dhk-calendar__cell {
+  width: 2.15rem;
+  height: 2.15rem;
+  text-align: center;
+  vertical-align: middle;
+  font-family: var(--dhk-font-mono);
+  font-size: var(--dhk-text-xs);
+  color: var(--dhk-text);
+  cursor: pointer;
+  outline: none;
+  border: 1px solid transparent;
+  transition:
+    background-color var(--dhk-duration-fast) var(--dhk-ease),
+    color var(--dhk-duration-fast) var(--dhk-ease);
+}
+.dhk-calendar__cell[data-outside-month] {
+  visibility: hidden;
+}
+.dhk-calendar__cell[data-hovered] {
+  background: var(--dhk-surface-inset);
+}
+.dhk-calendar__cell[data-selected] {
+  background: var(--dhk-ink);
+  color: var(--dhk-paper);
+}
+.dhk-calendar__cell[data-focus-visible] {
+  outline: 2px solid var(--dhk-focus);
+  outline-offset: -2px;
+}
+.dhk-calendar__cell[data-disabled],
+.dhk-calendar__cell[data-unavailable] {
+  color: var(--dhk-text-subtle);
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+/* Range selection: accent at both ends, flat fill between. Scoped to the
+   range calendar — a single-date cell carries data-selected with neither end
+   marker, and would otherwise be caught by the "middle of range" rule. */
+.dhk-calendar--range .dhk-calendar__cell[data-selection-start],
+.dhk-calendar--range .dhk-calendar__cell[data-selection-end] {
+  background: var(--dhk-accent);
+  color: var(--dhk-text-on-accent);
+}
+.dhk-calendar--range
+  .dhk-calendar__cell[data-selected]:not([data-selection-start]):not([data-selection-end]) {
+  background: var(--dhk-surface-inset);
+  color: var(--dhk-text);
+  border-block-color: var(--dhk-border);
+}
+.dhk-calendar__error {
+  margin-top: var(--dhk-space-3);
+  font-size: var(--dhk-text-xs);
+  color: var(--dhk-danger);
+}
+
+/* ================================================================
+ * NumberField
+ * ============================================================== */
+
+.dhk-numberfield__box {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--dhk-border-strong);
+  border-radius: var(--dhk-radius);
+  background: var(--dhk-surface-raised);
+  transition: border-color var(--dhk-duration) var(--dhk-ease);
+}
+.dhk-numberfield__box[data-hovered],
+.dhk-numberfield__box:focus-within {
+  border-color: var(--dhk-ink);
+}
+.dhk-numberfield__box:focus-within {
+  box-shadow: inset 0 -2px 0 var(--dhk-focus);
+}
+.dhk-numberfield__box[data-invalid] {
+  border-color: var(--dhk-danger);
+}
+.dhk-numberfield__box input {
+  flex: 1;
+  width: 100%;
+  min-width: 3rem;
+  min-height: var(--dhk-control-height-md);
+  padding: var(--dhk-space-2) var(--dhk-space-3);
+  border: none;
+  background: none;
+  outline: none;
+  color: var(--dhk-text);
+  font-family: var(--dhk-font-mono);
+  font-size: var(--dhk-text-sm);
+  font-variant-numeric: tabular-nums;
+}
+.dhk-numberfield__step {
+  width: 1.75rem;
+  border: none;
+  border-inline-start: 1px solid var(--dhk-border);
+  background: none;
+  color: var(--dhk-text-muted);
+  cursor: pointer;
+  font-family: var(--dhk-font-mono);
+  font-size: var(--dhk-text-sm);
+  line-height: 1;
+  outline: none;
+  transition: background-color var(--dhk-duration) var(--dhk-ease);
+}
+.dhk-numberfield__step[data-hovered] {
+  background: var(--dhk-ink);
+  color: var(--dhk-paper);
+}
+.dhk-numberfield__step[data-disabled] {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ================================================================
+ * SearchField
+ * ============================================================== */
+
+.dhk-searchfield__box {
+  display: flex;
+  align-items: center;
+  gap: var(--dhk-space-2);
+  padding-inline: var(--dhk-space-3);
+  border: 1px solid var(--dhk-border-strong);
+  border-radius: var(--dhk-radius);
+  background: var(--dhk-surface-raised);
+  transition: border-color var(--dhk-duration) var(--dhk-ease);
+}
+.dhk-searchfield__box[data-hovered],
+.dhk-searchfield__box:focus-within {
+  border-color: var(--dhk-ink);
+}
+.dhk-searchfield__box:focus-within {
+  box-shadow: inset 0 -2px 0 var(--dhk-focus);
+}
+.dhk-searchfield__box input {
+  flex: 1;
+  min-height: var(--dhk-control-height-md);
+  border: none;
+  background: none;
+  outline: none;
+  color: var(--dhk-text);
+  font-family: var(--dhk-font-sans);
+  font-size: var(--dhk-text-sm);
+}
+.dhk-searchfield__box input::-webkit-search-cancel-button {
+  display: none;
+}
+.dhk-searchfield__box input::placeholder {
+  color: var(--dhk-text-subtle);
+}
+.dhk-searchfield__icon {
+  color: var(--dhk-text-subtle);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.dhk-searchfield__clear {
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--dhk-text-subtle);
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: grid;
+  place-items: center;
+  outline: none;
+}
+.dhk-searchfield__clear[data-hovered] {
+  color: var(--dhk-text);
+}
+/* React Aria hides the clear button itself when the field is empty. */
+.dhk-searchfield__box[data-empty] .dhk-searchfield__clear {
+  display: none;
+}
+
+/* ================================================================
+ * Colour
+ * ============================================================== */
+
+.dhk-colorswatch {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--dhk-border-strong);
+  border-radius: var(--dhk-radius);
+  flex-shrink: 0;
+}
+.dhk-colorpicker__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dhk-space-3);
+  padding: var(--dhk-space-4);
+  width: 13rem;
+}
+.dhk-colorarea {
+  width: 100%;
+  height: 8rem;
+  border: 1px solid var(--dhk-border);
+  border-radius: var(--dhk-radius);
+  flex-shrink: 0;
+}
+.dhk-colorslider {
+  width: 100%;
+}
+.dhk-colorslider__track {
+  height: 0.75rem;
+  border: 1px solid var(--dhk-border);
+  border-radius: var(--dhk-radius);
+}
+.dhk-colorthumb {
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 2px solid #fff;
+  border-radius: var(--dhk-radius-full);
+  box-shadow: 0 0 0 1px rgba(16, 16, 16, 0.5);
+  outline: none;
+}
+.dhk-colorthumb[data-focus-visible] {
+  outline: 2px solid var(--dhk-focus);
+  outline-offset: 2px;
+}
+.dhk-colorfield__row {
+  display: flex;
+  align-items: center;
+  gap: var(--dhk-space-2);
+}
+
+/* ================================================================
+ * File input — trigger and drop zone
+ * ============================================================== */
+
+.dhk-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dhk-space-3);
+  padding: var(--dhk-space-8) var(--dhk-space-5);
+  text-align: center;
+  border: 1px dashed var(--dhk-border-strong);
+  border-radius: var(--dhk-radius);
+  background: var(--dhk-surface);
+  color: var(--dhk-text-muted);
+  outline: none;
+  transition:
+    border-color var(--dhk-duration) var(--dhk-ease),
+    background-color var(--dhk-duration) var(--dhk-ease);
+}
+.dhk-dropzone[data-drop-target] {
+  border-color: var(--dhk-accent);
+  border-style: solid;
+  background: var(--dhk-surface-raised);
+  color: var(--dhk-text);
+}
+.dhk-dropzone[data-focus-visible] {
+  outline: 2px solid var(--dhk-focus);
+  outline-offset: 2px;
+}
+.dhk-dropzone__hint {
+  font-size: var(--dhk-text-xs);
+  color: var(--dhk-text-subtle);
+}
+
+/* ================================================================
+ * GridList
+ * ============================================================== */
+
+.dhk-gridlist {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--dhk-border);
+  border-radius: var(--dhk-radius);
+  outline: none;
+  overflow: auto;
+}
+.dhk-gridlist__item {
+  display: flex;
+  align-items: center;
+  gap: var(--dhk-space-3);
+  padding: var(--dhk-space-3) var(--dhk-space-4);
+  border-bottom: 1px solid var(--dhk-border);
+  font-size: var(--dhk-text-sm);
+  color: var(--dhk-text);
+  outline: none;
+  cursor: default;
+  transition: background-color var(--dhk-duration-fast) var(--dhk-ease);
+}
+.dhk-gridlist__item:last-child {
+  border-bottom: none;
+}
+.dhk-gridlist__item[data-hovered] {
+  background: var(--dhk-surface-inset);
+}
+.dhk-gridlist__item[data-selected] {
+  background: var(--dhk-ink);
+  color: var(--dhk-paper);
+}
+.dhk-gridlist__item[data-selected] .dhk-checkbox__box {
+  border-color: var(--dhk-paper);
+}
+.dhk-gridlist__item[data-focus-visible] {
+  outline: 2px solid var(--dhk-focus);
+  outline-offset: -2px;
+}
+.dhk-gridlist__item[data-disabled] {
+  opacity: 0.45;
+}
+.dhk-gridlist__empty {
+  padding: var(--dhk-space-8);
+  text-align: center;
+  color: var(--dhk-text-subtle);
+  font-size: var(--dhk-text-sm);
+}
+
+/* ================================================================
+ * DataTable — sortable, selectable
+ * ============================================================== */
+
+.dhk-datatable-wrap {
+  border: 1px solid var(--dhk-border);
+  overflow: auto;
+}
+.dhk-datatable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--dhk-text-sm);
+  outline: none;
+}
+.dhk-datatable__column {
+  text-align: start;
+  padding: var(--dhk-space-3) var(--dhk-space-4);
+  border-bottom: 1px solid var(--dhk-border);
+  background: var(--dhk-surface-inset);
+  font-family: var(--dhk-font-condensed);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: var(--dhk-text-2xs);
+  letter-spacing: var(--dhk-tracking-label);
+  text-transform: uppercase;
+  color: var(--dhk-text-muted);
+  white-space: nowrap;
+  outline: none;
+}
+.dhk-datatable__column[data-allows-sorting] {
+  cursor: pointer;
+}
+.dhk-datatable__column[data-hovered] {
+  color: var(--dhk-text);
+}
+.dhk-datatable__column[data-focus-visible] {
+  outline: 2px solid var(--dhk-focus);
+  outline-offset: -2px;
+}
+.dhk-datatable__sort {
+  margin-inline-start: 0.4em;
+  font-family: var(--dhk-font-mono);
+  color: var(--dhk-accent);
+}
+.dhk-datatable__row {
+  outline: none;
+  cursor: default;
+  transition: background-color var(--dhk-duration-fast) var(--dhk-ease);
+}
+.dhk-datatable__row[data-hovered] {
+  background: var(--dhk-surface-inset);
+}
+.dhk-datatable__row[data-selected] {
+  background: color-mix(in srgb, var(--dhk-accent) 12%, transparent);
+}
+.dhk-datatable__row[data-focus-visible] {
+  outline: 2px solid var(--dhk-focus);
+  outline-offset: -2px;
+}
+.dhk-datatable__cell {
+  padding: var(--dhk-space-3) var(--dhk-space-4);
+  border-bottom: 1px solid var(--dhk-border);
+  outline: none;
+}
+.dhk-datatable__row:last-child .dhk-datatable__cell {
+  border-bottom: none;
+}
+.dhk-datatable__num {
+  text-align: end;
+  font-family: var(--dhk-font-mono);
+  font-size: var(--dhk-text-xs);
+  font-variant-numeric: tabular-nums;
+}
+.dhk-datatable__empty {
+  padding: var(--dhk-space-8);
+  text-align: center;
+  color: var(--dhk-text-subtle);
+}
+
+/* ================================================================
+ * Meter
+ * ============================================================== */
+
+.dhk-meter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dhk-space-2);
+}
+.dhk-meter__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--dhk-space-3);
+}
+.dhk-meter__label {
+  font-family: var(--dhk-font-condensed);
+  font-weight: var(--dhk-weight-semibold);
+  font-size: var(--dhk-text-2xs);
+  letter-spacing: var(--dhk-tracking-label);
+  text-transform: uppercase;
+  color: var(--dhk-text-muted);
+}
+.dhk-meter__value {
+  font-family: var(--dhk-font-mono);
+  font-size: var(--dhk-text-xs);
+  color: var(--dhk-text-muted);
+}
+.dhk-meter__track {
+  height: 8px;
+  border: 1px solid var(--dhk-border);
+  background: var(--dhk-surface-inset);
+  overflow: hidden;
+}
+.dhk-meter__fill {
+  height: 100%;
+  background: var(--dhk-success);
+  transition:
+    width var(--dhk-duration-slow) var(--dhk-ease),
+    background-color var(--dhk-duration) var(--dhk-ease);
+}
+.dhk-meter[data-level='warning'] .dhk-meter__fill {
+  background: var(--dhk-warning);
+}
+.dhk-meter[data-level='critical'] .dhk-meter__fill {
+  background: var(--dhk-danger);
+}
+
+/* ================================================================
+ * Toolbar
+ * ============================================================== */
+
+.dhk-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--dhk-space-3);
+  padding: var(--dhk-space-2) var(--dhk-space-3);
+  border: 1px solid var(--dhk-border);
+  border-radius: var(--dhk-radius);
+  background: var(--dhk-surface);
+}
+.dhk-toolbar[data-orientation='vertical'] {
+  flex-direction: column;
+  align-items: stretch;
+  width: fit-content;
+}
+.dhk-toolbar__separator {
+  width: 1px;
+  align-self: stretch;
+  background: var(--dhk-border);
+  border: none;
+  margin: 0;
+}
+.dhk-toolbar[data-orientation='vertical'] .dhk-toolbar__separator {
+  width: auto;
+  height: 1px;
+}
+
+/* ================================================================
+ * Modal — React Aria overlay (Dialog stays on the native element)
+ * ============================================================== */
+
+.dhk-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--dhk-z-overlay);
+  display: grid;
+  place-items: center;
+  padding: var(--dhk-space-5);
+  background: rgba(16, 16, 16, 0.4);
+  backdrop-filter: blur(2px);
+}
+.dhk-modal-overlay[data-entering] {
+  animation: dhk-fade-in var(--dhk-duration) var(--dhk-ease);
+}
+.dhk-modal-overlay[data-exiting] {
+  animation: dhk-fade-in var(--dhk-duration-fast) var(--dhk-ease) reverse;
+}
+@keyframes dhk-fade-in {
+  from { opacity: 0; }
+}
+.dhk-modal {
+  width: min(32rem, 100%);
+  max-height: calc(100dvh - 2 * var(--dhk-space-8));
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--dhk-border-strong);
+  border-radius: var(--dhk-radius);
+  background: var(--dhk-surface-raised);
+  color: var(--dhk-text);
+  box-shadow: var(--dhk-shadow-overlay);
+  outline: none;
+}
+.dhk-modal[data-entering] {
+  animation: dhk-dialog-in var(--dhk-duration) var(--dhk-ease);
+}

@@ -1,9 +1,10 @@
-import { type ReactNode } from 'react';
+import { type ReactElement, type ReactNode } from 'react';
 import {
   MenuTrigger,
   Menu as AriaMenu,
   MenuItem as AriaMenuItem,
   MenuSection,
+  SubmenuTrigger,
   Popover,
   Separator,
   Header,
@@ -90,5 +91,32 @@ export function MenuGroup<T extends object>({ label, children, items }: MenuGrou
       {label != null && <Header className="dhk-menu__section-label">{label}</Header>}
       {children as never}
     </MenuSection>
+  );
+}
+
+export interface SubMenuProps<T extends object> extends Omit<AriaMenuProps<T>, 'className'> {
+  /** The parent row that opens the submenu — a `<MenuItem>`. */
+  trigger: ReactElement;
+  className?: string;
+}
+
+/**
+ * A nested menu. React Aria opens it on hover with a safe-triangle delay, on
+ * ArrowRight, and closes it on ArrowLeft or Escape.
+ *
+ * ```tsx
+ * <SubMenu trigger={<MenuItem>Move to…</MenuItem>}>
+ *   <MenuItem>Archive</MenuItem>
+ * </SubMenu>
+ * ```
+ */
+export function SubMenu<T extends object>({ trigger, className, ...rest }: SubMenuProps<T>) {
+  return (
+    <SubmenuTrigger>
+      {trigger}
+      <Popover className="dhk-popover">
+        <AriaMenu {...rest} className={cn('dhk-menu', className)} />
+      </Popover>
+    </SubmenuTrigger>
   );
 }

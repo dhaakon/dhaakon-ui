@@ -28,7 +28,7 @@ export function Layout() {
         <NavLink to="/" className="doc-top__brand">
           <span>◆</span> Dhaakon UI
         </NavLink>
-        <span className="doc-top__ver">v0.2.0</span>
+        <span className="doc-top__ver">v{__KIT_VERSION__}</span>
         <nav className="doc-top__links">
           <NavLink to="/install">Install</NavLink>
           <NavLink to="/foundations">Foundations</NavLink>

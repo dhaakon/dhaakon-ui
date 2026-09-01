@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
@@ -7,8 +8,11 @@ const here = resolve(fileURLToPath(import.meta.url), '..');
 // The docs read @dhaakon/ui straight from ../src, so the site always shows the
 // working tree rather than the last published tarball.
 const kit = resolve(here, '..', 'src');
+const kitPkg = createRequire(import.meta.url)('../package.json');
 
 export default defineConfig({
+  // Read from the kit's package.json so the version shown cannot drift.
+  define: { __KIT_VERSION__: JSON.stringify(kitPkg.version) },
   plugins: [react()],
   resolve: {
     alias: [

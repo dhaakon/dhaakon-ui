@@ -104,3 +104,23 @@ export const MoreIcon = (p: P) => (
     <circle cx="12" cy="19" r="1" fill="currentColor" />
   </Svg>
 );
+
+export const CalendarIcon = (p: P) => (
+  <Svg {...p}>
+    <rect x="3" y="5" width="18" height="16" rx="1" />
+    <path d="M3 10h18M8 3v4M16 3v4" />
+  </Svg>
+);
+
+export const ChevronUpIcon = (p: P) => (
+  <Svg {...p}>
+    <path d="m6 15 6-6 6 6" />
+  </Svg>
+);
+
+export const UploadIcon = (p: P) => (
+  <Svg {...p}>
+    <path d="M12 16V4M8 8l4-4 4 4" />
+    <path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+  </Svg>
+);
