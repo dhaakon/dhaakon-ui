@@ -522,7 +522,7 @@
 .dhk-datatable__sort {
   margin-inline-start: 0.4em;
   font-family: var(--dhk-font-mono);
-  color: var(--dhk-accent);
+  color: var(--dhk-accent-text);
 }
 .dhk-datatable__row {
   outline: none;

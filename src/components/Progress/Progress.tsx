@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { ProgressBar, type ProgressBarProps } from 'react-aria-components';
+import { Label, ProgressBar, type ProgressBarProps } from 'react-aria-components';
 import { cn } from '../../lib/cn';
 
 export type ProgressTone = 'neutral' | 'accent' | 'success' | 'warning' | 'danger';
@@ -35,7 +35,7 @@ export function Progress({
         <>
           {(label != null || showValue) && (
             <div className="dhk-progress__head">
-              {label != null && <span className="dhk-progress__label">{label}</span>}
+              {label != null && <Label className="dhk-progress__label">{label}</Label>}
               {showValue && !isIndeterminate && (
                 <span className="dhk-progress__value">{valueText}</span>
               )}

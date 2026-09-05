@@ -1,5 +1,8 @@
 import { type ReactNode } from 'react';
 import {
+  Label,
+  Text,
+  FieldError,
   DatePicker as AriaDatePicker,
   DateRangePicker as AriaDateRangePicker,
   Group,
@@ -11,6 +14,7 @@ import {
   type DateValue,
 } from 'react-aria-components';
 import { cn } from '../../lib/cn';
+import { hasFieldMessage } from '../../lib/fieldMessage';
 import { CalendarIcon } from '../../lib/icons';
 import { Segments } from '../DateField/DateField';
 import { Calendar, RangeCalendar } from '../Calendar/Calendar';
@@ -36,21 +40,20 @@ export function DatePicker<T extends DateValue>({
   className,
   ...rest
 }: DatePickerProps<T>) {
+  const hasError = hasFieldMessage(errorMessage);
   return (
-    <AriaDatePicker {...rest} className={cn('dhk-datefield', className)}>
-      {label != null && <span className="dhk-control-label">{label}</span>}
+    <AriaDatePicker {...rest} isInvalid={rest.isInvalid ?? (hasError ? true : undefined)} className={cn('dhk-datefield', className)}>
+      {label != null && <Label className="dhk-control-label">{label}</Label>}
       <Group className="dhk-datefield__box">
         <Segments />
         <AriaButton className="dhk-field-trigger" aria-label="Open calendar">
           <CalendarIcon />
         </AriaButton>
       </Group>
-      {description != null && errorMessage == null && (
-        <span className="dhk-control-desc">{description}</span>
+      {description != null && !hasError && (
+        <Text slot="description" className="dhk-control-desc">{description}</Text>
       )}
-      {errorMessage != null && (
-        <span className="dhk-control-error" role="alert">{errorMessage}</span>
-      )}
+      <FieldError className="dhk-control-error">{hasError ? errorMessage : undefined}</FieldError>
       <Popover className="dhk-popover">
         <Dialog>
           <Calendar />
@@ -76,9 +79,10 @@ export function DateRangePicker<T extends DateValue>({
   className,
   ...rest
 }: DateRangePickerProps<T>) {
+  const hasError = hasFieldMessage(errorMessage);
   return (
-    <AriaDateRangePicker {...rest} className={cn('dhk-datefield', className)}>
-      {label != null && <span className="dhk-control-label">{label}</span>}
+    <AriaDateRangePicker {...rest} isInvalid={rest.isInvalid ?? (hasError ? true : undefined)} className={cn('dhk-datefield', className)}>
+      {label != null && <Label className="dhk-control-label">{label}</Label>}
       <Group className="dhk-datefield__box">
         <Segments slot="start" />
         <span aria-hidden className="dhk-daterange__sep">–</span>
@@ -87,12 +91,10 @@ export function DateRangePicker<T extends DateValue>({
           <CalendarIcon />
         </AriaButton>
       </Group>
-      {description != null && errorMessage == null && (
-        <span className="dhk-control-desc">{description}</span>
+      {description != null && !hasError && (
+        <Text slot="description" className="dhk-control-desc">{description}</Text>
       )}
-      {errorMessage != null && (
-        <span className="dhk-control-error" role="alert">{errorMessage}</span>
-      )}
+      <FieldError className="dhk-control-error">{hasError ? errorMessage : undefined}</FieldError>
       <Popover className="dhk-popover">
         <Dialog>
           <RangeCalendar />

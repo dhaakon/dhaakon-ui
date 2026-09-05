@@ -1,11 +1,15 @@
 import { type ReactNode } from 'react';
 import {
+  Label,
+  Text,
+  FieldError,
   Checkbox as AriaCheckbox,
   CheckboxGroup as AriaCheckboxGroup,
   type CheckboxProps as AriaCheckboxProps,
   type CheckboxGroupProps as AriaCheckboxGroupProps,
 } from 'react-aria-components';
 import { cn } from '../../lib/cn';
+import { hasFieldMessage } from '../../lib/fieldMessage';
 import { CheckIcon, MinusIcon } from '../../lib/icons';
 
 export interface CheckboxProps extends Omit<AriaCheckboxProps, 'children' | 'className'> {
@@ -59,22 +63,19 @@ export function CheckboxGroup({
   className,
   ...rest
 }: CheckboxGroupProps) {
+  const hasError = hasFieldMessage(errorMessage);
   return (
     <AriaCheckboxGroup
-      {...rest}
+      {...rest} isInvalid={rest.isInvalid ?? (hasError ? true : undefined)}
       data-orientation={orientation}
       className={cn('dhk-control-group', className)}
     >
-      {label != null && <span className="dhk-control-label">{label}</span>}
+      {label != null && <Label className="dhk-control-label">{label}</Label>}
       <div className="dhk-control-group__items">{children}</div>
-      {description != null && errorMessage == null && (
-        <span className="dhk-control-desc">{description}</span>
+      {description != null && !hasError && (
+        <Text slot="description" className="dhk-control-desc">{description}</Text>
       )}
-      {errorMessage != null && (
-        <span className="dhk-control-error" role="alert">
-          {errorMessage}
-        </span>
-      )}
+      <FieldError className="dhk-control-error">{hasError ? errorMessage : undefined}</FieldError>
     </AriaCheckboxGroup>
   );
 }

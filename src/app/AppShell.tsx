@@ -8,6 +8,9 @@ export interface AppShellProps extends HTMLAttributes<HTMLDivElement> {
   sidebar?: ReactNode;
   /** Sidebar width. Default `15rem`. */
   sidebarWidth?: string;
+  /** Use a section or div when embedding a shell within another page's main. */
+  contentAs?: 'main' | 'section' | 'div';
+  contentLabel?: string;
   children: ReactNode;
 }
 
@@ -23,7 +26,10 @@ export function AppShell({
   header,
   sidebar,
   sidebarWidth = '15rem',
+  contentAs: Content = 'main',
+  contentLabel,
   className,
+  style,
   children,
   ...rest
 }: AppShellProps) {
@@ -32,11 +38,11 @@ export function AppShell({
       {header}
       <div
         className={cn('dhk-shell', !sidebar && 'dhk-shell--no-side', className)}
-        style={{ ['--_side' as string]: sidebarWidth }}
+        style={{ ['--_side' as string]: sidebarWidth, ...style }}
         {...rest}
       >
         {sidebar}
-        <main className="dhk-shell__main">{children}</main>
+        <Content className="dhk-shell__main" aria-label={contentLabel}>{children}</Content>
       </div>
     </>
   );

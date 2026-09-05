@@ -10,11 +10,12 @@ const dist = join(root, 'dist');
 
 await mkdir(join(dist, 'fonts'), { recursive: true });
 
-for (const file of ['dhaakon-ui.css', 'fonts.css', 'controls.css', 'controls-2.css', 'app.css', 'site.css', 'theme.css']) {
+for (const file of ['dhaakon-ui.css', 'fonts.css', 'controls.css', 'controls-2.css', 'app.css', 'site.css', 'research.css', 'theme.css']) {
   await cp(join(src, file), join(dist, file));
 }
 
 const fonts = await readdir(join(src, 'fonts'));
+await cp(join(src, 'fonts', 'OFL.txt'), join(dist, 'fonts', 'OFL.txt'));
 for (const f of fonts.filter((n) => n.endsWith('.woff2'))) {
   await cp(join(src, 'fonts', f), join(dist, 'fonts', f));
 }
@@ -27,4 +28,4 @@ for (const m of entry.matchAll(/@import\s+['"]\.\/([^'"]+)['"]/g)) {
   });
 }
 
-console.log(`build-css: dist/dhaakon-ui.css (+ imports) + dist/theme.css + ${fonts.length} fonts`);
+console.log(`build-css: dist/dhaakon-ui.css (+ imports) + dist/theme.css + ${fonts.filter((name) => name.endsWith('.woff2')).length} fonts + OFL notice`);

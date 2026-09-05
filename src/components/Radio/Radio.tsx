@@ -1,11 +1,15 @@
 import { type ReactNode } from 'react';
 import {
+  Label,
+  Text,
+  FieldError,
   Radio as AriaRadio,
   RadioGroup as AriaRadioGroup,
   type RadioProps as AriaRadioProps,
   type RadioGroupProps as AriaRadioGroupProps,
 } from 'react-aria-components';
 import { cn } from '../../lib/cn';
+import { hasFieldMessage } from '../../lib/fieldMessage';
 
 export interface RadioProps extends Omit<AriaRadioProps, 'children' | 'className'> {
   children?: ReactNode;
@@ -48,22 +52,19 @@ export function RadioGroup({
   className,
   ...rest
 }: RadioGroupProps) {
+  const hasError = hasFieldMessage(errorMessage);
   return (
     <AriaRadioGroup
-      {...rest}
+      {...rest} isInvalid={rest.isInvalid ?? (hasError ? true : undefined)}
       orientation={orientation}
       className={cn('dhk-control-group', className)}
     >
-      {label != null && <span className="dhk-control-label">{label}</span>}
+      {label != null && <Label className="dhk-control-label">{label}</Label>}
       <div className="dhk-control-group__items">{children}</div>
-      {description != null && errorMessage == null && (
-        <span className="dhk-control-desc">{description}</span>
+      {description != null && !hasError && (
+        <Text slot="description" className="dhk-control-desc">{description}</Text>
       )}
-      {errorMessage != null && (
-        <span className="dhk-control-error" role="alert">
-          {errorMessage}
-        </span>
-      )}
+      <FieldError className="dhk-control-error">{hasError ? errorMessage : undefined}</FieldError>
     </AriaRadioGroup>
   );
 }

@@ -1,121 +1,307 @@
-import { Link } from 'react-router-dom';
-import { Badge, Button, Card, CardBody } from '@dhaakon/ui';
-import { DisplayHeading, SectionIntro, NumberedList, NumberedItem, CtaLink } from '@dhaakon/ui/site';
-import { COMPONENTS } from '../lib/registry';
-import { CodeBlock } from '../parts/CodeBlock';
+import { Link } from "react-router-dom";
+import { COMPONENTS, LAYERS, MOTION_DOCS_URL, byLayer } from "../lib/registry";
+import { CodeBlock } from "../parts/CodeBlock";
 
-const ariaCount = COMPONENTS.filter((c) => c.aria).length;
+const kitCount = COMPONENTS.filter(
+  (component) => component.layer !== "motion",
+).length;
+const ariaCount = COMPONENTS.filter((component) => component.aria).length;
+
+function SignalStudy() {
+  return (
+    <svg
+      className="doc-signal-study"
+      viewBox="0 0 480 390"
+      role="img"
+      aria-label="Vector study: four signal paths converge into a research instrument"
+    >
+      <defs>
+        <pattern
+          id="home-study-grid"
+          width="30"
+          height="30"
+          patternUnits="userSpaceOnUse"
+        >
+          <path
+            d="M30 0H0V30"
+            fill="none"
+            stroke="currentColor"
+            strokeOpacity=".12"
+          />
+        </pattern>
+      </defs>
+      <rect width="480" height="390" fill="url(#home-study-grid)" />
+      <g fill="none" stroke="currentColor" strokeWidth=".8">
+        {[46, 72, 98, 124, 150].map((r) => (
+          <circle
+            key={r}
+            cx="240"
+            cy="195"
+            r={r}
+            opacity={r === 98 ? 0.55 : 0.18}
+          />
+        ))}
+        <path
+          d="M18 195H462M240 15V375M78 33L402 357M402 33L78 357"
+          opacity=".22"
+        />
+        {Array.from({ length: 16 }, (_, index) => (
+          <path
+            key={index}
+            d={`M20 ${100 + index * 12} C150 ${index * 19}, 240 ${365 - index * 12}, 460 ${85 + index * 13}`}
+            stroke={index === 7 ? "#d9ff43" : "currentColor"}
+            opacity={index === 7 ? 1 : 0.3}
+          />
+        ))}
+      </g>
+      <g fill="#101010" stroke="#d9ff43">
+        <rect
+          x="226"
+          y="181"
+          width="28"
+          height="28"
+          transform="rotate(45 240 195)"
+        />
+        <circle cx="91" cy="163" r="5" />
+        <circle cx="387" cy="260" r="5" />
+      </g>
+      <g fill="currentColor" fontSize="9" fontFamily="monospace">
+        <text x="18" y="25">
+          FIG. 001 / SIGNAL → SYSTEM
+        </text>
+        <text x="18" y="372">
+          VECTOR STUDY / NOT LIVE TELEMETRY
+        </text>
+        <text x="367" y="25">
+          DHK / LAB
+        </text>
+      </g>
+      <circle cx="240" cy="195" r="3" fill="#d9ff43" />
+    </svg>
+  );
+}
 
 export function Home() {
   return (
     <>
-      <DisplayHeading
-        as="h1"
-        style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)' }}
-        annotations={[
-          { text: '@dhaakon/ui', glyph: 'arrow-ne', x: 1, y: -22 },
-          { text: 'React Aria', glyph: 'target', x: 62, y: 104 },
-        ]}
+      <section className="doc-home-hero" aria-labelledby="home-title">
+        <div className="doc-home-hero__copy">
+          <p className="doc-kicker">
+            The creative technology toolkit / {__KIT_VERSION__}
+          </p>
+          <h1 id="home-title">
+            Serious tools.
+            <br />
+            <em>Curious minds.</em>
+          </h1>
+          <p className="doc-home-hero__lead">
+            An interface language for the things you haven’t built yet.
+          </p>
+          <p className="doc-p">
+            From the public-facing practice to the private research lab.
+            Accessible controls, editorial systems, and precise instruments for
+            experiments that become professional work.
+          </p>
+          <div className="doc-actions">
+            <Link className="doc-action doc-action--accent" to="/workbench">
+              Enter the workbench ↗
+            </Link>
+            <Link className="doc-text-link" to="/components">
+              Explore the component atlas →
+            </Link>
+          </div>
+        </div>
+        <div className="doc-home-hero__study">
+          <SignalStudy />
+          <div className="doc-home-hero__caption">
+            <span>01 / Form follows inquiry</span>
+            <span aria-hidden>↗</span>
+          </div>
+        </div>
+      </section>
+      <div className="doc-fact-strip" aria-label="System inventory">
+        <div>
+          <strong>{kitCount}</strong>
+          <span>UI documentation entries</span>
+        </div>
+        <div>
+          <strong>{ariaCount}</strong>
+          <span>React Aria integrations</span>
+        </div>
+        <div>
+          <strong>03</strong>
+          <span>Kit layers / one language</span>
+        </div>
+        <div>
+          <strong>∞</strong>
+          <span>Questions worth building for</span>
+        </div>
+      </div>
+      <section className="doc-home-section" aria-labelledby="studies-title">
+        <div className="doc-section-label">
+          <span>[ 01 / In practice ]</span>
+          <span>Made to be used, not just viewed</span>
+        </div>
+        <h2 id="studies-title" className="doc-editorial-title">
+          The component is only
+          <br />
+          the <em>beginning.</em>
+        </h2>
+        <div className="doc-study-grid">
+          <Link
+            to="/workbench"
+            className="doc-study-card doc-study-card--instrument"
+          >
+            <span className="doc-study-card__index">STUDY 01 / RESEARCH</span>
+            <div className="doc-mini-signal" aria-hidden>
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
+            <h3>Operate the experiment.</h3>
+            <p>
+              A working local simulation: run a signal study, filter
+              experiments, inspect parameters, and export the evidence.
+            </p>
+            <span className="doc-study-card__action">Open workbench ↗</span>
+          </Link>
+          <Link to="/editorial" className="doc-study-card">
+            <span className="doc-study-card__index">STUDY 02 / PRACTICE</span>
+            <div className="doc-type-study" aria-hidden>
+              Aa<span>↘</span>
+            </div>
+            <h3>Give the work a voice.</h3>
+            <p>
+              Expressive typography, numbered methods, field notes, and a visual
+              language that carries from dhaakon.com.
+            </p>
+            <span className="doc-study-card__action">
+              Read the field guide ↗
+            </span>
+          </Link>
+          <a
+            href={`${MOTION_DOCS_URL}/svg-cue-sheet`}
+            className="doc-study-card doc-study-card--motion"
+          >
+            <span className="doc-study-card__index">STUDY 03 / MOTION</span>
+            <div className="doc-orbit-study" aria-hidden>
+              <span />
+              <i />
+              <b>24</b>
+            </div>
+            <h3>Design in time.</h3>
+            <p>
+              The companion motion system: an inspectable SVG score and a 1080p
+              offline master, side by side at 24 fps.
+            </p>
+            <span className="doc-study-card__action">
+              Explore Ink / Signal ↗
+            </span>
+          </a>
+        </div>
+      </section>
+      <section className="doc-home-section" aria-labelledby="layers-title">
+        <div className="doc-section-label">
+          <span>[ 02 / Architecture ]</span>
+          <span>One foundation. Different scales.</span>
+        </div>
+        <h2 id="layers-title" className="doc-editorial-title">
+          From a control
+          <br />
+          to a <em>complete practice.</em>
+        </h2>
+        <div className="doc-layer-list">
+          {LAYERS.filter((layer) => layer.id !== "motion").map(
+            (layer, index) => (
+              <div className="doc-layer-row" key={layer.id}>
+                <span className="doc-kicker">0{index + 1}</span>
+                <div>
+                  <h3>{layer.label}</h3>
+                  <code>{layer.entry}</code>
+                </div>
+                <p>{layer.blurb}</p>
+                <span>{byLayer(layer.id).length} entries</span>
+              </div>
+            ),
+          )}
+        </div>
+        <p className="doc-p">
+          Counts refer to documentation entries, not an accessibility
+          certification or every named export. The motion package is a separate
+          system; the three UI layers share tokens, behavior conventions, and
+          the same visual intent.
+        </p>
+      </section>
+      <section
+        className="doc-home-section doc-principles"
+        aria-labelledby="principles-title"
       >
-        One language,
-        <br />
-        site to app.
-      </DisplayHeading>
-
-      <p className="doc-lede" style={{ marginTop: '2.5rem' }}>
-        The design system and React component library for the dhaakon-network.
-        Its visual language comes from <strong>dhaakon.com</strong>; its behaviour
-        comes from <strong>React Aria</strong>.
-      </p>
-
-      <div className="doc-chips" style={{ marginTop: '2rem' }}>
-        <Badge tone="accent" solid>{COMPONENTS.length} components</Badge>
-        <Badge>{ariaCount} on React Aria</Badge>
-        <Badge>IBM Plex</Badge>
-        <Badge>Light + dark</Badge>
-        <Badge>Zero-config CSS</Badge>
-      </div>
-
-      <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginTop: '1.5rem' }}>
-        <Link to="/components"><Button variant="accent">Browse components</Button></Link>
-        <Link to="/install"><Button variant="outline">Install</Button></Link>
-      </div>
-
-      <h2 className="doc-h2">The shape of it</h2>
-      <SectionIntro
-        index="01"
-        eyebrow="Design language"
-        title="Warm paper, near-black ink, hairlines."
-        lead="Sharp corners everywhere — the only curve in the system is a full circle. IBM Plex Sans for UI, Serif for editorial, Mono for identifiers, Condensed for the uppercase labels. One decisive accent."
-      />
-
-      <h2 className="doc-h2">Three layers</h2>
-      <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(16rem, 1fr))' }}>
-        <Card>
-          <CardBody>
-            <div className="dhk-eyebrow" style={{ marginBottom: '0.5rem' }}>@dhaakon/ui</div>
-            <p className="doc-grid__sum">
-              Primitives — buttons, forms, tables, overlays. What screens are built from.
+        <div>
+          <p className="doc-kicker">[ 03 / Working principles ]</p>
+          <h2 id="principles-title">
+            Craft is what
+            <br />
+            survives <em>use.</em>
+          </h2>
+        </div>
+        <div>
+          <article>
+            <h3>Behavior is part of the design.</h3>
+            <p>
+              Keyboard operation, focus, validation, and readable data
+              alternatives belong in the component—not in a future clean-up
+              sprint.
             </p>
-          </CardBody>
-        </Card>
-        <Card>
-          <CardBody>
-            <div className="dhk-eyebrow" style={{ marginBottom: '0.5rem' }}>@dhaakon/ui/app</div>
-            <p className="doc-grid__sum">
-              Composites — shells, page headers, metric bands, data grids, command menus,
-              whole login and error pages. Assembled from the primitives.
+          </article>
+          <article>
+            <h3>Evidence over decoration.</h3>
+            <p>
+              Controls do something. Data is identified as real or simulated.
+              Motion clarifies a change, and reduced motion preserves the
+              result.
             </p>
-          </CardBody>
-        </Card>
-        <Card>
-          <CardBody>
-            <div className="dhk-eyebrow" style={{ marginBottom: '0.5rem' }}>@dhaakon/ui/site</div>
-            <p className="doc-grid__sum">
-              The editorial patterns lifted from dhaakon.com — display headings, numbered lists,
-              programme cards, field notes. What you build pages from.
+          </article>
+          <article>
+            <h3>Built to travel.</h3>
+            <p>
+              Typed APIs, source-backed examples, separate entry points, and a
+              shared token system keep the work understandable to people and
+              coding agents.
             </p>
-          </CardBody>
-        </Card>
-      </div>
+          </article>
+        </div>
+      </section>
+      <section className="doc-home-section" aria-labelledby="start-title">
+        <div className="doc-section-label">
+          <span>[ 04 / Start building ]</span>
+          <Link to="/install">Installation notes ↗</Link>
+        </div>
+        <h2 id="start-title" className="doc-editorial-title">
+          Your next instrument.
+        </h2>
+        <CodeBlock
+          standalone
+          code={`import '@dhaakon/ui/styles.css';
+import { DhaakonProvider, Button } from '@dhaakon/ui';
+import { TelemetryChart } from '@dhaakon/ui/app';
 
-      <h2 className="doc-h2">Why React Aria</h2>
-      <NumberedList>
-        <NumberedItem index="01" title="Accessibility is behaviour, not markup" equation="ARIA ≠ accessible" sign="−" defaultOpen>
-          A <code className="doc-inline">role="listbox"</code> does nothing on its own. Typeahead, roving
-          tabindex, focus restoration and collision-aware positioning are what make a Select usable —
-          and they are where hand-rolled components quietly fail.
-        </NumberedItem>
-        <NumberedItem index="02" title="Styling stays ours" equation="Behaviour ≠ appearance" sign="+">
-          React Aria ships unstyled primitives that expose their state as
-          <code className="doc-inline">data-*</code> attributes. Every rule in this kit is plain CSS keyed
-          off those states, so the tokens remain the single source of truth.
-        </NumberedItem>
-        <NumberedItem index="03" title="It is externalised, not bundled" equation="One copy" sign="+">
-          <code className="doc-inline">react-aria-components</code> is a dependency, not inlined — apps
-          that use it directly share one copy.
-        </NumberedItem>
-      </NumberedList>
-
-      <h2 className="doc-h2">Sixty seconds</h2>
-      <CodeBlock
-        standalone
-        code={`import '@dhaakon/ui/styles.css';
-import { DhaakonProvider, Button, Select, SelectItem } from '@dhaakon/ui';
-
-export function App() {
-  return (
-    <DhaakonProvider>
-      <Select label="Region" placeholder="Choose a region">
-        <SelectItem id="nuc">homelab-nuc-1</SelectItem>
-      </Select>
-      <Button variant="accent">Engage</Button>
-    </DhaakonProvider>
-  );
-}`}
-      />
-
-      <CtaLink href="#/install">Full install guide</CtaLink>
+// Your data. Your workflows. A shared visual language.
+<DhaakonProvider>
+  <Button onClick={runExperiment}>Run experiment</Button>
+  <TelemetryChart title="Latency" unit="ms" labels={sampleLabels}
+    series={[{ id: 'inference', label: 'Inference', values: samples }]} />
+</DhaakonProvider>`}
+        />
+      </section>
     </>
   );
 }

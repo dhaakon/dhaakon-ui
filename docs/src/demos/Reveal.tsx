@@ -3,7 +3,7 @@ import { Card, CardBody } from '@dhaakon/ui';
 
 export default function Demo() {
   return (
-    <div style={{ height: 260, overflowY: 'auto', border: '1px solid var(--dhk-border)', padding: '1rem' }}>
+    <div tabIndex={0} role="region" aria-label="Scroll to reveal service cards" style={{ height: 260, overflowY: 'auto', border: '1px solid var(--dhk-border)', padding: '1rem' }}>
       <p className="dhk-mono" style={{ fontSize: 'var(--dhk-text-xs)', color: 'var(--dhk-text-subtle)' }}>
         Scroll this panel ↓
       </p>

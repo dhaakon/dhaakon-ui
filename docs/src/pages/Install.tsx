@@ -10,6 +10,11 @@ export function Install() {
         The kit is published to the network Verdaccio, not npmjs — point the
         <code className="doc-inline">@dhaakon</code> scope at it once per project.
       </p>
+      <Alert tone="info" title={`Source documentation · v${__KIT_VERSION__}`}>
+        This site documents the current source build. Registry publishing is a separate step:
+        check the published version before installing, or build and install a local tarball
+        with <code className="doc-inline">npm run build &amp;&amp; npm pack</code>.
+      </Alert>
 
       <h2 className="doc-h2">1 · Point the scope at the registry</h2>
       <p className="doc-p">
@@ -38,7 +43,7 @@ export function Install() {
       <h2 className="doc-h2">2 · Install</h2>
       <CodeBlock standalone code={`npm install @dhaakon/ui`} />
       <p className="doc-p">
-        <code className="doc-inline">react-aria-components</code>, <code className="doc-inline">clsx</code>{' '}
+        <code className="doc-inline">react-aria-components</code>, its matched <code className="doc-inline">react-aria</code> dependency, <code className="doc-inline">clsx</code>{' '}
         and <code className="doc-inline">tailwind-merge</code> come along as dependencies. React 18 or 19
         is a peer.
       </p>
@@ -80,12 +85,18 @@ createRoot(el).render(
         <code className="doc-inline">prefers-color-scheme</code>.
       </p>
       <p className="doc-p">
+        Explicit provider themes nest, including their overlay portals. Add <code className="doc-inline">density="compact"</code>{' '}
+        for dense controls or <code className="doc-inline">locale="ar-EG"</code> for right-to-left formatting and interaction.
+      </p>
+      <p className="doc-p">
         Override any token in your own stylesheet — they are ordinary custom properties:
       </p>
       <CodeBlock
         standalone
         code={`:root {
-  --dhk-accent: #2d62ff;   /* blue instead of orange */
+  --dhk-accent: #1843cf;
+  --dhk-accent-hover: #1234a8;
+  --dhk-text-on-accent: #ffffff; /* change the foreground together */
   --dhk-radius: 4px;       /* soften the corners */
 }`}
       />
@@ -110,9 +121,11 @@ import                         '@dhaakon/ui/theme.css';`}
       <h2 className="doc-h2">Publishing a new version</h2>
       <CodeBlock
         standalone
-        code={`npm version patch --no-git-tag-version
-npm run build
-npm publish            # → http://dhaakon-ubuntu:21760/`}
+        code={`npm run check
+npm --prefix docs run build
+npm --prefix docs run check:routes
+# Review CHANGELOG.md, version, commit and tag before publishing.
+# Registry publishing is an explicit release operation.`}
       />
       <p className="doc-p">
         Storybook is the workshop for building components; it lives at{' '}

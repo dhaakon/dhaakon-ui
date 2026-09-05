@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import {
+  Label,
   Slider as AriaSlider,
   SliderTrack,
   SliderThumb,
@@ -33,7 +34,7 @@ export function Slider<T extends number | number[] = number>({
     <AriaSlider {...rest} className={cn('dhk-slider', className)}>
       {(label != null || showValue) && (
         <div className="dhk-slider__head">
-          {label != null && <span className="dhk-control-label">{label}</span>}
+          {label != null && <Label className="dhk-control-label">{label}</Label>}
           {showValue && <SliderOutput className="dhk-slider__output" />}
         </div>
       )}

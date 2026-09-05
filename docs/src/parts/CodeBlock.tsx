@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 
 /**
  * Minimal TSX highlighter. One combined regex so the alternatives are matched
@@ -31,30 +31,40 @@ function highlight(source: string): ReactNode[] {
 
 export function CodeBlock({ code, standalone }: { code: string; standalone?: boolean }) {
   return (
-    <pre className={`doc-code${standalone ? ' doc-code--standalone' : ''}`}>
+    <pre tabIndex={0} className={`doc-code${standalone ? ' doc-code--standalone' : ''}`}>
       <code>{highlight(code.trim())}</code>
     </pre>
   );
 }
 
 export function CopyButton({ text, label = 'Copy' }: { text: string; label?: string }) {
-  const [done, setDone] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'copied' | 'failed'>('idle');
+  const generation = useRef(0);
+  useEffect(() => {
+    generation.current += 1;
+    setStatus('idle');
+    return () => { generation.current += 1; };
+  }, [text]);
 
   async function copy() {
+    const attempt = ++generation.current;
     try {
       await navigator.clipboard.writeText(text);
     } catch {
-      // Clipboard is unavailable over plain http on some hosts; the code is
-      // on screen and selectable either way, so fail quietly.
+      if (attempt === generation.current) setStatus('failed');
       return;
     }
-    setDone(true);
-    setTimeout(() => setDone(false), 1600);
+    if (attempt === generation.current) setStatus('copied');
   }
 
   return (
-    <button type="button" className="doc-demo__btn" onClick={copy}>
-      {done ? 'Copied' : label}
-    </button>
+    <span>
+      <button type="button" className="doc-demo__btn" onClick={copy}>
+        {status === 'copied' ? 'Copied' : label}
+      </button>
+      <span role="status" style={{ fontSize: '0.75rem', color: 'var(--dhk-text-muted)' }}>
+        {status === 'failed' ? 'Clipboard unavailable; select the code to copy.' : status === 'copied' ? ' Copied to clipboard.' : ''}
+      </span>
+    </span>
   );
 }

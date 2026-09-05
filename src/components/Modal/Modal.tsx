@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import { useId, type ReactNode } from 'react';
 import {
   DialogTrigger,
   Modal as AriaModal,
@@ -21,6 +21,8 @@ export interface ModalProps extends Omit<ModalOverlayProps, 'children' | 'classN
   footer?: ReactNode | ((close: () => void) => ReactNode);
   hideClose?: boolean;
   className?: string;
+  /** Accessible name when there is no visible title. */
+  'aria-label'?: string;
 }
 
 /**
@@ -42,8 +44,10 @@ export function Modal({
   isOpen,
   defaultOpen,
   onOpenChange,
+  'aria-label': ariaLabel,
   ...rest
 }: ModalProps) {
+  const descriptionId = useId();
   // With a trigger, DialogTrigger owns the open state — React Aria warns if
   // the overlay is also handed it. Without one, the overlay is the owner.
   const stateOnTrigger = trigger != null;
@@ -52,14 +56,14 @@ export function Modal({
   const body = (
     <ModalOverlay {...rest} {...(stateOnTrigger ? {} : state)} className="dhk-modal-overlay">
       <AriaModal className={cn('dhk-modal', className)}>
-        <AriaDialog className="dhk-dialog__inner" style={{ outline: 'none' }}>
+        <AriaDialog className="dhk-dialog__inner" aria-label={ariaLabel} aria-describedby={description != null ? descriptionId : undefined} style={{ outline: 'none' }}>
           {({ close }) => (
             <>
-              {(title != null || !hideClose) && (
+              {(title != null || description != null || !hideClose) && (
                 <div className="dhk-dialog__header">
                   <div>
                     {title != null && <Heading slot="title" className="dhk-dialog__title">{title}</Heading>}
-                    {description != null && <p className="dhk-dialog__desc">{description}</p>}
+                    {description != null && <p className="dhk-dialog__desc" id={descriptionId}>{description}</p>}
                   </div>
                   {!hideClose && (
                     <AriaButton className="dhk-dialog__close" aria-label="Close" onPress={close}>

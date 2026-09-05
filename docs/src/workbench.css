@@ -1,0 +1,329 @@
+.wb-page {
+  min-width: 0;
+}
+.wb-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+.wb-page-header .doc-editorial-title {
+  margin-bottom: 1rem;
+}
+.wb-page-header .doc-lede {
+  max-width: 38rem;
+  margin-bottom: 2rem;
+}
+.wb-edition {
+  font-family: var(--dhk-font-mono);
+  font-size: 0.625rem;
+  line-height: 1.8;
+  letter-spacing: 0.07em;
+  text-align: right;
+  color: var(--dhk-text-muted);
+  white-space: nowrap;
+  padding-top: 0.5rem;
+}
+.wb-disclosure {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  border-block: 1px solid var(--dhk-border-strong);
+  padding: 0.9rem 0;
+  margin-bottom: 2rem;
+  font-size: 0.75rem;
+  color: var(--dhk-text-muted);
+}
+.wb-disclosure strong {
+  color: var(--dhk-text);
+  font-family: var(--dhk-font-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+}
+.wb-disclosure__dot {
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--dhk-accent-text);
+  transform: rotate(45deg);
+}
+.wb-console {
+  border: 1px solid var(--dhk-border-strong);
+  min-width: 0;
+  background: var(--dhk-surface-raised);
+}
+.wb-console__head {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--dhk-border);
+}
+.wb-console__head .doc-kicker {
+  margin-bottom: 0.5rem;
+}
+.wb-console__head h2 {
+  margin: 0;
+  font-weight: 300;
+  font-size: 1.7rem;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+.wb-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.wb-instrument-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 1fr);
+}
+.wb-visual {
+  min-width: 0;
+  background: #101311;
+  color: #dbe1cf;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding-top: 1.5rem;
+}
+.wb-field {
+  display: block;
+  width: 100%;
+}
+.wb-visual__caption {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border-top: 1px solid #3e473c;
+  padding: 0.85rem 1rem;
+  margin-top: auto;
+  color: #b8c2b2;
+  font-family: var(--dhk-font-mono);
+  font-size: 0.5625rem;
+  line-height: 1.5;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.wb-parameters {
+  padding: 1.5rem;
+  border-left: 1px solid var(--dhk-border);
+  min-width: 0;
+}
+.wb-parameters .doc-kicker {
+  margin-bottom: 0.75rem;
+}
+.wb-parameters > p {
+  font-size: 0.8125rem;
+  color: var(--dhk-text-muted);
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+}
+.wb-parameters dl {
+  margin: 1.5rem 0 1rem;
+  font-family: var(--dhk-font-mono);
+  font-size: 0.625rem;
+}
+.wb-parameters dl > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
+  padding-block: 0.5rem;
+  border-bottom: 1px solid var(--dhk-border);
+}
+.wb-parameters dt {
+  color: var(--dhk-text-muted);
+}
+.wb-parameters dd {
+  margin: 0;
+}
+.wb-progress {
+  height: 3px;
+  background: var(--dhk-border);
+  margin-bottom: 1.5rem;
+}
+.wb-progress > span {
+  display: block;
+  height: 100%;
+  background: var(--dhk-accent);
+}
+.wb-chart {
+  border-top: 1px solid var(--dhk-border);
+  padding: 1.5rem;
+  min-width: 0;
+}
+.wb-announcement {
+  min-height: 2rem;
+  font-family: var(--dhk-font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.7;
+  color: var(--dhk-text-muted);
+  padding-block: 0.5rem;
+}
+.wb-registry,
+.wb-events {
+  margin-top: 3.5rem;
+  min-width: 0;
+}
+.wb-registry h2,
+.wb-events h2 {
+  font-weight: 300;
+  font-size: 1.9rem;
+  letter-spacing: -0.04em;
+  margin-top: 0;
+}
+.wb-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.wb-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--dhk-border);
+}
+.wb-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.8125rem;
+}
+.wb-table th,
+.wb-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--dhk-border);
+}
+.wb-table thead {
+  background: var(--dhk-surface-inset);
+}
+.wb-table thead th {
+  font-family: var(--dhk-font-mono);
+  font-size: 0.625rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--dhk-text-muted);
+}
+.wb-table tbody th {
+  font-weight: 400;
+  min-width: 14rem;
+}
+.wb-table tbody th span {
+  display: block;
+  font-family: var(--dhk-font-mono);
+  font-size: 0.5625rem;
+  color: var(--dhk-text-muted);
+  margin-bottom: 0.4rem;
+}
+.wb-table td code {
+  font-size: 0.625rem;
+  white-space: nowrap;
+}
+.wb-table tr[data-selected] {
+  background: var(--dhk-surface-inset);
+}
+.wb-table tr[data-selected] th {
+  box-shadow: inset 2px 0 var(--dhk-accent);
+}
+.wb-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+.wb-table .dhk-btn {
+  white-space: nowrap;
+}
+.wb-empty {
+  padding: 2.5rem;
+  text-align: center;
+}
+.wb-empty h3 {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+.wb-empty p {
+  color: var(--dhk-text-muted);
+  font-size: 0.875rem;
+}
+.wb-colophon {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--dhk-border);
+  margin-top: 3rem;
+  font-size: 0.75rem;
+  line-height: 1.8;
+  color: var(--dhk-text-muted);
+}
+.wb-colophon a {
+  color: var(--dhk-text);
+  text-underline-offset: 0.25em;
+}
+@media (max-width: 1200px) {
+  .wb-instrument-grid {
+    grid-template-columns: 1fr;
+  }
+  .wb-parameters {
+    border-left: 0;
+    border-top: 1px solid var(--dhk-border);
+  }
+  .wb-visual {
+    padding-top: 0;
+  }
+}
+@media (max-width: 700px) {
+  .wb-page-header {
+    display: block;
+  }
+  .wb-edition {
+    display: none;
+  }
+  .wb-console__head {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.25rem;
+  }
+  .wb-chart,
+  .wb-parameters {
+    padding: 1.25rem;
+  }
+  .wb-filters,
+  .wb-colophon {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .wb-disclosure > span:last-child {
+    flex-basis: 100%;
+    line-height: 1.6;
+  }
+  .wb-table th,
+  .wb-table td {
+    padding: 0.75rem;
+  }
+  .wb-page .doc-editorial-title {
+    font-size: clamp(2.25rem, 9vw, 3.4rem);
+  }
+}
+@media (forced-colors: active) {
+  .wb-visual {
+    color: CanvasText;
+    background: Canvas;
+  }
+  .wb-visual__caption {
+    color: CanvasText;
+    border-color: CanvasText;
+  }
+  .wb-progress {
+    border: 1px solid CanvasText;
+    height: 6px;
+  }
+  .wb-progress > span {
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+}

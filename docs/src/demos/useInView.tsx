@@ -12,7 +12,7 @@ export default function Demo() {
           {inView ? 'in view' : 'out of view'}
         </Badge>
       </div>
-      <div style={{ height: 220, overflowY: 'auto', border: '1px solid var(--dhk-border)', padding: '1rem' }}>
+      <div tabIndex={0} role="region" aria-label="Scroll to observe element visibility" style={{ height: 220, overflowY: 'auto', border: '1px solid var(--dhk-border)', padding: '1rem' }}>
         <div style={{ height: 180 }} />
         <div
           ref={ref}

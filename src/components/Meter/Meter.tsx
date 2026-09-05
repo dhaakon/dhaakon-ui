@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { Meter as AriaMeter, type MeterProps as AriaMeterProps } from 'react-aria-components';
+import { Label, Meter as AriaMeter, type MeterProps as AriaMeterProps } from 'react-aria-components';
 import { cn } from '../../lib/cn';
 
 export interface MeterProps extends Omit<AriaMeterProps, 'children' | 'className'> {
@@ -28,14 +28,22 @@ export function Meter({
   ...rest
 }: MeterProps) {
   return (
-    <AriaMeter {...rest} className={cn('dhk-meter', className)}>
+    <AriaMeter
+      {...rest}
+      className={cn('dhk-meter', className)}
+      render={(meterProps, values) => {
+        // Normalize RAC's legacy progressbar fallback to the standard meter role.
+        const props = { ...meterProps, role: 'meter' };
+        return rest.render ? rest.render(props, values) : <div {...props} />;
+      }}
+    >
       {({ percentage, valueText }) => {
         const f = percentage / 100;
         return (
           <>
             {(label != null || showValue) && (
               <div className="dhk-meter__head">
-                {label != null && <span className="dhk-meter__label">{label}</span>}
+                {label != null && <Label className="dhk-meter__label">{label}</Label>}
                 {showValue && <span className="dhk-meter__value">{valueText}</span>}
               </div>
             )}

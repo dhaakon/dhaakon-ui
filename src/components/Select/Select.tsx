@@ -1,5 +1,8 @@
 import { type ReactNode } from 'react';
 import {
+  Label,
+  Text,
+  FieldError,
   Select as AriaSelect,
   SelectValue,
   Button as AriaButton,
@@ -10,6 +13,7 @@ import {
   type ListBoxItemProps,
 } from 'react-aria-components';
 import { cn } from '../../lib/cn';
+import { hasFieldMessage } from '../../lib/fieldMessage';
 import { CheckIcon, ChevronDownIcon } from '../../lib/icons';
 
 export interface SelectProps<T extends object>
@@ -45,10 +49,12 @@ export function Select<T extends object>({
   className,
   ...rest
 }: SelectProps<T>) {
+  const hasError = hasFieldMessage(errorMessage);
   return (
-    <AriaSelect {...rest} className={cn('dhk-field', className)}>
-      {label != null && <span className="dhk-control-label">{label}</span>}
-      <AriaButton className="dhk-select-trigger">
+    <AriaSelect {...rest} isInvalid={rest.isInvalid ?? (hasError ? true : undefined)} className={cn('dhk-field', className)}>
+      {({ isInvalid }) => <>
+      {label != null && <Label className="dhk-control-label">{label}</Label>}
+      <AriaButton className="dhk-select-trigger" render={(buttonProps) => <button {...buttonProps} aria-invalid={isInvalid || undefined} />}>
         <SelectValue className="dhk-select-trigger__value">
           {({ isPlaceholder, selectedText }) =>
             isPlaceholder ? (placeholder ?? 'Select…') : selectedText
@@ -56,19 +62,16 @@ export function Select<T extends object>({
         </SelectValue>
         <ChevronDownIcon className="dhk-select-trigger__chevron" />
       </AriaButton>
-      {description != null && errorMessage == null && (
-        <span className="dhk-control-desc">{description}</span>
+      {description != null && !hasError && (
+        <Text slot="description" className="dhk-control-desc">{description}</Text>
       )}
-      {errorMessage != null && (
-        <span className="dhk-control-error" role="alert">
-          {errorMessage}
-        </span>
-      )}
+      <FieldError className="dhk-control-error">{hasError ? errorMessage : undefined}</FieldError>
       <Popover className="dhk-popover">
         <ListBox className="dhk-listbox" items={items}>
           {children as never}
         </ListBox>
       </Popover>
+      </>}
     </AriaSelect>
   );
 }

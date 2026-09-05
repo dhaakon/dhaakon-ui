@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode, type MouseEvent } from 'react';
+import { useEffect, useId, useRef, type ReactNode, type MouseEvent } from 'react';
 import { cn } from '../../lib/cn';
 import { XIcon } from '../../lib/icons';
 
@@ -15,6 +15,8 @@ export interface DialogProps {
   /** Clicking the backdrop closes the dialog. Default: true. */
   dismissOnBackdrop?: boolean;
   className?: string;
+  /** Accessible name when no visible title is provided. */
+  'aria-label'?: string;
 }
 
 /**
@@ -31,8 +33,12 @@ export function Dialog({
   hideClose,
   dismissOnBackdrop = true,
   className,
+  'aria-label': ariaLabel,
 }: DialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
+  const id = useId();
+  const titleId = `${id}-title`;
+  const descriptionId = `${id}-description`;
 
   useEffect(() => {
     const el = ref.current;
@@ -53,25 +59,30 @@ export function Dialog({
     <dialog
       ref={ref}
       className={cn('dhk-dialog', className)}
-      aria-labelledby={title != null ? 'dhk-dialog-title' : undefined}
-      aria-describedby={description != null ? 'dhk-dialog-desc' : undefined}
+      aria-label={ariaLabel}
+      aria-labelledby={title != null ? titleId : undefined}
+      aria-describedby={description != null ? descriptionId : undefined}
       onCancel={(e) => {
         e.preventDefault();
         onClose();
       }}
+      onClose={() => {
+        // A native form with method="dialog" can close without changing props.
+        if (open) onClose();
+      }}
       onClick={onBackdropClick}
     >
       <div className="dhk-dialog__inner">
-        {(title != null || !hideClose) && (
+        {(title != null || description != null || !hideClose) && (
           <div className="dhk-dialog__header">
             <div>
               {title != null && (
-                <h2 className="dhk-dialog__title" id="dhk-dialog-title">
+                <h2 className="dhk-dialog__title" id={titleId}>
                   {title}
                 </h2>
               )}
               {description != null && (
-                <p className="dhk-dialog__desc" id="dhk-dialog-desc">
+                <p className="dhk-dialog__desc" id={descriptionId}>
                   {description}
                 </p>
               )}

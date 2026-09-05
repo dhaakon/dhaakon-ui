@@ -6,3 +6,7 @@ storybook-static/
 .eslintcache
 docs/dist/
 docs/node_modules/
+test-results/
+coverage/
+*.tgz
+*.tsbuildinfo

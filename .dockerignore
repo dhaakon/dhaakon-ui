@@ -1,6 +1,14 @@
 node_modules
+**/node_modules
 dist
+**/dist
 storybook-static
+test-results
+coverage
 .git
 *.log
+*.tgz
+.env*
+**/.env*
+/.npmrc
 .DS_Store

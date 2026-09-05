@@ -8,7 +8,7 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
 }
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
-  { mono, invalid, className, id, 'aria-describedby': describedBy, ...rest },
+  { mono, invalid, className, id, required, 'aria-describedby': describedBy, ...rest },
   ref,
 ) {
   const field = useField();
@@ -18,7 +18,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
   return (
     <textarea
       ref={ref}
-      id={id ?? field?.id}
+      id={field?.id ?? id}
+      required={required ?? field?.required}
       aria-invalid={isInvalid || undefined}
       aria-describedby={described}
       className={cn('dhk-textarea', mono && 'dhk-input--mono', className)}

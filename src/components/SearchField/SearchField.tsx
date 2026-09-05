@@ -1,5 +1,7 @@
 import { type ReactNode } from 'react';
 import {
+  Label,
+  Text,
   SearchField as AriaSearchField,
   Input as AriaInput,
   Button as AriaButton,
@@ -31,7 +33,7 @@ export function SearchField({
 }: SearchFieldProps) {
   return (
     <AriaSearchField {...rest} className={cn('dhk-field', className)}>
-      {label != null && <span className="dhk-control-label">{label}</span>}
+      {label != null && <Label className="dhk-control-label">{label}</Label>}
       <div className="dhk-searchfield__box">
         <SearchIcon className="dhk-searchfield__icon" />
         <AriaInput placeholder={placeholder} />
@@ -39,7 +41,7 @@ export function SearchField({
           <XIcon />
         </AriaButton>
       </div>
-      {description != null && <span className="dhk-control-desc">{description}</span>}
+      {description != null && <Text slot="description" className="dhk-control-desc">{description}</Text>}
     </AriaSearchField>
   );
 }

@@ -1,4 +1,4 @@
-import type { ComponentType } from 'react';
+import { lazy, type ComponentType } from 'react';
 
 export interface ComponentDoc {
   /** Display name and URL slug source. */
@@ -20,7 +20,7 @@ export interface ComponentDoc {
    * `app` is `@dhaakon/ui/app` (composites assembled from them); `motion` is
    * the companion `@dhaakon/motion` package.
    */
-  layer?: 'core' | 'app' | 'motion';
+  layer?: 'core' | 'app' | 'site' | 'motion';
   /** Overrides the layer's default entry — e.g. `@dhaakon/motion/react`. */
   entry?: string;
   /** File in ../demos, without extension. Defaults to `name`. */
@@ -55,6 +55,7 @@ export const CATEGORIES: Category[] = [
 export const LAYERS = [
   { id: 'core', label: 'Components', entry: '@dhaakon/ui', blurb: 'Primitives — the pieces screens are built from.' },
   { id: 'app', label: 'Composites', entry: '@dhaakon/ui/app', blurb: 'Assemblies — shells, headers, metric bands, feeds, whole pages.' },
+  { id: 'site', label: 'Editorial', entry: '@dhaakon/ui/site', blurb: 'Practice — expressive typography, field notes, numbered systems, and complete editorial sections.' },
   { id: 'motion', label: 'Motion', entry: '@dhaakon/motion', blurb: 'The companion animation package: tweens, timelines and React bindings.' },
 ] as const;
 
@@ -63,6 +64,7 @@ export type Layer = (typeof LAYERS)[number]['id'];
 export function entryFor(doc: ComponentDoc): string {
   if (doc.entry) return doc.entry;
   if (doc.layer === 'app') return '@dhaakon/ui/app';
+  if (doc.layer === 'site') return '@dhaakon/ui/site';
   if (doc.layer === 'motion') return '@dhaakon/motion';
   return '@dhaakon/ui';
 }
@@ -77,6 +79,50 @@ export function byLayer(layer: Layer): ComponentDoc[] {
 
 export const COMPONENTS: ComponentDoc[] = [
   {
+    name: 'MultiSelect', slug: 'multi-select', category: 'Forms', aria: true,
+    summary: 'A labeled, searchable selection of multiple values.',
+    guidance: 'Use for tags, environments, or capabilities. Selection is controlled with stable string IDs; always supply a visible label and explain whether an empty selection means none or all.',
+    exports: ['MultiSelect'],
+  },
+  {
+    name: 'Drawer', slug: 'drawer', category: 'Containment', aria: true,
+    summary: 'A modal inspection panel with focus containment and restoration.',
+    guidance: 'Keep the parent context visible while inspecting a record or editing details. Give the panel a concise title. Closing returns focus to the control that opened it.',
+    exports: ['Drawer'],
+  },
+  {
+    name: 'TelemetryChart', slug: 'telemetry-chart', category: 'Data', layer: 'app',
+    summary: 'An SVG time-series view with a readable data alternative.',
+    guidance: 'Label units and series, provide equally spaced sample labels, and expose the data table. A line chart is a view of evidence, not proof that a system is live.',
+    exports: ['TelemetryChart'],
+  },
+  {
+    name: 'CodeSnippet', slug: 'code-snippet', category: 'Data', layer: 'app',
+    summary: 'Copyable source with line numbers and honest clipboard feedback.',
+    guidance: 'Use for short reproducible examples and configurations. For long editing sessions use a purpose-built editor, not a read-only code block.',
+    exports: ['CodeSnippet'],
+  },
+  {
+    name: 'LogViewer', slug: 'log-viewer', category: 'Data', layer: 'app',
+    summary: 'A searchable, filterable event stream with a pauseable view.',
+    guidance: 'Timestamps and severity carry meaning without relying on color. A paused view retains its visible snapshot while the producer continues independently.',
+    exports: ['LogViewer'],
+  },
+  { name: 'DisplayHeading', slug: 'display-heading', category: 'Pages', layer: 'site', summary: 'Large editorial type with decorative spatial annotations.', exports: ['DisplayHeading'], storybook: 'site-elements--display-heading' },
+  { name: 'Section', slug: 'section', category: 'Pages', layer: 'site', summary: 'A numbered section marker and editorial introduction.', exports: ['SectionMarker', 'SectionIntro'] },
+  { name: 'FieldNote', slug: 'field-note', category: 'Pages', layer: 'site', summary: 'A bracketed serif aside for context and critical observations.', exports: ['FieldNote'] },
+  { name: 'CapabilityIndex', slug: 'capability-index', category: 'Data', layer: 'site', summary: 'A numbered capability grid with compact technical rhythm.', exports: ['CapabilityIndex'] },
+  { name: 'ProcessStep', slug: 'process-step', category: 'Pages', layer: 'site', summary: 'One concrete step in a process, with its deliverable made visible.', exports: ['ProcessStep'] },
+  { name: 'NumberedList', slug: 'numbered-list', category: 'Containment', layer: 'site', summary: 'An editorial disclosure list for methods, principles, and evidence.', exports: ['NumberedList', 'NumberedItem'] },
+  { name: 'StatusBar', slug: 'status-bar', category: 'Shell', layer: 'site', summary: 'A thin context strip for status, place, and operating conditions.', exports: ['StatusBar'] },
+  { name: 'Marker', slug: 'marker', category: 'Feedback', layer: 'site', summary: 'A compact vocabulary of directional and technical glyphs.', exports: ['Marker', 'GLYPHS'] },
+  { name: 'ProgramCard', slug: 'program-card', category: 'Pages', layer: 'site', summary: 'An editorial programme with time horizon, outcomes, and details.', exports: ['ProgramCard'] },
+  { name: 'OfferCard', slug: 'offer-card', category: 'Pages', layer: 'site', summary: 'A structured engagement offering with a clear next action.', exports: ['OfferCard'] },
+  { name: 'Segmented', slug: 'segmented', category: 'Navigation', layer: 'site', summary: 'A numbered choice control for related editorial perspectives.', exports: ['Segmented'] },
+  { name: 'LogoMarquee', slug: 'logo-marquee', category: 'Pages', layer: 'site', summary: 'A horizontal strip of names or marks with a reduced-motion fallback.', exports: ['LogoMarquee'] },
+  { name: 'CtaLink', slug: 'cta-link', category: 'Actions', layer: 'site', summary: 'An editorial action that remains a real navigable link.', exports: ['CtaLink'] },
+  { name: 'SiteFooter', slug: 'site-footer', category: 'Shell', layer: 'site', summary: 'A closing identity line with context and real destination links.', exports: ['SiteFooter'] },
+  {
     name: 'Button',
     slug: 'button',
     category: 'Actions',
@@ -85,6 +131,7 @@ export const COMPONENTS: ComponentDoc[] = [
       'One `accent` button per view at most. `primary` is solid ink that turns accent on hover; `outline` for secondary actions; `ghost` inside dense toolbars. Group alternatives with ButtonGroup rather than stacking solid buttons.',
     exports: ['Button', 'ButtonGroup'],
     storybook: 'components-button--variants',
+    aria: true,
   },
   {
     name: 'Logo',
@@ -345,6 +392,7 @@ export const COMPONENTS: ComponentDoc[] = [
       'For content of equal standing; a tab is not a navigation link. Roving tabindex and arrow-key movement are built in.',
     exports: ['Tabs', 'TabList', 'Tab', 'TabPanel'],
     storybook: 'components-tabs--basic',
+    aria: true,
   },
   {
     name: 'Accordion',
@@ -735,23 +783,27 @@ export const COMPONENTS: ComponentDoc[] = [
 // Each demo is loaded twice: as a component to render, and as raw text to show.
 // One file, so the preview and the snippet cannot drift apart.
 
-const demoModules = import.meta.glob<{ default: ComponentType }>('../demos/*.tsx', { eager: true });
+const demoModules = import.meta.glob<{ default: ComponentType }>('../demos/*.tsx');
 const demoSources = import.meta.glob<string>('../demos/*.tsx', {
-  eager: true,
   query: '?raw',
   import: 'default',
 });
+const lazyDemos = new Map<string, ComponentType>();
 
 function demoKey(doc: ComponentDoc) {
   return `../demos/${doc.demo ?? doc.name}.tsx`;
 }
 
 export function getDemo(doc: ComponentDoc): ComponentType | null {
-  return demoModules[demoKey(doc)]?.default ?? null;
+  const key = demoKey(doc);
+  const loader = demoModules[key];
+  if (!loader) return null;
+  if (!lazyDemos.has(key)) lazyDemos.set(key, lazy(loader));
+  return lazyDemos.get(key)!;
 }
 
-export function getDemoSource(doc: ComponentDoc): string | null {
-  return demoSources[demoKey(doc)] ?? null;
+export async function getDemoSource(doc: ComponentDoc): Promise<string | null> {
+  return await demoSources[demoKey(doc)]?.() ?? null;
 }
 
 export function findComponent(slug: string): ComponentDoc | undefined {

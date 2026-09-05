@@ -1,5 +1,8 @@
 import { type ReactNode } from 'react';
 import {
+  Label,
+  Text,
+  FieldError,
   NumberField as AriaNumberField,
   Group,
   Input as AriaInput,
@@ -7,6 +10,7 @@ import {
   type NumberFieldProps as AriaNumberFieldProps,
 } from 'react-aria-components';
 import { cn } from '../../lib/cn';
+import { hasFieldMessage } from '../../lib/fieldMessage';
 
 export interface NumberFieldProps extends Omit<AriaNumberFieldProps, 'children' | 'className'> {
   label?: ReactNode;
@@ -34,9 +38,10 @@ export function NumberField({
   className,
   ...rest
 }: NumberFieldProps) {
+  const hasError = hasFieldMessage(errorMessage);
   return (
-    <AriaNumberField {...rest} className={cn('dhk-field', className)}>
-      {label != null && <span className="dhk-control-label">{label}</span>}
+    <AriaNumberField {...rest} isInvalid={rest.isInvalid ?? (hasError ? true : undefined)} className={cn('dhk-field', className)}>
+      {label != null && <Label className="dhk-control-label">{label}</Label>}
       <Group className="dhk-numberfield__box">
         {!hideSteppers && (
           <AriaButton slot="decrement" className="dhk-numberfield__step" aria-label="Decrease">
@@ -50,12 +55,10 @@ export function NumberField({
           </AriaButton>
         )}
       </Group>
-      {description != null && errorMessage == null && (
-        <span className="dhk-control-desc">{description}</span>
+      {description != null && !hasError && (
+        <Text slot="description" className="dhk-control-desc">{description}</Text>
       )}
-      {errorMessage != null && (
-        <span className="dhk-control-error" role="alert">{errorMessage}</span>
-      )}
+      <FieldError className="dhk-control-error">{hasError ? errorMessage : undefined}</FieldError>
     </AriaNumberField>
   );
 }

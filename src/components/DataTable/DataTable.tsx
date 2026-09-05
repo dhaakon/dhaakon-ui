@@ -42,13 +42,14 @@ export function DataTableHeader<T extends object>(props: AriaTableHeaderProps<T>
 
 export function DataTableBody<T extends object>({
   emptyText,
+  renderEmptyState,
   ...rest
 }: AriaTableBodyProps<T> & { emptyText?: ReactNode }) {
   return (
     <AriaTableBody
       {...rest}
       renderEmptyState={
-        emptyText != null ? () => <div className="dhk-datatable__empty">{emptyText}</div> : undefined
+        emptyText != null ? () => <div className="dhk-datatable__empty">{emptyText}</div> : renderEmptyState
       }
     />
   );

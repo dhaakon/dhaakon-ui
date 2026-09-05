@@ -5,6 +5,8 @@ export default function Demo() {
   return (
     <div style={{ border: '1px solid var(--dhk-border)', height: 420, overflow: 'auto' }}>
       <AppShell
+        contentAs="section"
+        contentLabel="Example application content"
         header={<HeaderNav brand="Dhaakon" links={[{ label: 'Console', href: '#', current: true }, { label: 'Teams', href: '#' }]} />}
         sidebar={
           <SidebarNav

@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import {
   Autocomplete,
   Input as AriaInput,
+  SearchField as AriaSearchField,
   ListBox,
   ListBoxItem,
   ListBoxSection,
@@ -53,23 +54,22 @@ export function CommandMenu({
   const [internalOpen, setInternalOpen] = useState(false);
   const open = isOpen ?? internalOpen;
 
-  const setOpen = (v: boolean) => {
+  const setOpen = useCallback((v: boolean) => {
     if (isOpen === undefined) setInternalOpen(v);
     onOpenChange?.(v);
-  };
+  }, [isOpen, onOpenChange]);
 
   useEffect(() => {
     if (!hotkey) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key.toLowerCase() === 'k' && (e.metaKey || e.ctrlKey)) {
+      if (!e.defaultPrevented && !e.repeat && !e.isComposing && e.key.toLowerCase() === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         setOpen(!open);
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hotkey, open]);
+  }, [hotkey, open, setOpen]);
 
   const { contains } = useFilter({ sensitivity: 'base' });
 
@@ -94,10 +94,10 @@ export function CommandMenu({
       <Modal className="dhk-modal dhk-command">
         <Dialog aria-label="Command menu" style={{ outline: 'none', display: 'contents' }}>
           <Autocomplete filter={contains}>
-            <div className="dhk-command__search">
+            <AriaSearchField className="dhk-command__search" aria-label="Search commands">
               <SearchIcon className="dhk-command__icon" />
-              <AriaInput autoFocus placeholder={placeholder} aria-label="Search commands" />
-            </div>
+              <AriaInput autoFocus placeholder={placeholder} />
+            </AriaSearchField>
             <ListBox
               className="dhk-command__list"
               aria-label="Commands"

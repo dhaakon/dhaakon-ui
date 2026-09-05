@@ -53,3 +53,8 @@ export { NotificationList, type NotificationListProps, type Notification } from 
 export { InlineCTA, type InlineCTAProps } from './InlineCTA';
 export { LoginPanel, type LoginPanelProps } from './LoginPanel';
 export { ErrorPage, type ErrorPageProps } from './ErrorPage';
+
+/* ---- research & developer instruments ------------------------------ */
+export { TelemetryChart, type TelemetryChartProps, type TelemetrySeries, type TelemetryTone } from './TelemetryChart';
+export { CodeSnippet, type CodeSnippetProps } from './CodeSnippet';
+export { LogViewer, type LogViewerProps, type LogEntry, type LogLevel } from './LogViewer';

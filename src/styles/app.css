@@ -62,7 +62,7 @@
   white-space: nowrap;
 }
 .dhk-headernav__mark {
-  color: var(--dhk-accent);
+  color: var(--dhk-accent-text);
 }
 .dhk-headernav__links {
   display: flex;
@@ -632,7 +632,7 @@
 }
 .dhk-step[data-state='complete'] .dhk-step__index,
 .dhk-step[data-state='current'] .dhk-step__index {
-  color: var(--dhk-accent);
+  color: var(--dhk-accent-text);
 }
 .dhk-step__title {
   font-size: var(--dhk-text-sm);
@@ -730,6 +730,7 @@
  * ============================================================== */
 
 .dhk-codeinput {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--dhk-space-2);
@@ -739,6 +740,8 @@
   gap: var(--dhk-space-2);
 }
 .dhk-codeinput__box {
+  display: grid;
+  place-items: center;
   width: 2.6rem;
   height: 3.1rem;
   text-align: center;
@@ -754,10 +757,20 @@
 .dhk-codeinput__box:hover {
   border-color: var(--dhk-ink);
 }
-.dhk-codeinput__box:focus {
+.dhk-codeinput__box:focus,
+.dhk-codeinput__box[data-active] {
   border-color: var(--dhk-ink);
   box-shadow: inset 0 -2px 0 var(--dhk-focus);
 }
+.dhk-codeinput__native {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.dhk-codeinput__box[data-disabled] { opacity: 0.45; }
 .dhk-codeinput[data-invalid] .dhk-codeinput__box {
   border-color: var(--dhk-danger);
 }
@@ -972,7 +985,7 @@
   font-size: var(--dhk-text-2xs);
   letter-spacing: var(--dhk-tracking-label-wide);
   text-transform: uppercase;
-  color: var(--dhk-accent);
+  color: var(--dhk-accent-text);
 }
 .dhk-errorpage__title {
   font-size: clamp(1.8rem, 5vw, 3rem);

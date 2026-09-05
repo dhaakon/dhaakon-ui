@@ -15,6 +15,7 @@ import {
   type DateValue,
 } from 'react-aria-components';
 import { cn } from '../../lib/cn';
+import { hasFieldMessage } from '../../lib/fieldMessage';
 import { ChevronLeftIcon, ChevronRightIcon } from '../../lib/icons';
 
 function Header() {
@@ -62,7 +63,7 @@ export function Calendar<T extends DateValue>({ errorMessage, className, ...rest
     <AriaCalendar {...rest} className={cn('dhk-calendar', className)}>
       <Header />
       <Grid />
-      {errorMessage != null && (
+      {hasFieldMessage(errorMessage) && (
         <Text slot="errorMessage" className="dhk-calendar__error">{errorMessage}</Text>
       )}
     </AriaCalendar>
@@ -85,7 +86,7 @@ export function RangeCalendar<T extends DateValue>({
     <AriaRangeCalendar {...rest} className={cn('dhk-calendar', 'dhk-calendar--range', className)}>
       <Header />
       <Grid />
-      {errorMessage != null && (
+      {hasFieldMessage(errorMessage) && (
         <Text slot="errorMessage" className="dhk-calendar__error">{errorMessage}</Text>
       )}
     </AriaRangeCalendar>

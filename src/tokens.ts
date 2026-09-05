@@ -23,9 +23,9 @@ export const color = {
   accent: '#ff5a1f',
   accentHover: '#e6480f',
   focus: '#2d62ff',
-  info: '#2d62ff',
+  info: '#2452dc',
   success: '#1f7a4d',
-  warning: '#a5620a',
+  warning: '#8d5104',
   danger: '#c22b1c',
 } as const;
 
@@ -87,6 +87,29 @@ export const layout = {
   gutter: 'clamp(1.25rem, 3vw, 3.75rem)',
 } as const;
 
+/** Theme-aware data equivalents for canvas/chart consumers; CSS remains authoritative. */
+export const theme = {
+  light: {
+    bg: '#f0eee8', surface: '#f0eee8', surfaceRaised: '#faf9f5', text: '#101010',
+    textMuted: 'rgba(16, 16, 16, 0.66)', textSubtle: 'rgba(16, 16, 16, 0.62)',
+    textOnAccent: '#101010', accentText: '#a8320c', info: '#2452dc',
+    success: '#1f7a4d', warning: '#8d5104', danger: '#c22b1c', focus: '#2d62ff',
+  },
+  dark: {
+    bg: '#0d0d0c', surface: '#141412', surfaceRaised: '#1b1b18', text: '#f0eee8',
+    textMuted: 'rgba(240, 238, 232, 0.66)', textSubtle: 'rgba(240, 238, 232, 0.64)',
+    textOnAccent: '#0d0d0c', accentText: '#ff956f', info: '#8da9ff',
+    success: '#4fd18b', warning: '#e0a75c', danger: '#f2705f', focus: '#6f93ff',
+  },
+} as const;
+
+export const density = {
+  comfortable: { sm: '1.75rem', md: '2.25rem', lg: '2.75rem' },
+  compact: { sm: '1.5rem', md: '2rem', lg: '2.5rem' },
+} as const;
+
+export const elevation = { dropdown: 1000, overlay: 1100, toast: 1200 } as const;
+
 export const tokens = {
   color,
   font,
@@ -98,6 +121,9 @@ export const tokens = {
   radius,
   motion,
   layout,
+  theme,
+  density,
+  elevation,
 } as const;
 
 export default tokens;

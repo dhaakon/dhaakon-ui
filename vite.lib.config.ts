@@ -15,7 +15,7 @@ const EXTERNAL = [
 export default defineConfig({
   plugins: [
     react(),
-    dts({ include: ['src'], exclude: ['src/**/*.stories.*', 'src/stories/**'], rollupTypes: true }),
+    dts({ include: ['src'], exclude: ['src/**/*.stories.*', 'src/**/*.test.*', 'src/stories/**'], rollupTypes: true }),
   ],
   resolve: {
     alias: { '@': resolve(__dirname, 'src') },

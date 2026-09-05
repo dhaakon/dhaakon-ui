@@ -156,5 +156,8 @@ export { Breadcrumbs, Breadcrumb, type BreadcrumbsProps, type BreadcrumbProps } 
 export { Pagination, type PaginationProps } from './components/Pagination/Pagination';
 
 /* ---- utilities --------------------------------------------------- */
+export { MultiSelect, type MultiSelectProps, type MultiSelectOption } from './components/MultiSelect/MultiSelect';
+export { Drawer, type DrawerProps } from './components/Drawer/Drawer';
+
 export { cn } from './lib/cn';
 export * as tokens from './tokens';

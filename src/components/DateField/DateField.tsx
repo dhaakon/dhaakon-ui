@@ -1,5 +1,8 @@
 import { type ReactNode } from 'react';
 import {
+  Label,
+  Text,
+  FieldError,
   DateField as AriaDateField,
   TimeField as AriaTimeField,
   DateInput,
@@ -10,6 +13,7 @@ import {
   type TimeValue,
 } from 'react-aria-components';
 import { cn } from '../../lib/cn';
+import { hasFieldMessage } from '../../lib/fieldMessage';
 
 /**
  * The segmented `<DateInput>` body, shared by DateField, TimeField and the
@@ -47,18 +51,17 @@ export function DateField<T extends DateValue>({
   className,
   ...rest
 }: DateFieldProps<T>) {
+  const hasError = hasFieldMessage(errorMessage);
   return (
-    <AriaDateField {...rest} className={cn('dhk-datefield', className)}>
-      {label != null && <span className="dhk-control-label">{label}</span>}
+    <AriaDateField {...rest} isInvalid={rest.isInvalid ?? (hasError ? true : undefined)} className={cn('dhk-datefield', className)}>
+      {label != null && <Label className="dhk-control-label">{label}</Label>}
       <div className="dhk-datefield__box">
         <Segments />
       </div>
-      {description != null && errorMessage == null && (
-        <span className="dhk-control-desc">{description}</span>
+      {description != null && !hasError && (
+        <Text slot="description" className="dhk-control-desc">{description}</Text>
       )}
-      {errorMessage != null && (
-        <span className="dhk-control-error" role="alert">{errorMessage}</span>
-      )}
+      <FieldError className="dhk-control-error">{hasError ? errorMessage : undefined}</FieldError>
     </AriaDateField>
   );
 }
@@ -79,18 +82,17 @@ export function TimeField<T extends TimeValue>({
   className,
   ...rest
 }: TimeFieldProps<T>) {
+  const hasError = hasFieldMessage(errorMessage);
   return (
-    <AriaTimeField {...rest} className={cn('dhk-datefield', className)}>
-      {label != null && <span className="dhk-control-label">{label}</span>}
+    <AriaTimeField {...rest} isInvalid={rest.isInvalid ?? (hasError ? true : undefined)} className={cn('dhk-datefield', className)}>
+      {label != null && <Label className="dhk-control-label">{label}</Label>}
       <div className="dhk-datefield__box">
         <Segments />
       </div>
-      {description != null && errorMessage == null && (
-        <span className="dhk-control-desc">{description}</span>
+      {description != null && !hasError && (
+        <Text slot="description" className="dhk-control-desc">{description}</Text>
       )}
-      {errorMessage != null && (
-        <span className="dhk-control-error" role="alert">{errorMessage}</span>
-      )}
+      <FieldError className="dhk-control-error">{hasError ? errorMessage : undefined}</FieldError>
     </AriaTimeField>
   );
 }

@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import {
+  Label,
   ColorPicker as AriaColorPicker,
   ColorArea,
   ColorSlider,
@@ -36,7 +37,7 @@ export interface ColorFieldProps extends Omit<AriaColorFieldProps, 'children' | 
 export function ColorField({ label, className, ...rest }: ColorFieldProps) {
   return (
     <AriaColorField {...rest} className={cn('dhk-field', className)}>
-      {label != null && <span className="dhk-control-label">{label}</span>}
+      {label != null && <Label className="dhk-control-label">{label}</Label>}
       <div className="dhk-searchfield__box">
         <AriaInput />
       </div>
@@ -68,7 +69,7 @@ export function ColorPicker({ label, className, ...rest }: ColorPickerProps) {
           {label}
         </AriaButton>
         <Popover className="dhk-popover" placement="bottom start">
-          <Dialog className="dhk-colorpicker__panel">
+          <Dialog className="dhk-colorpicker__panel" aria-label="Choose color">
             <ColorArea
               className="dhk-colorarea"
               colorSpace="hsb"
@@ -89,7 +90,7 @@ export function ColorPicker({ label, className, ...rest }: ColorPickerProps) {
             </ColorSlider>
             <div className="dhk-colorfield__row">
               <ColorSwatch />
-              <ColorField />
+              <ColorField aria-label="Hex color" />
             </div>
           </Dialog>
         </Popover>

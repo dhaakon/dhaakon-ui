@@ -18,7 +18,7 @@
   color: var(--dhk-text-subtle);
 }
 .dhk-marker--accent {
-  color: var(--dhk-accent);
+  color: var(--dhk-accent-text);
 }
 .dhk-marker--ink {
   color: var(--dhk-text);
@@ -72,7 +72,7 @@
 }
 .dhk-sectionmarker__index::before { content: '[ '; color: var(--dhk-text-subtle); }
 .dhk-sectionmarker__index::after { content: ' ]'; color: var(--dhk-text-subtle); }
-.dhk-sectionmarker__index { color: var(--dhk-accent); }
+.dhk-sectionmarker__index { color: var(--dhk-accent-text); }
 
 .dhk-sectionintro {
   display: flex;
@@ -128,7 +128,7 @@
   animation: dhk-anno-in var(--dhk-duration-slow) var(--dhk-ease) both;
   animation-delay: var(--dhk-anno-delay, 0ms);
 }
-.dhk-displayheading__anno .dhk-marker { color: var(--dhk-accent); }
+.dhk-displayheading__anno .dhk-marker { color: var(--dhk-accent-text); }
 @keyframes dhk-anno-in {
   from { opacity: 0; transform: translate(-4px, 2px); }
 }
@@ -160,7 +160,7 @@
   transition: color var(--dhk-duration) var(--dhk-ease);
 }
 .dhk-numitem__head:hover {
-  color: var(--dhk-accent);
+  color: var(--dhk-accent-text);
 }
 .dhk-numitem__index {
   font-family: var(--dhk-font-mono);
@@ -183,7 +183,7 @@
 }
 .dhk-numitem__sign {
   font-family: var(--dhk-font-mono);
-  color: var(--dhk-accent);
+  color: var(--dhk-accent-text);
   font-size: var(--dhk-text-sm);
 }
 .dhk-numitem__body {
@@ -200,7 +200,7 @@
   font-size: var(--dhk-text-2xs);
   letter-spacing: var(--dhk-tracking-label-wide);
   text-transform: uppercase;
-  color: var(--dhk-accent);
+  color: var(--dhk-accent-text);
 }
 
 /* ---- Logo marquee --------------------------------------------- */
@@ -255,7 +255,7 @@
   text-transform: uppercase;
   color: var(--dhk-text-muted);
 }
-.dhk-programcard__count { color: var(--dhk-accent); }
+.dhk-programcard__count { color: var(--dhk-accent-text); }
 .dhk-programcard__name {
   font-size: var(--dhk-text-xl);
   font-weight: var(--dhk-weight-light);
@@ -345,7 +345,7 @@
 .dhk-offercard__includes li::before {
   content: '+';
   font-family: var(--dhk-font-mono);
-  color: var(--dhk-accent);
+  color: var(--dhk-accent-text);
 }
 
 /* ---- Field note ---------------------------------------- */
@@ -419,7 +419,7 @@
 }
 .dhk-segmented__item-index {
   font-family: var(--dhk-font-mono);
-  opacity: 0.6;
+  opacity: 1;
 }
 
 /* ---- Capability index --------------------------------- */
@@ -433,7 +433,7 @@
   font-size: var(--dhk-text-2xs);
   letter-spacing: var(--dhk-tracking-label-wide);
   text-transform: uppercase;
-  color: var(--dhk-accent);
+  color: var(--dhk-accent-text);
 }
 .dhk-capindex__grid {
   display: grid;
@@ -466,7 +466,7 @@
 .dhk-processstep__index {
   font-family: var(--dhk-font-mono);
   font-size: var(--dhk-text-sm);
-  color: var(--dhk-accent);
+  color: var(--dhk-accent-text);
 }
 .dhk-processstep__title {
   font-size: var(--dhk-text-lg);
@@ -510,7 +510,7 @@
   transition: color var(--dhk-duration) var(--dhk-ease), gap var(--dhk-duration) var(--dhk-ease);
 }
 .dhk-cta:hover {
-  color: var(--dhk-accent);
+  color: var(--dhk-accent-text);
   gap: var(--dhk-space-4);
 }
 .dhk-cta__glyph {
@@ -538,5 +538,5 @@
   font-size: var(--dhk-text-sm);
 }
 .dhk-sitefooter__email:hover {
-  color: var(--dhk-accent);
+  color: var(--dhk-accent-text);
 }

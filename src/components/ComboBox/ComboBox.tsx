@@ -1,5 +1,8 @@
 import { type ReactNode } from 'react';
 import {
+  Label,
+  Text,
+  FieldError,
   ComboBox as AriaComboBox,
   Input as AriaInput,
   Group,
@@ -9,6 +12,7 @@ import {
   type ComboBoxProps as AriaComboBoxProps,
 } from 'react-aria-components';
 import { cn } from '../../lib/cn';
+import { hasFieldMessage } from '../../lib/fieldMessage';
 import { ChevronDownIcon, SearchIcon } from '../../lib/icons';
 
 export interface ComboBoxProps<T extends object>
@@ -45,9 +49,10 @@ export function ComboBox<T extends object>({
   className,
   ...rest
 }: ComboBoxProps<T>) {
+  const hasError = hasFieldMessage(errorMessage);
   return (
-    <AriaComboBox {...rest} className={cn('dhk-field', className)}>
-      {label != null && <span className="dhk-control-label">{label}</span>}
+    <AriaComboBox {...rest} isInvalid={rest.isInvalid ?? (hasError ? true : undefined)} className={cn('dhk-field', className)}>
+      {label != null && <Label className="dhk-control-label">{label}</Label>}
       <Group className="dhk-combobox-input">
         {searchIcon && <SearchIcon className="dhk-combobox-input__icon" />}
         <AriaInput placeholder={placeholder} />
@@ -57,14 +62,10 @@ export function ComboBox<T extends object>({
           </AriaButton>
         )}
       </Group>
-      {description != null && errorMessage == null && (
-        <span className="dhk-control-desc">{description}</span>
+      {description != null && !hasError && (
+        <Text slot="description" className="dhk-control-desc">{description}</Text>
       )}
-      {errorMessage != null && (
-        <span className="dhk-control-error" role="alert">
-          {errorMessage}
-        </span>
-      )}
+      <FieldError className="dhk-control-error">{hasError ? errorMessage : undefined}</FieldError>
       <Popover className="dhk-popover">
         <ListBox
           className="dhk-listbox"

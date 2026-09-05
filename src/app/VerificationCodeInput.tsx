@@ -1,11 +1,12 @@
-import { useRef, useState, type ClipboardEvent, type KeyboardEvent } from 'react';
+import { useId, useRef, useState, type ClipboardEvent } from 'react';
 import { cn } from '../lib/cn';
 
 export interface VerificationCodeInputProps {
   length?: number;
   value?: string;
+  defaultValue?: string;
   onChange?: (value: string) => void;
-  /** Fired once every box is filled. */
+  /** Fired when an edit produces a changed, complete code. */
   onComplete?: (value: string) => void;
   label?: string;
   errorMessage?: string;
@@ -15,16 +16,13 @@ export interface VerificationCodeInputProps {
 }
 
 /**
- * One box per character of a one-time code.
- *
- * Pasting the whole code into any box fills the rest — people paste these far
- * more often than they type them, and a split input that rejects a paste is
- * the classic version of this control done badly. Backspace on an empty box
- * steps back; ← and → move without editing.
+ * One native OTP input with presentational cells: autofill, paste, selection,
+ * mobile deletion and screen readers all operate on the same string.
  */
 export function VerificationCodeInput({
   length = 6,
   value,
+  defaultValue = '',
   onChange,
   onComplete,
   label = 'Verification code',
@@ -33,84 +31,79 @@ export function VerificationCodeInput({
   autoFocus,
   className,
 }: VerificationCodeInputProps) {
-  const [internal, setInternal] = useState('');
-  const code = value ?? internal;
-  const refs = useRef<(HTMLInputElement | null)[]>([]);
+  if (!Number.isInteger(length) || length < 1 || length > 32) {
+    throw new RangeError('VerificationCodeInput length must be an integer from 1 to 32.');
+  }
+  const clean = (text: string) => text.replace(/\D/g, '').slice(0, length);
+  const [internal, setInternal] = useState(() => clean(defaultValue));
+  const code = clean(value ?? internal);
+  const [active, setActive] = useState<number | null>(null);
+  const ref = useRef<HTMLInputElement>(null);
+  const errorId = useId();
 
-  const chars = Array.from({ length }, (_, i) => code[i] ?? '');
-
-  function commit(next: string) {
-    const trimmed = next.slice(0, length);
-    if (value === undefined) setInternal(trimmed);
-    onChange?.(trimmed);
-    if (trimmed.length === length) onComplete?.(trimmed);
+  function commit(raw: string) {
+    const next = clean(raw);
+    if (next === code) return;
+    if (value === undefined) setInternal(next);
+    onChange?.(next);
+    if (next.length === length) onComplete?.(next);
   }
 
-  function focusBox(i: number) {
-    refs.current[Math.max(0, Math.min(length - 1, i))]?.focus();
+  function updateCaret() {
+    setActive(Math.min(ref.current?.selectionStart ?? code.length, length - 1));
   }
 
-  function onInput(i: number, raw: string) {
-    const digits = raw.replace(/\D/g, '');
-    if (!digits) return;
-    // A paste lands here too — spread it across the remaining boxes.
-    const next = (code.slice(0, i) + digits + code.slice(i + digits.length)).slice(0, length);
-    commit(next);
-    focusBox(i + digits.length);
-  }
-
-  function onKeyDown(i: number, e: KeyboardEvent<HTMLInputElement>) {
-    if (e.key === 'Backspace') {
-      e.preventDefault();
-      if (chars[i]) commit(code.slice(0, i) + code.slice(i + 1));
-      else if (i > 0) {
-        commit(code.slice(0, i - 1) + code.slice(i));
-        focusBox(i - 1);
-      }
-    } else if (e.key === 'ArrowLeft') {
-      e.preventDefault();
-      focusBox(i - 1);
-    } else if (e.key === 'ArrowRight') {
-      e.preventDefault();
-      focusBox(i + 1);
-    }
-  }
-
-  function onPaste(i: number, e: ClipboardEvent<HTMLInputElement>) {
-    e.preventDefault();
-    onInput(i, e.clipboardData.getData('text'));
+  function onPaste(event: ClipboardEvent<HTMLInputElement>) {
+    event.preventDefault();
+    const input = event.currentTarget;
+    const digits = event.clipboardData.getData('text').replace(/\D/g, '');
+    const start = input.selectionStart ?? code.length;
+    const end = input.selectionEnd ?? start;
+    // A full code replaces the existing value, including a partially entered code.
+    commit(digits.length >= length ? digits : code.slice(0, start) + digits + code.slice(end));
   }
 
   return (
-    <div
-      className={cn('dhk-codeinput', className)}
-      data-invalid={errorMessage ? '' : undefined}
-      role="group"
-      aria-label={label}
-    >
-      <div className="dhk-codeinput__boxes">
-        {chars.map((c, i) => (
-          <input
-            key={i}
-            ref={(el) => { refs.current[i] = el; }}
+    <div className={cn('dhk-codeinput', className)} data-invalid={errorMessage ? '' : undefined}>
+      <input
+        ref={ref}
+        className="dhk-codeinput__native"
+        value={code}
+        type="text"
+        inputMode="numeric"
+        autoComplete="one-time-code"
+        maxLength={length}
+        aria-label={label}
+        aria-describedby={errorMessage ? errorId : undefined}
+        aria-invalid={errorMessage ? true : undefined}
+        disabled={isDisabled}
+        autoFocus={autoFocus}
+        onChange={(event) => { commit(event.target.value); updateCaret(); }}
+        onPaste={onPaste}
+        onSelect={updateCaret}
+        onFocus={updateCaret}
+        onBlur={() => setActive(null)}
+      />
+      <div className="dhk-codeinput__boxes" aria-hidden="true">
+        {Array.from({ length }, (_, index) => (
+          <span
+            key={index}
             className="dhk-codeinput__box"
-            value={c}
-            inputMode="numeric"
-            autoComplete={i === 0 ? 'one-time-code' : 'off'}
-            aria-label={`${label}, digit ${i + 1} of ${length}`}
-            aria-invalid={errorMessage ? true : undefined}
-            disabled={isDisabled}
-            autoFocus={autoFocus && i === 0}
-            onChange={(e) => onInput(i, e.target.value)}
-            onKeyDown={(e) => onKeyDown(i, e)}
-            onPaste={(e) => onPaste(i, e)}
-            onFocus={(e) => e.target.select()}
-          />
+            data-active={active === index ? '' : undefined}
+            data-disabled={isDisabled ? '' : undefined}
+            onMouseDown={(event) => {
+              if (isDisabled) return;
+              event.preventDefault();
+              ref.current?.focus();
+              ref.current?.setSelectionRange(Math.min(index, code.length), Math.min(index + 1, code.length));
+              setActive(Math.min(index, code.length, length - 1));
+            }}
+          >
+            {code[index] ?? ''}
+          </span>
         ))}
       </div>
-      {errorMessage && (
-        <span className="dhk-control-error" role="alert">{errorMessage}</span>
-      )}
+      {errorMessage && <span id={errorId} className="dhk-control-error" role="alert">{errorMessage}</span>}
     </div>
   );
 }

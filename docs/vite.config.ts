@@ -24,8 +24,14 @@ export default defineConfig({
     ],
     // The kit source sits outside this project root, so its bare imports would
     // otherwise resolve against ../node_modules — two Reacts, broken hooks.
-    dedupe: ['react', 'react-dom', 'react-aria-components'],
+    dedupe: ['react', 'react-dom', 'react-aria-components', 'react-aria', 'react-stately'],
   },
-  server: { port: 5174, allowedHosts: true },
+  server: {
+    port: 5174,
+    allowedHosts: true,
+    // CSS aliases import sibling source assets, including the bundled Plex fonts.
+    // Permit only the docs project and kit source; retain Vite's strict boundary.
+    fs: { allow: [here, kit] },
+  },
   build: { outDir: 'dist', emptyOutDir: true },
 });

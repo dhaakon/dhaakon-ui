@@ -8,9 +8,10 @@ export function ComponentIndex() {
     <>
       <h1 className="doc-h1">Components</h1>
       <p className="doc-lede">
-        {COMPONENTS.length} pages across two layers. Those marked <Badge>aria</Badge> are built on
-        React Aria — keyboard behaviour, focus management and screen-reader semantics come from
-        Adobe's primitives, and everything in this kit is appearance.
+        {COMPONENTS.length} documentation entries across three UI layers and the companion motion
+        package. Those marked <Badge>aria</Badge> integrate React Aria behavior. The kit adds a shared
+        visual language and composed workflows; application labels, content, contrast, and complete
+        keyboard journeys still need testing.
       </p>
 
       {LAYERS.map((layer) => {

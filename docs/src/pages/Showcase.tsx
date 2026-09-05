@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MotionConfig, Reveal, motion, useTween } from '@dhaakon/motion/react';
 import { stagger } from '@dhaakon/motion';
 import {
   Avatar, Badge, Button, DataCell, DataColumn, DataRow, DataTable, DataTableBody,
-  DataTableHeader, FeaturedIcon, Switch,
+  DataTableHeader, Drawer, FeaturedIcon, Switch,
 } from '@dhaakon/ui';
 import {
   ActivityFeed, DataGrid, FilterBar, MetricRow, MetricTile, PageHeader,
-  ProgressSteps, Sparkline, StatList,
+  ConfirmDialog, LogViewer, ProgressSteps, Sparkline, StatList, type LogEntry,
 } from '@dhaakon/ui/app';
 import { CodeBlock } from '../parts/CodeBlock';
 
@@ -43,14 +43,44 @@ const ROWS = [
 ];
 
 function Dashboard() {
+  const [step, setStep] = useState(4);
+  const [deployed, setDeployed] = useState(false);
+  const [events, setEvents] = useState<LogEntry[]>([
+    { id: 'ready', timestamp: 'T+00s', level: 'info', source: 'fixture', message: 'Local deployment simulation ready. No infrastructure is connected.' },
+  ]);
+  const deploying = step < 4;
+  useEffect(() => {
+    if (step >= 4) return;
+    const timer = setTimeout(() => {
+      setEvents((previous) => [...previous, {
+        id: `${previous.length}-${step}`, timestamp: `T+0${step + 1}s`, level: 'info', source: 'simulation',
+        message: ['Fixture image selected.', 'Fixture migrations validated.', 'Fixture containers marked healthy.', 'Local simulation complete. No services changed.'][step],
+      }]);
+      setStep((previous) => previous + 1);
+      if (step === 3) setDeployed(true);
+    }, 700);
+    return () => clearTimeout(timer);
+  }, [step]);
   return (
     <div style={{ display: 'grid', gap: '2rem' }}>
       <motion.div initial={{ y: 16, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
         <PageHeader
           title="homelab-nuc-1"
-          badge={<Badge tone="success" dot>running</Badge>}
+          badge={<Badge tone={deploying ? 'info' : 'success'} dot>{deploying ? 'simulating' : 'fixture ready'}</Badge>}
           description="Intel NUC8i7HVK · 8 vCPU · 30 GiB · nuc8i7hvk.metal"
-          actions={<><Button variant="outline">Logs</Button><Button>Redeploy</Button></>}
+          actions={<>
+            <Drawer title="Simulation event log" trigger={<Button variant="outline">Logs</Button>}>
+              <LogViewer entries={events} isStreaming={deploying} />
+            </Drawer>
+            <ConfirmDialog
+              title="Replay a local deployment"
+              description="This animates deterministic fixture stages. It does not deploy, restart or contact any service."
+              trigger={<Button disabled={deploying}>Simulate redeploy</Button>}
+              confirmLabel="Start simulation"
+              destructive={false}
+              onConfirm={() => { setStep(0); setDeployed(false); }}
+            />
+          </>}
           flush
         />
       </motion.div>
@@ -67,9 +97,9 @@ function Dashboard() {
         </MetricRow>
       </motion.div>
 
-      <div style={{ display: 'grid', gap: '2rem', gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))' }}>
+      <div style={{ display: 'grid', gap: '2rem', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 20rem), 1fr))' }}>
         <Reveal amount={0.2}>
-          <h3 className="dhk-eyebrow" style={{ marginBottom: '0.75rem' }}>Instance</h3>
+          <h2 className="dhk-eyebrow" style={{ marginBottom: '0.75rem' }}>Instance</h2>
           <StatList
             stats={[
               { label: 'Instance ID', value: <span className="dhk-mono">i-60b786b1ac524aa6b</span> },
@@ -80,7 +110,7 @@ function Dashboard() {
         </Reveal>
 
         <Reveal amount={0.2} style={{ display: 'block' }}>
-          <h3 className="dhk-eyebrow" style={{ marginBottom: '0.75rem' }}>Recent activity</h3>
+          <h2 className="dhk-eyebrow" style={{ marginBottom: '0.75rem' }}>Recent activity</h2>
           <ActivityFeed
             items={[
               { id: 1, marker: <Avatar name="David Poyner" size="sm" />, actor: 'dhaakon-ubuntu',
@@ -96,11 +126,11 @@ function Dashboard() {
 
       <Reveal amount={0.15} style={{ display: 'block' }}>
         <ProgressSteps
-          current={2}
+          current={step}
           steps={[
             { title: 'Pull image' },
             { title: 'Run migrations' },
-            { title: 'Start containers', description: 'Waiting on health checks…' },
+            { title: 'Start containers', description: deploying ? 'Simulated health checks…' : 'Local fixture only' },
             { title: 'Swap traffic' },
           ]}
         />
@@ -124,7 +154,7 @@ function Dashboard() {
                   <DataCell numeric>{r.port}</DataCell>
                   <DataCell numeric>{r.mem.toLocaleString()}</DataCell>
                   <DataCell>
-                    <Badge tone={r.status === 'running' ? 'success' : 'danger'} dot>{r.status}</Badge>
+                    <Badge tone={deployed || r.status === 'running' ? 'success' : 'danger'} dot>{deployed ? 'running' : r.status}</Badge>
                   </DataCell>
                 </DataRow>
               ))}
@@ -132,6 +162,7 @@ function Dashboard() {
           </DataTable>
         </DataGrid>
       </Reveal>
+      <p role="status" className="doc-p">{deploying ? `Simulating deployment: stage ${step + 1} of 4.` : deployed ? 'Simulation complete. Fixture service states updated; no infrastructure changed.' : 'Local fixture ready. Open logs or simulate a deployment.'}</p>
     </div>
   );
 }
@@ -143,6 +174,7 @@ export function Showcase() {
   return (
     <>
       <h1 className="doc-h1">Compositions in motion</h1>
+      <p className="dhk-eyebrow">Interactive local simulation · no infrastructure connection</p>
       <p className="doc-lede">
         The same composites from the gallery, assembled into one screen and animated with{' '}
         <code className="doc-inline">@dhaakon/motion</code>. Nothing here is a bespoke animation:
