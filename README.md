@@ -1,5 +1,10 @@
 # @dhaakon/ui
 
+Coding agents can use the version-controlled `$dhaakon-ui-motion` skill from the
+sibling `dhaakon-motion/skills/dhaakon-ui-motion/` checkout to compose this kit with
+`@dhaakon/motion` while preserving accessibility, token, execution-path, lifecycle,
+and verification contracts.
+
 The creative technology toolkit for the dhaakon-network: professional interfaces for research, homelab operations, experiments and editorial work.
 
 Version **0.5.0** combines Dhaakon’s paper/ink/Plex identity with a working research instrument, repaired interaction foundations and executable release checks. It is an original system, benchmarked against professional UI-kit capabilities—not a claim of complete Untitled UI parity.

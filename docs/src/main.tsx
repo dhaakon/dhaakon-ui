@@ -35,6 +35,9 @@ const Editorial = lazy(() =>
 const Accessibility = lazy(() =>
   import("./pages/Accessibility").then((m) => ({ default: m.Accessibility })),
 );
+const AgentSkill = lazy(() =>
+  import("./pages/AgentSkill").then((m) => ({ default: m.AgentSkill })),
+);
 
 // Keep published hash URLs working on static hosts without rewrite assumptions.
 const router = createHashRouter([
@@ -48,6 +51,7 @@ const router = createHashRouter([
       { path: "workbench", element: <Workbench /> },
       { path: "editorial", element: <Editorial /> },
       { path: "accessibility", element: <Accessibility /> },
+      { path: "agent-skill", element: <AgentSkill /> },
       { path: "showcase", element: <Showcase /> },
       { path: "components", element: <ComponentIndex /> },
       { path: "components/:slug", element: <ComponentPage /> },

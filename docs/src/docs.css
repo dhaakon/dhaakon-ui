@@ -335,6 +335,13 @@ html {
   color: var(--dhk-text);
   transition: background-color var(--dhk-duration) var(--dhk-ease);
 }
+.doc-grid > article {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dhk-space-2);
+  padding: var(--dhk-space-5);
+  background: var(--dhk-surface);
+}
 .doc-grid a:hover {
   background: var(--dhk-surface-raised);
 }
@@ -655,6 +662,9 @@ html {
 }
 .doc-grid {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+}
+.doc-agent-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 /* Editorial overview. Decorative studies use native SVG and CSS, never heavy renderers. */
@@ -1073,6 +1083,9 @@ html {
   }
   .doc-main {
     padding-top: 2rem;
+  }
+  .doc-agent-grid {
+    grid-template-columns: 1fr;
   }
   .doc-home-hero {
     grid-template-columns: 1.1fr 1fr;

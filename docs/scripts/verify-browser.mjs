@@ -11,7 +11,7 @@ const output = resolve(here, '../../test-results');
 const registry = await readFile(resolve(here, '../src/lib/registry.ts'), 'utf8');
 const slugs = [...registry.matchAll(/\bslug:\s*['"]([^'"]+)['"]/g)].map((match) => match[1]);
 assert(slugs.length > 70 && new Set(slugs).size === slugs.length, 'catalogue parsing/unique routes');
-const routes = ['/', '/install', '/foundations', '/components', '/showcase', '/workbench', '/editorial', '/accessibility', ...slugs.map((slug) => '/components/' + slug)];
+const routes = ['/', '/install', '/foundations', '/components', '/showcase', '/workbench', '/editorial', '/accessibility', '/agent-skill', ...slugs.map((slug) => '/components/' + slug)];
 const selectedRoutes = process.env.UI_CHECK_ROUTES ? routes.filter((route) => process.env.UI_CHECK_ROUTES.split(',').includes(route)) : routes;
 assert(selectedRoutes.length, 'at least one route must be checked');
 const axe = await readFile(resolve(here, '../../node_modules/axe-core/axe.min.js'), 'utf8');
@@ -87,6 +87,7 @@ try {
       assert(state.heading && !state.errors.length, 'missing/failed example: ' + JSON.stringify(state.errors));
       assert(!state.overflow, 'desktop horizontal page overflow');
       assert.equal(state.nested, 0, 'nested interactive elements');
+      if (route === '/agent-skill') await capture('agent-skill-ui');
       if (route.startsWith('/components/')) {
         await clickText('Show code');
         await until("!!document.querySelector('.doc-demo pre code') || !!document.querySelector('.doc-demo [role=alert]')", route + ' source');
@@ -197,7 +198,7 @@ try {
     await browser.evaluate("void document.querySelector('#doc-search').focus()");
     await key('Escape');
     assert(await browser.evaluate("document.activeElement === document.querySelector('.doc-menu-toggle')"));
-    for (const route of ['/', '/workbench', '/editorial', '/accessibility', '/foundations', '/showcase', '/components/multi-select', '/components/drawer', '/components/telemetry-chart', '/components/verification-code']) {
+    for (const route of ['/', '/workbench', '/editorial', '/accessibility', '/agent-skill', '/foundations', '/showcase', '/components/multi-select', '/components/drawer', '/components/telemetry-chart', '/components/verification-code']) {
       await navigate(route);
       assert(await browser.evaluate("document.documentElement.scrollWidth <= innerWidth + 1"), route + ' mobile overflow');
     }

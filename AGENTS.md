@@ -21,6 +21,9 @@ This is an original design system, not a commercial template clone. Read `AUDIT.
 - Demonstrations are local simulations, never actual host metrics. Working controls must change understandable state. Essential content must remain available under reduced motion.
 - Add new CSS imports to `scripts/build-css.mjs`. Add exports, demos, documentation and tests with new public components.
 - Do not include tests, stories, source credentials or docs bundles in the published library.
+- Consumer work spanning UI and Motion can use the canonical skill at
+  `../dhaakon-motion/skills/dhaakon-ui-motion/SKILL.md`; keep its UI reference aligned
+  with public exports and this repository's component registry.
 
 ## Before handoff
 

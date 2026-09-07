@@ -16,6 +16,7 @@ const guides = [
   ["/workbench", "Research workbench"],
   ["/editorial", "Editorial practice"],
   ["/accessibility", "Interaction contracts"],
+  ["/agent-skill", "Agent integration skill"],
   ["/install", "Installation"],
   ["/foundations", "Foundations"],
   ["/components", "Component atlas"],
