@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.1 - Slider contrast - 2026-09-08
+
+- Slider fills, thumbs and thumb borders now use the semantic text token. This retains the existing light appearance and makes the resting slider visible in dark and nested theme scopes. Hover, focus, disabled and keyboard behavior are unchanged.
+- Private network patch release; no public-registry publication or automatic consumer upgrades.
+
 ## 0.5.0 — Research system — 2026-09-05
 
 ### New capabilities

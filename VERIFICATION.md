@@ -1,3 +1,17 @@
+# Private patch verification - 0.5.1
+
+Date: 2026-09-08. Scope: use semantic text colors for slider fill, thumb and thumb border, so resting sliders remain visible in dark and nested themes.
+
+- `npm run check`: lint, strict types, 148 tests, production build and packed artifact/SSR checks passed.
+- `npm --prefix docs run build` and `npm run build-storybook` passed. Storybook retains its existing large-chunk warning.
+- `npm --prefix docs run check:routes`: 102 routes and 10 interaction gates passed with zero failures, including theme, portal, mobile, fonts and reduced-motion checks. The first invocation timed out at the initial Chrome Page.navigate; the full retry passed.
+- Real Chrome computed-style checks against the built styles passed for light, dark and both nested theme combinations. Resting slider thumb contrast is 16.40:1 on light and 16.76:1 on dark; fill and thumb border match the thumb.
+- Compared the build with the private registry's published 0.5.0 tarball: every runtime artifact is byte-identical except `dist/controls.css`.
+
+This patch is released only to the existing private registry at `http://dhaakon-ubuntu:21760/`. It does not deploy library documentation/services or upgrade consumers. The earlier assistive-technology and browser coverage limits below still apply.
+
+---
+
 # Release verification — 0.5.0
 
 Date: 2026-09-05. Baseline: `c1d9254` / 0.4.1. The baseline assessment is preserved in `AUDIT.md` on `audit/ui-system-2026-09-05`; implementation lives on `feat/ui-research-system-v0.5.0`.

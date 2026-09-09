@@ -1176,14 +1176,14 @@ a.dhk-logo:hover .dhk-logo__word {
 .dhk-slider__fill {
   position: absolute;
   height: 3px;
-  background: var(--dhk-ink);
+  background: var(--dhk-text);
   pointer-events: none;
 }
 .dhk-slider__thumb {
   width: 0.9rem;
   height: 0.9rem;
-  background: var(--dhk-ink);
-  border: 1px solid var(--dhk-ink);
+  background: var(--dhk-text);
+  border: 1px solid var(--dhk-text);
   border-radius: var(--dhk-radius-full);
   outline: none;
   transition:
