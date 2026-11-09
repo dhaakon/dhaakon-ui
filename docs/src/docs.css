@@ -663,6 +663,10 @@ html {
 .doc-grid {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
 }
+.doc-agent-tool {
+  margin: 2rem 0 0.75rem;
+}
+
 .doc-agent-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }

@@ -20,6 +20,7 @@
 - [Research instruments](#research-instruments)
 - [Accessibility and interaction contracts](#accessibility-and-interaction-contracts)
 - [Using it with @dhaakon/motion](#using-it-with-dhaakonmotion)
+- [Agent skill: Claude Code and Codex](#agent-skill-claude-code-and-codex)
 - [Develop and verify](#develop-and-verify)
 - [Project structure](#project-structure)
 - [Release boundaries and scope](#release-boundaries-and-scope)
@@ -160,7 +161,28 @@ Application content still needs accessible names, meaningful error recovery and 
 
 [`@dhaakon/motion`](https://github.com/dhaakon/dhaakon-motion) is the companion animation engine. The kit's motion tokens (`motion.ease`, durations) are shared with motion's CSS-first `cssMotion` API, and the [motion docs](https://motion.dhaakon.com) are built with this kit.
 
-Coding agents can use the version-controlled `$dhaakon-ui-motion` skill in [`dhaakon-motion/skills/dhaakon-ui-motion/`](https://github.com/dhaakon/dhaakon-motion/tree/main/skills/dhaakon-ui-motion) to compose both packages while preserving accessibility, token, execution-path, lifecycle and verification contracts. See [AGENTS.md](AGENTS.md).
+The [agent skill](#agent-skill-claude-code-and-codex) below teaches coding agents to compose both packages.
+
+## Agent skill: Claude Code and Codex
+
+[`skills/dhaakon-ui-motion/`](https://github.com/dhaakon/dhaakon-motion/tree/main/skills/dhaakon-ui-motion) is a version-controlled skill that teaches a coding agent how `@dhaakon/ui` and `@dhaakon/motion` fit together: which layer to choose, who owns each animated property, the accessibility contracts, and how to verify the result. One canonical folder serves both tools — install it with a symlink so documentation and agent behavior cannot drift.
+
+| | Claude Code | Codex |
+| --- | --- | --- |
+| Personal install | `~/.claude/skills/dhaakon-ui-motion` | `$CODEX_HOME/skills/dhaakon-ui-motion` (default `~/.codex`) |
+| Per-project install | `.claude/skills/dhaakon-ui-motion` in the consumer repo | — |
+| Invoke | `/dhaakon-ui-motion …`, or automatically when the task matches | `Use $dhaakon-ui-motion to …` |
+| Repository rules | `CLAUDE.md` (imports `AGENTS.md`) | `AGENTS.md` |
+| Display metadata | `SKILL.md` frontmatter | `agents/openai.yaml` |
+
+```sh
+# from a dhaakon-motion checkout
+mkdir -p ~/.claude/skills "${CODEX_HOME:-$HOME/.codex}/skills"
+ln -s "$PWD/skills/dhaakon-ui-motion" ~/.claude/skills/dhaakon-ui-motion
+ln -s "$PWD/skills/dhaakon-ui-motion" "${CODEX_HOME:-$HOME/.codex}/skills/dhaakon-ui-motion"
+```
+
+Start a new agent session afterwards so skill discovery refreshes. Using the skill never grants permission to publish, deploy, push or upgrade packages. The full guide is on [ui.dhaakon.com](https://ui.dhaakon.com/#/agent-skill) and [motion.dhaakon.com](https://motion.dhaakon.com/agent-skill).
 
 ## Develop and verify
 
