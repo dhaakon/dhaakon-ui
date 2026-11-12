@@ -2,9 +2,9 @@
 
 **The design system and React component library behind [dhaakon.com](https://dhaakon.com/)** — professional interfaces for research, homelab operations, experiments and editorial work, built on warm paper, near-black ink, hairlines, sharp corners and IBM Plex.
 
-[Documentation](https://ui.dhaakon.com) · [Component atlas](https://ui.dhaakon.com/#/components) · [Storybook](https://ui.dhaakon.com/storybook/) · [Motion companion](https://motion.dhaakon.com) · [Changelog](CHANGELOG.md)
+[Documentation](https://ui.dhaakon.com) · [npm](https://www.npmjs.com/package/@dhaakon/ui) · [Component atlas](https://ui.dhaakon.com/#/components) · [Storybook](https://ui.dhaakon.com/storybook/) · [Motion companion](https://motion.dhaakon.com) · [Changelog](CHANGELOG.md)
 
-![version](https://img.shields.io/badge/version-0.5.1-ff5a1f) ![react](https://img.shields.io/badge/react-18%20%7C%2019-111) ![license](https://img.shields.io/badge/license-MIT-111)
+[![npm](https://img.shields.io/npm/v/@dhaakon/ui?color=ff5a1f)](https://www.npmjs.com/package/@dhaakon/ui) ![react](https://img.shields.io/badge/react-18%20%7C%2019-111) ![license](https://img.shields.io/badge/license-MIT-111)
 
 ---
 
@@ -52,21 +52,14 @@ Version **0.5.1** is an original system benchmarked against professional UI-kit 
 
 ## Install
 
-The package is not on the public npm registry yet. Install it from a release tarball or from source:
-
 ```sh
-# from a clone of this repository
-npm ci
-npm run build
-npm pack                       # → dhaakon-ui-0.5.1.tgz
-
-# in your app
-npm install ../path/to/dhaakon-ui-0.5.1.tgz
+npm install @dhaakon/ui
+# or: pnpm add @dhaakon/ui · yarn add @dhaakon/ui
 ```
 
-Inside the dhaakon-network, the package is also served by the private registry configured in `publishConfig` (`npm install @dhaakon/ui` with `@dhaakon:registry` pointed at it).
+**Peer dependencies:** `react` and `react-dom` 18 or 19. `lucide-react` is optional (used for icons in some demos). React Aria, `clsx` and `tailwind-merge` install automatically.
 
-**Peer dependencies:** `react` and `react-dom` 18 or 19. `lucide-react` is optional (used for icons in some demos).
+The docs site documents the current source, which can be ahead of the latest npm release — check [the published version](https://www.npmjs.com/package/@dhaakon/ui) before relying on a newly documented API. To try unreleased work, build a tarball from a clone with `npm run build && npm pack` and install that.
 
 ## Quick start
 
@@ -240,7 +233,7 @@ tests/          browser gate and integration tests
 
 ## Release boundaries and scope
 
-Versioned commits and tags, docs deployments, registry publishing and consumer upgrades are separate steps — a docs deployment never silently upgrades another application. Tags: `v0.5.0`, `v0.5.1`.
+Versioned commits and tags, docs deployments, npm publishing and consumer upgrades are separate steps — a docs deployment never silently upgrades another application. Tags: `v0.5.0`, `v0.5.1`. To release, update `CHANGELOG.md`, bump the version, commit and tag, then run `npm publish` — `prepublishOnly` runs `npm run check` first and `publishConfig` publishes publicly to npmjs.
 
 Not claimed: a Figma library, rich-text editor, GPU charting, production log ingestion, or a virtualized/editable spreadsheet engine. `DataGrid` is a toolbar/table/footer layout, not that engine. See the [audit](AUDIT.md), [verification record](VERIFICATION.md) and [contribution contracts](CONTRIBUTING.md).
 

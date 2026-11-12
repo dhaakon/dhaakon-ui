@@ -4,6 +4,26 @@
   "description": "Dhaakon UI — the design system and React component library for the dhaakon-network. Built from dhaakon.com and IBM Plex.",
   "type": "module",
   "license": "MIT",
+  "author": "dhaakon (https://dhaakon.com)",
+  "homepage": "https://ui.dhaakon.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhaakon/dhaakon-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dhaakon/dhaakon-ui/issues"
+  },
+  "keywords": [
+    "react",
+    "design-system",
+    "component-library",
+    "react-aria",
+    "accessibility",
+    "ibm-plex",
+    "ui-kit",
+    "tokens",
+    "dhaakon"
+  ],
   "sideEffects": [
     "*.css"
   ],
@@ -39,7 +59,8 @@
     "./fonts/*": "./dist/fonts/*"
   },
   "publishConfig": {
-    "registry": "http://dhaakon-ubuntu:21760/"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "dev": "storybook dev -p 6006",
@@ -52,7 +73,8 @@
     "test:watch": "vitest",
     "check:package": "node scripts/check-package.mjs",
     "check:peers": "node scripts/check-peers.mjs",
-    "check": "npm run lint && npm run typecheck && npm test && npm run build && npm run check:package"
+    "check": "npm run lint && npm run typecheck && npm test && npm run build && npm run check:package",
+    "prepublishOnly": "npm run check"
   },
   "peerDependencies": {
     "react": "^18 || ^19",

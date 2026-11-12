@@ -7,48 +7,23 @@ export function Install() {
     <>
       <h1 className="doc-h1">Install</h1>
       <p className="doc-lede">
-        The kit is published to the network Verdaccio, not npmjs — point the
-        <code className="doc-inline">@dhaakon</code> scope at it once per project.
+        <code className="doc-inline">@dhaakon/ui</code> is published on npm. Install it, import the
+        stylesheet once, and wrap your tree in the provider.
       </p>
       <Alert tone="info" title={`Source documentation · v${__KIT_VERSION__}`}>
-        This site documents the current source build. Registry publishing is a separate step:
-        check the published version before installing, or build and install a local tarball
-        with <code className="doc-inline">npm run build &amp;&amp; npm pack</code>.
+        This site documents the current source build, which can be ahead of the latest npm release.
+        Check <a href="https://www.npmjs.com/package/@dhaakon/ui">the published version</a> before
+        relying on a newly documented API.
       </Alert>
 
-      <h2 className="doc-h2">1 · Point the scope at the registry</h2>
-      <p className="doc-p">
-        Add an <code className="doc-inline">.npmrc</code> beside your{' '}
-        <code className="doc-inline">package.json</code>. Which host to use depends on where{' '}
-        <code className="doc-inline">npm install</code> actually runs.
-      </p>
-      <CodeBlock
-        standalone
-        code={`# On dhaakon-ubuntu, or from any machine on the tailnet
-@dhaakon:registry=http://dhaakon-ubuntu:21760/
-
-# Building inside a container — Docker's DNS does not know the host's
-# name, so address it by the docker0 gateway instead
-@dhaakon:registry=http://172.17.0.1:21760/`}
-      />
-      <Alert tone="warning" title="Not localhost">
-        Inside a container <code className="doc-inline">localhost</code> is the container itself, and
-        from another machine it is that machine — neither reaches the registry.
-      </Alert>
-      <Alert tone="info" title="Reading is anonymous">
-        The <code className="doc-inline">@dhaakon/*</code> scope is readable without a token.
-        Publishing needs a registry login.
-      </Alert>
-
-      <h2 className="doc-h2">2 · Install</h2>
-      <CodeBlock standalone code={`npm install @dhaakon/ui`} />
+      <h2 className="doc-h2">1 · Install</h2>
+      <CodeBlock standalone code={`npm install @dhaakon/ui\n# or: pnpm add @dhaakon/ui · yarn add @dhaakon/ui`} />
       <p className="doc-p">
         <code className="doc-inline">react-aria-components</code>, its matched <code className="doc-inline">react-aria</code> dependency, <code className="doc-inline">clsx</code>{' '}
         and <code className="doc-inline">tailwind-merge</code> come along as dependencies. React 18 or 19
-        is a peer.
+        is a peer. <code className="doc-inline">lucide-react</code> is optional.
       </p>
-
-      <h2 className="doc-h2">3 · Import the stylesheet, once</h2>
+      <h2 className="doc-h2">2 · Import the stylesheet, once</h2>
       <p className="doc-p">
         One import carries the tokens, the IBM Plex faces and every component's styles. There is no
         Tailwind or PostCSS requirement — it is plain CSS with custom properties.
@@ -59,7 +34,7 @@ export function Install() {
 import '@dhaakon/ui/styles.css';`}
       />
 
-      <h2 className="doc-h2">4 · Wrap the tree</h2>
+      <h2 className="doc-h2">3 · Wrap the tree</h2>
       <p className="doc-p">
         <code className="doc-inline">DhaakonProvider</code> establishes the{' '}
         <code className="doc-inline">.dhk-root</code> baseline — Plex, the paper ground,{' '}
@@ -121,11 +96,10 @@ import                         '@dhaakon/ui/theme.css';`}
       <h2 className="doc-h2">Publishing a new version</h2>
       <CodeBlock
         standalone
-        code={`npm run check
-npm --prefix docs run build
+        code={`npm --prefix docs run build
 npm --prefix docs run check:routes
-# Review CHANGELOG.md, version, commit and tag before publishing.
-# Registry publishing is an explicit release operation.`}
+# Update CHANGELOG.md, bump the version, commit and tag.
+npm publish        # runs npm run check first; publishes publicly to npmjs`}
       />
       <p className="doc-p">
         Storybook is the workshop for building components; it lives at{' '}
