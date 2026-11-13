@@ -29,10 +29,8 @@
   ],
   "files": [
     "dist",
-    "AUDIT.md",
     "CHANGELOG.md",
-    "CONTRIBUTING.md",
-    "VERIFICATION.md"
+    "CONTRIBUTING.md"
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",

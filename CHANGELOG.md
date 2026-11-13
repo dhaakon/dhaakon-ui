@@ -37,7 +37,7 @@
 - Responsive, searchable navigation, skip link, named landmarks, route focus/titles and explicit not-found behavior.
 - Lazy page modules, individual examples and source snippets; the full editorial entry is documented. Initial built overview JS reduced from 1,284,941 to approximately 415,000 decoded bytes.
 - Working TypeScript-aware lint, non-masking docs build, component regression tests, real-browser route/source/accessibility/interaction checks, packed-artifact/SSR smoke and isolated React peer verification.
-- Audit baseline, agent ownership/invariants, contributor workflow, build identity and bundled IBM Plex license notices.
+- Contributor workflow, build identity and bundled IBM Plex license notices.
 - Vite development access limited to the docs and sibling kit source, restoring actual Plex font rendering without allowing the entire workspace.
 
 ### Compatibility and adoption notes
@@ -57,4 +57,4 @@ No claim of full commercial template/Figma parity, complete assistive-technology
 
 ## 0.4.1 — Baseline
 
-Existing package version at c1d9254. The immutable starting assessment is retained on audit/ui-system-2026-09-05 in AUDIT.md. Earlier project history remains on main.
+Existing package version at c1d9254. Earlier project history remains on main.

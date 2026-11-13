@@ -33,7 +33,7 @@
 - **Accessible by construction.** Complex interactions use [React Aria](https://react-spectrum.adobe.com/react-aria/); everything else is semantic HTML with tested composition. Light/dark, compact/comfortable density and right-to-left locales are first-class.
 - **Executable release checks.** Lint, strict types, unit tests, a packed-artifact/SSR check and a browser gate that walks every documented demo.
 
-Version **0.5.2** is an original system benchmarked against professional UI-kit capabilities — not a claim of complete parity with any commercial kit. See the [baseline audit](AUDIT.md) and [verification record](VERIFICATION.md) for scope.
+Version **0.5.2** is an original system benchmarked against professional UI-kit capabilities — not a claim of complete parity with any commercial kit. See [release boundaries and scope](#release-boundaries-and-scope) for what it does not claim.
 
 ## Explore the docs
 
@@ -165,7 +165,6 @@ The [agent skill](#agent-skill-claude-code-and-codex) below teaches coding agent
 | Personal install | `~/.claude/skills/dhaakon-ui-motion` | `$CODEX_HOME/skills/dhaakon-ui-motion` (default `~/.codex`) |
 | Per-project install | `.claude/skills/dhaakon-ui-motion` in the consumer repo | — |
 | Invoke | `/dhaakon-ui-motion …`, or automatically when the task matches | `Use $dhaakon-ui-motion to …` |
-| Repository rules | `CLAUDE.md` (imports `AGENTS.md`) | `AGENTS.md` |
 | Display metadata | `SKILL.md` frontmatter | `agents/openai.yaml` |
 
 ```sh
@@ -235,7 +234,7 @@ tests/          browser gate and integration tests
 
 Versioned commits and tags, docs deployments, npm publishing and consumer upgrades are separate steps — a docs deployment never silently upgrades another application. Tags: `v0.5.0`, `v0.5.1`, `v0.5.2`. To release, update `CHANGELOG.md`, bump the version, commit and tag, then run `npm publish` — `prepublishOnly` runs `npm run check` first and `publishConfig` publishes publicly to npmjs.
 
-Not claimed: a Figma library, rich-text editor, GPU charting, production log ingestion, or a virtualized/editable spreadsheet engine. `DataGrid` is a toolbar/table/footer layout, not that engine. See the [audit](AUDIT.md), [verification record](VERIFICATION.md) and [contribution contracts](CONTRIBUTING.md).
+Not claimed: a Figma library, rich-text editor, GPU charting, production log ingestion, or a virtualized/editable spreadsheet engine. `DataGrid` is a toolbar/table/footer layout, not that engine. See the [contribution notes](CONTRIBUTING.md) for the development workflow.
 
 ## Fonts and licensing
 

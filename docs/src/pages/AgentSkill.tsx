@@ -134,18 +134,14 @@ export function AgentSkill() {
       <CodeBlock standalone code={claudeInstall} />
       <p className="doc-p">
         Claude Code loads the skill when a request matches its description, or
-        on demand with the slash command. Each kit repository ships a{" "}
-        <code className="doc-inline">CLAUDE.md</code> that imports its{" "}
-        <code className="doc-inline">AGENTS.md</code>, so Claude Code follows
-        the same repository rules as Codex.
+        on demand with the slash command.
       </p>
       <CodeBlock standalone code={claudeExample} />
 
       <h3 className="dhk-eyebrow doc-agent-tool">Codex</h3>
       <CodeBlock standalone code={codexInstall} />
       <p className="doc-p">
-        Name the skill in the prompt. Codex reads{" "}
-        <code className="doc-inline">AGENTS.md</code> natively, and{" "}
+        Name the skill in the prompt.{" "}
         <code className="doc-inline">agents/openai.yaml</code> supplies the
         skill&rsquo;s display name and default prompt.
       </p>
