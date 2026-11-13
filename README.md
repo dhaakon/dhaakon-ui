@@ -33,7 +33,7 @@
 - **Accessible by construction.** Complex interactions use [React Aria](https://react-spectrum.adobe.com/react-aria/); everything else is semantic HTML with tested composition. Light/dark, compact/comfortable density and right-to-left locales are first-class.
 - **Executable release checks.** Lint, strict types, unit tests, a packed-artifact/SSR check and a browser gate that walks every documented demo.
 
-Version **0.5.1** is an original system benchmarked against professional UI-kit capabilities — not a claim of complete parity with any commercial kit. See the [baseline audit](AUDIT.md) and [verification record](VERIFICATION.md) for scope.
+Version **0.5.2** is an original system benchmarked against professional UI-kit capabilities — not a claim of complete parity with any commercial kit. See the [baseline audit](AUDIT.md) and [verification record](VERIFICATION.md) for scope.
 
 ## Explore the docs
 
@@ -233,7 +233,7 @@ tests/          browser gate and integration tests
 
 ## Release boundaries and scope
 
-Versioned commits and tags, docs deployments, npm publishing and consumer upgrades are separate steps — a docs deployment never silently upgrades another application. Tags: `v0.5.0`, `v0.5.1`. To release, update `CHANGELOG.md`, bump the version, commit and tag, then run `npm publish` — `prepublishOnly` runs `npm run check` first and `publishConfig` publishes publicly to npmjs.
+Versioned commits and tags, docs deployments, npm publishing and consumer upgrades are separate steps — a docs deployment never silently upgrades another application. Tags: `v0.5.0`, `v0.5.1`, `v0.5.2`. To release, update `CHANGELOG.md`, bump the version, commit and tag, then run `npm publish` — `prepublishOnly` runs `npm run check` first and `publishConfig` publishes publicly to npmjs.
 
 Not claimed: a Figma library, rich-text editor, GPU charting, production log ingestion, or a virtualized/editable spreadsheet engine. `DataGrid` is a toolbar/table/footer layout, not that engine. See the [audit](AUDIT.md), [verification record](VERIFICATION.md) and [contribution contracts](CONTRIBUTING.md).
 

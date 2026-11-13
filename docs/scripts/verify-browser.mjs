@@ -139,6 +139,13 @@ try {
     assert(field, 'visual label is not the accessible name');
     assert(field.description?.value.includes('Escape clears'), 'description is not associated');
   });
+  await check('Slider thumbs sit on the centre line of their track', async () => {
+    await navigate('/components/slider');
+    const offsets = await browser.evaluate("[...document.querySelectorAll('.dhk-slider__thumb')].map((thumb) => { const t = thumb.getBoundingClientRect(); const track = thumb.closest('.dhk-slider__track'); const r = track.getBoundingClientRect(); const fill = track.querySelector('.dhk-slider__fill').getBoundingClientRect(); return [t.top + t.height / 2 - (r.top + r.height / 2), t.top + t.height / 2 - (fill.top + fill.height / 2)]; })");
+    assert(offsets.length >= 3, 'expected single and range sliders, found ' + offsets.length + ' thumbs');
+    const worst = Math.max(...offsets.flat().map(Math.abs));
+    assert(worst <= 0.75, 'a thumb is ' + worst.toFixed(2) + 'px off the centre line of its track');
+  });
   await check('Workbench runs, completes, filters and inspects local evidence', async () => {
     await navigate('/workbench');
     await clickText('Run experiment ↗');

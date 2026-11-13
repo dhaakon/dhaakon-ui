@@ -1,3 +1,19 @@
+# Patch verification - 0.5.2
+
+Date: 2026-11-13. Scope: centre Slider thumbs on the track. React Aria positions a thumb with `translate(-50%, -50%)`; without an explicit `top` the kit left it half its own height above the rail.
+
+- `npm run check`: lint, strict types, 148 tests, production build and packed artifact/SSR checks passed.
+- `npm run check:peers`: React/React DOM 18.3.1 and 19.2.0 passed.
+- `npm --prefix docs run build` and `npm run build-storybook` passed.
+- `npm --prefix docs run check:routes`: 102 routes and 11 interaction gates passed with zero failures and zero pages with axe violations. The new gate, "Slider thumbs sit on the centre line of their track", failed before the change with a 7.20px offset and passes after it; all three thumbs on the Slider page measure 0px from the centre line in light and dark.
+- Compared the packed build with the 0.5.1 tarball published on npm: the same 47 files, every one byte-identical except `dist/controls.css` (four added lines), `package.json`, `CHANGELOG.md`, `README.md` and this file.
+
+Not covered: vertical sliders (the kit does not style them) and hover/drag feedback (the thumb's `transform: scale()` rule is overridden by React Aria's inline transform, before and after this patch).
+
+Release state when this was written: committed and tagged. Publishing to npm is a separate step and had not been run.
+
+---
+
 # Private patch verification - 0.5.1
 
 Date: 2026-09-08. Scope: use semantic text colors for slider fill, thumb and thumb border, so resting sliders remain visible in dark and nested themes.

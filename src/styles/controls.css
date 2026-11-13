@@ -1180,6 +1180,10 @@ a.dhk-logo:hover .dhk-logo__word {
   pointer-events: none;
 }
 .dhk-slider__thumb {
+  /* React Aria positions the thumb with translate(-50%, -50%), which centres it
+     on this point. Without an explicit top it starts from the flex-centred
+     static position and ends up half its own height above the rail. */
+  top: 50%;
   width: 0.9rem;
   height: 0.9rem;
   background: var(--dhk-text);

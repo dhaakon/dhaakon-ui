@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.2 - Slider thumb alignment - 2026-11-13
+
+- Slider thumbs now sit on the centre line of the track. They were drawn half their own height (7.2px at the default size) above it, for single and range sliders alike. Values, keyboard behavior and the rest of the slider's appearance are unchanged.
+- The docs browser gate measures thumb alignment on the Slider page, so the offset cannot return unnoticed.
+
 ## 0.5.1 - Slider contrast - 2026-09-08
 
 - Slider fills, thumbs and thumb borders now use the semantic text token. This retains the existing light appearance and makes the resting slider visible in dark and nested theme scopes. Hover, focus, disabled and keyboard behavior are unchanged.
