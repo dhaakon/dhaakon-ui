@@ -52,7 +52,12 @@ const toolRows: ToolRow[] = [
 ];
 
 const toolColumns: Column<ToolRow>[] = [
-  { key: "aspect", header: "", width: "24%" },
+  // A header needs a name for screen readers even when the column needs no visible title.
+  {
+    key: "aspect",
+    header: <span className="dhk-sr-only">Aspect</span>,
+    width: "24%",
+  },
   { key: "claude", header: "Claude Code", cell: (row) => row.claude },
   { key: "codex", header: "Codex", cell: (row) => row.codex },
 ];
