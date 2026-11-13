@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { LogoMark } from "@dhaakon/ui";
+import { BrandLogo } from "./BrandLogo";
 import {
   CATEGORIES,
   COMPONENTS,
@@ -90,9 +90,9 @@ export function Layout() {
           className="doc-top__brand"
           aria-label="Dhaakon UI overview"
         >
-          <LogoMark size={22} />
+          <BrandLogo className="doc-top__logo" />
           <span>
-            Dhaakon <span className="doc-top__slash">/</span> UI
+            <span className="doc-top__slash">/</span> UI
           </span>
         </NavLink>
         <span className="doc-top__ver">v{__KIT_VERSION__}</span>
